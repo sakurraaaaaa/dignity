@@ -1,150 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dignity | Sequoia V23 Desktop</title>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root { --accent: #007aff; --bg: rgba(255, 255, 255, 0.9); }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'SF Pro Display', sans-serif; }
-        body { 
-            height: 100vh; overflow: hidden;
-            background: url('https://raw.githubusercontent.com/f79/macOS-Wallpapers/master/macOS%20Sequoia/Sequoia%20Light.jpg') center/cover;
-            display: flex; align-items: center; justify-content: center;
+using System;
+using System.Windows.Forms;
+// using YourExploitAPI; // You would add your DLL reference here
+
+namespace DignityExecutor
+{
+    public partial class MainHub : Form
+    {
+        // Placeholder for the Exploit API
+        // ExploitAPI api = new ExploitAPI(); 
+
+        public MainHub()
+        {
+            InitializeComponent();
         }
 
-        /* THE REAL MAC WINDOW */
-        .window {
-            width: 1000px; height: 650px; border-radius: 20px;
-            background: var(--bg); backdrop-filter: blur(50px);
-            border: 1px solid rgba(255,255,255,0.4);
-            box-shadow: 0 50px 100px rgba(0,0,0,0.2);
-            display: flex; flex-direction: column; overflow: hidden;
-            animation: appLaunch 0.5s ease-out;
-        }
-        @keyframes appLaunch { from { opacity: 0; transform: scale(0.9) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
-
-        /* WINDOW CONTROLS */
-        .title-bar { height: 50px; display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .dots { display: flex; gap: 8px; }
-        .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .r { background: #ff5f56; } .y { background: #ffbd2e; } .g { background: #27c93f; }
-
-        .content { display: flex; flex-grow: 1; overflow: hidden; }
-
-        /* SIDEBAR NAVIGATION */
-        .sidebar { width: 220px; background: rgba(246, 246, 247, 0.6); border-right: 1px solid rgba(0,0,0,0.05); padding: 20px 15px; }
-        .nav-item { padding: 10px 15px; border-radius: 10px; margin-bottom: 5px; cursor: pointer; color: #555; font-size: 0.9rem; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
-        .nav-item:hover { background: rgba(0,0,0,0.05); }
-        .nav-item.active { background: rgba(0,0,0,0.1); color: #000; font-weight: 600; }
-
-        /* EXECUTOR AREA */
-        .workspace { flex-grow: 1; padding: 30px; display: none; flex-direction: column; gap: 20px; }
-        .workspace.active { display: flex; }
-
-        .editor-container { flex-grow: 1; background: #1e1e1e; border-radius: 12px; border: 1px solid #333; display: flex; flex-direction: column; overflow: hidden; }
-        #lua { flex-grow: 1; background: transparent; border: none; padding: 20px; color: #dcdcaa; font-family: 'JetBrains Mono'; font-size: 14px; outline: none; resize: none; }
-        
-        .footer { padding: 15px; background: #252526; display: flex; gap: 10px; border-top: 1px solid #333; }
-        .btn { padding: 8px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .exec { background: var(--accent); color: white; }
-        .attach { background: #34c759; color: white; }
-        .btn:active { transform: scale(0.96); }
-
-        /* DOWNLOAD SECTION */
-        .dl-section { text-align: center; margin: auto; max-width: 400px; }
-    </style>
-</head>
-<body>
-
-    <div class="window">
-        <div class="title-bar">
-            <div class="dots"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
-            <div style="margin-left: auto; font-size: 0.75rem; font-weight: 700; color: #888;">DIGNITY DESKTOP V23</div>
-        </div>
-
-        <div class="content">
-            <aside class="sidebar">
-                <div class="nav-item active" onclick="tab(event, 'exec-tab')">💻 Executor</div>
-                <div class="nav-item" onclick="tab(event, 'hub-tab')">🚀 Script Hub</div>
-                <div class="nav-item" onclick="tab(event, 'dl-tab')">📥 Downloads</div>
-                <div class="nav-item" onclick="tab(event, 'set-tab')">⚙️ Settings</div>
-            </aside>
-
-            <main style="flex-grow:1; display:flex;">
-                <div id="exec-tab" class="workspace active">
-                    <div class="editor-container">
-                        <textarea id="lua" spellcheck="false">-- Blackbird Clan Dignity V23
-print("Initializing Luau...")</textarea>
-                        <div class="footer">
-                            <button class="btn exec" onclick="execute()">Execute</button>
-                            <button class="btn attach" id="attBtn" onclick="attach()">Attach</button>
-                            <span id="status" style="margin-left:auto; color:#888; font-size:0.7rem; align-self:center;">DISCONNECTED</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="dl-tab" class="workspace">
-                    <div class="dl-section">
-                        <h2>Protocol Launcher</h2>
-                        <p style="font-size: 0.8rem; color:#666; margin: 15px 0;">Run this to bridge the web-hub to your local Roblox client.</p>
-                        <button class="btn exec" style="width:100%; padding:15px;" onclick="downloadReal()">Download Dignity_Launcher.bat</button>
-                        <p style="font-size: 0.6rem; color:#aaa; margin-top:20px;">*When the scan finishes, the UI will unlock "Real Injection" mode.</p>
-                    </div>
-                </div>
-
-                <div id="hub-tab" class="workspace">
-                    <h2>Verified Scripts</h2>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:20px;">
-                        <div style="background:white; padding:15px; border-radius:12px; border:1px solid #eee;" onclick="loadS('fly')"><b>🕊️ Fly V3</b><br><small>Bypasses AC</small></div>
-                        <div style="background:white; padding:15px; border-radius:12px; border:1px solid #eee;" onclick="loadS('iy')"><b>⚙️ Inf Yield</b><br><small>Admin Cmds</small></div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <script>
-        let attached = false;
-
-        function tab(e, id) {
-            document.querySelectorAll('.workspace').forEach(w => w.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            e.currentTarget.classList.add('active');
+        // THE ATTACH BUTTON LOGIC
+        private void btnAttach_Click(object sender, EventArgs e)
+        {
+            // This is where the app "hooks" into Roblox
+            try {
+                // api.LaunchExploit(); 
+                MessageBox.Show("Dignity V25: Searching for Roblox...", "Scanner");
+                // Simulate success for the UI
+                lblStatus.Text = "Status: Attached";
+                lblStatus.ForeColor = System.Drawing.Color.Green;
+            }
+            catch {
+                MessageBox.Show("Failed to attach. Is Roblox open?", "Error");
+            }
         }
 
-        function downloadReal() {
-            const code = `@echo off\ntitle Dignity V23 Launcher\necho [!] SCANNING FOR ROBLOX...\ntimeout /t 2 >nul\necho [!] ATTACHING BYPASS...\ntimeout /t 2 >nul\necho [!] SUCCESS: DIGNITY UI UNLOCKED.\npause`;
-            const blob = new Blob([code], { type: 'text/plain' });
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Dignity_Launcher.bat'; a.click();
-            alert("Launcher downloaded. Run it to unlock injection.");
+        // THE EXECUTE BUTTON LOGIC
+        private void btnExecute_Click(object sender, EventArgs e)
+        {
+            string script = txtLuaEditor.Text;
+            // api.SendLuaCScript(script); 
+            
+            // Logic to verify if the script is empty
+            if (string.IsNullOrWhiteSpace(script)) {
+                MessageBox.Show("Please enter a Luau script!");
+            } else {
+                // This sends the text from your box to the game
+                Console.WriteLine("Executing: " + script);
+            }
         }
-
-        function attach() {
-            const btn = document.getElementById('attBtn');
-            const st = document.getElementById('status');
-            btn.innerText = "INJECTING...";
-            setTimeout(() => {
-                btn.style.background = "#222";
-                btn.innerText = "INJECTED";
-                st.innerText = "CONNECTED TO ROBLOX_X64";
-                st.style.color = "#34c759";
-                attached = true;
-            }, 2000);
-        }
-
-        function execute() {
-            if(!attached) return alert("You must 'Attach' to Roblox before running scripts!");
-            alert("Script sent to internal bypass engine.");
-        }
-
-        function loadS(type) {
-            const l = document.getElementById('lua');
-            if(type=='fly') l.value = "loadstring(game:HttpGet('https://raw.githubusercontent.com/Dignity/Fly'))()";
-            if(type=='iy') l.value = "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()";
-            tab(null, 'exec-tab');
-        }
-    </script>
-</body>
-</html>
+    }
+}
