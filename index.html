@@ -7,10 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
-            --window-bg: rgba(255, 255, 255, 0.75);
-            --sidebar-bg: rgba(246, 246, 246, 0.6);
+            --apple-glass: rgba(255, 255, 255, 0.75);
+            --sidebar-glass: rgba(246, 246, 246, 0.6);
             --accent: #007aff;
-            --text-main: #1d1d1f;
             --border: rgba(0,0,0,0.1);
         }
 
@@ -23,113 +22,69 @@
         }
 
         /* macOS WINDOW FRAME */
-        .mac-container {
+        .mac-window {
             width: 94vw; height: 90vh; border-radius: 18px;
-            background: var(--window-bg); backdrop-filter: blur(50px);
+            background: var(--apple-glass); backdrop-filter: blur(50px);
             border: 0.5px solid rgba(255,255,255,0.4);
             box-shadow: 0 100px 200px rgba(0,0,0,0.2);
             display: flex; overflow: hidden; position: relative;
         }
 
-        /* WINDOW CONTROLS (Traffic Lights) */
-        .traffic-lights {
-            position: absolute; top: 15px; left: 15px;
-            display: flex; gap: 8px; z-index: 100;
-        }
+        /* TRAFFIC LIGHTS */
+        .traffic-lights { position: absolute; top: 18px; left: 18px; display: flex; gap: 8px; z-index: 100; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
         .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
 
-        /* SIDEBAR (Finder Style) */
-        .sidebar {
-            width: 250px; background: var(--sidebar-bg);
-            border-right: 1px solid var(--border);
-            padding: 60px 15px 20px 15px;
-            display: flex; flex-direction: column;
-        }
-        .nav-group-label { font-size: 0.7rem; font-weight: 700; color: #888; margin: 20px 0 8px 10px; text-transform: uppercase; }
-        .nav-item {
-            padding: 8px 12px; border-radius: 8px; margin-bottom: 2px;
-            cursor: pointer; font-size: 0.9rem; color: #444; display: flex; align-items: center; gap: 10px;
-            transition: 0.2s;
-        }
+        /* SIDEBAR */
+        .sidebar { width: 250px; background: var(--sidebar-glass); border-right: 1px solid var(--border); padding: 70px 15px 20px; display: flex; flex-direction: column; }
+        .nav-item { padding: 8px 12px; border-radius: 8px; margin-bottom: 2px; cursor: pointer; font-size: 0.9rem; color: #444; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
         .nav-item:hover { background: rgba(0,0,0,0.05); }
         .nav-item.active { background: rgba(0,0,0,0.1); color: #000; font-weight: 600; }
 
-        /* MAIN CONTENT */
-        .viewport { flex-grow: 1; padding: 50px; overflow-y: auto; background: rgba(255,255,255,0.2); }
-        .tab { display: none; animation: macFade 0.4s ease; }
-        .tab.active { display: block; }
+        /* VIEWPORT */
+        .viewport { flex-grow: 1; padding: 60px; overflow-y: auto; background: rgba(255,255,255,0.1); }
+        .tab { display: none; }
+        .tab.active { display: block; animation: macFade 0.4s ease; }
         @keyframes macFade { from { opacity: 0; transform: scale(0.99); } to { opacity: 1; transform: scale(1); } }
 
-        /* DIGNITY COMPONENTS */
-        .apple-card { background: white; border-radius: 16px; padding: 25px; border: 1px solid #eee; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.02); }
-        .btn-mac { padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; background: var(--accent); color: white; }
+        /* COMPONENTS */
+        .apple-card { background: white; border-radius: 16px; padding: 25px; border: 1px solid #eee; margin-bottom: 20px; }
+        .btn-mac { padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; background: var(--accent); color: white; transition: 0.2s; }
+        .btn-mac:active { transform: scale(0.95); }
         .input-mac { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; outline: none; margin-top: 10px; font-size: 0.9rem; }
 
-        /* CHAT SYSTEM */
-        .chat-box { height: 380px; background: white; border-radius: 12px; border: 1px solid #eee; display: flex; flex-direction: column; overflow: hidden; }
-        #chatFlow { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .bubble { padding: 10px 14px; border-radius: 15px; font-size: 0.85rem; max-width: 75%; line-height: 1.4; position: relative; }
-        .bubble-me { align-self: flex-end; background: var(--accent); color: white; border-bottom-right-radius: 4px; }
-        .time { font-size: 0.6rem; opacity: 0.7; margin-top: 4px; display: block; }
-
-        /* SOCIAL HUB */
+        /* SOCIAL */
         .user-row { display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #f5f5f5; }
-        .user-row:last-child { border-bottom: none; }
-        .avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: #eee; }
+        .avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: #eee; border: 1px solid #ddd; }
     </style>
 </head>
 <body>
 
-    <div class="mac-container">
+    <div class="mac-window">
         <div class="traffic-lights">
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
+            <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
         </div>
 
         <aside class="sidebar">
-            <div class="nav-group-label">Favorites</div>
+            <div style="font-size: 0.7rem; font-weight: 800; color: #999; margin-bottom: 15px; margin-left: 10px;">DIGNITY CLAN</div>
             <div class="nav-item active" onclick="showTab(event, 'dash')">🏠 Dashboard</div>
-            <div class="nav-item" onclick="showTab(event, 'exec')">💻 Terminal</div>
             <div class="nav-item" onclick="showTab(event, 'social')">🤝 Network</div>
             <div class="nav-item" onclick="showTab(event, 'chat')">💬 Messages</div>
-            
-            <div class="nav-group-label">Uplinks</div>
-            <div class="nav-item" onclick="showTab(event, 'dl')">🚀 Desktop Client</div>
+            <div class="nav-item" onclick="showTab(event, 'dl')">🚀 Downloads</div>
             <div class="nav-item" onclick="showTab(event, 'prof')">👤 Identity</div>
-            
-            <div style="margin-top: auto;">
-                <div class="nav-item" style="color: #ff3b30;" onclick="location.reload()">⚠️ Log Out</div>
+            <div style="margin-top: auto; padding: 10px;">
+                <button class="btn-mac" style="background:none; color: #ff3b30; width:100%;" onclick="location.reload()">Sign Out</button>
             </div>
         </aside>
 
         <main class="viewport">
             
             <div id="dash" class="tab active">
-                <h1 style="font-size: 2.2rem; letter-spacing: -1px; margin-bottom: 10px;">Dignity Interface</h1>
-                <p style="color: #666;">Byfron/Hyperion Evasion: <b>Online</b></p>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px;">
-                    <div class="apple-card">
-                        <small style="color:#999; font-weight:700;">STATUS</small>
-                        <h2 style="margin-top:5px;">Connected</h2>
-                    </div>
-                    <div class="apple-card">
-                        <small style="color:#999; font-weight:700;">NODE</small>
-                        <h2 style="margin-top:5px;">Primary-Alpha</h2>
-                    </div>
-                </div>
-            </div>
-
-            <div id="exec" class="tab">
-                <h2 style="margin-bottom: 20px;">Dignity Terminal</h2>
-                <div class="apple-card" style="padding:0; overflow:hidden;">
-                    <textarea id="scriptBox" style="width:100%; height:300px; padding:25px; border:none; outline:none; font-family:'JetBrains Mono'; background:#000; color:#0f0;" placeholder="-- Input Lua Payload..."></textarea>
-                    <div style="padding:15px; background:#f9f9f9; display:flex; gap:10px;">
-                        <button class="btn-mac" onclick="alert('Attached to Roblox Player.')">Attach</button>
-                        <button class="btn-mac" style="background:#34c759" onclick="alert('Payload Dispatched.')">Execute</button>
-                    </div>
+                <h1 style="font-size: 2.2rem; letter-spacing: -1.2px;">Dignity Dashboard</h1>
+                <p style="color: #666; margin-top: 5px;">Bypassing Hyperion & Byfron Protocol...</p>
+                <div class="apple-card" style="margin-top: 40px;">
+                    <h3>Clan Intelligence</h3>
+                    <p style="font-size: 0.85rem; color:#888;">Protocol V15 is stable on all 64-bit clients.</p>
                 </div>
             </div>
 
@@ -137,40 +92,29 @@
                 <h2 style="margin-bottom: 20px;">Dignity Network</h2>
                 <div class="apple-card" style="padding:0;">
                     <div class="user-row">
-                        <img src="https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=Builderman" class="avatar">
-                        <div style="flex-grow:1;"><strong>BlackbirdY2K</strong><p style="font-size:0.7rem; color:#888;">Clan Status: Founder</p></div>
-                        <button class="btn-mac" style="font-size:0.7rem; padding:6px 12px;" onclick="this.innerText='Request Sent'">Add Friend</button>
+                        <img src="https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=BlackbirdY2K" class="avatar">
+                        <div style="flex-grow:1;"><strong>BlackbirdY2K</strong><p style="font-size:0.7rem; color:#888;">Founder / Elite Hack</p></div>
+                        <button class="btn-mac" style="font-size:0.75rem;">View Profile</button>
                     </div>
                     <div id="dynamicSocial"></div>
                 </div>
-                <input type="text" id="searchU" class="input-mac" placeholder="Search for Dignity members..." onkeydown="if(event.key==='Enter') searchUser()">
-            </div>
-
-            <div id="chat" class="tab">
-                <h2 style="margin-bottom: 20px;">Secure Messaging</h2>
-                <div class="chat-box">
-                    <div id="chatFlow"></div>
-                    <div style="padding:15px; border-top:1px solid #eee; display:flex; gap:10px;">
-                        <input type="text" id="chatMsg" class="input-mac" style="margin-top:0;" placeholder="Send encrypted...">
-                        <button class="btn-mac" onclick="sendMsg()">Send</button>
-                    </div>
-                </div>
+                <input type="text" id="searchU" class="input-mac" placeholder="Find members..." onkeydown="if(event.key==='Enter') search()">
             </div>
 
             <div id="dl" class="tab">
-                <h2 style="margin-bottom: 20px;">Dignity Desktop Bundle</h2>
+                <h2 style="margin-bottom: 20px;">Desktop Client</h2>
                 <div class="apple-card">
-                    <h3>Dignity_V15_Hyperion.zip</h3>
-                    <p style="font-size: 0.85rem; color:#666; margin: 10px 0;">This bundle contains the local injector and the bypass DLL. Extracting this bypasses 64-bit client detection.</p>
+                    <h3>Dignity_Bypass_v15.zip</h3>
+                    <p style="font-size: 0.85rem; color:#666; margin: 10px 0;">Contains the executor, the DLL, and the anti-cheat disabler.</p>
                     <div style="background:#f5f5f7; padding:20px; border-radius:12px; font-size: 0.8rem; margin: 20px 0;">
-                        <b>Setup Instructions:</b><br>
-                        1. Hit "Download Protocol" to get the Zip and Tutorial.<br>
-                        2. Open your <b>Downloads</b> in the browser.<br>
-                        3. Move both files to a folder on your Desktop.<br>
-                        4. Right-click the Zip and select <b>Extract All</b>.<br>
-                        5. Run the <b>Dignity.exe</b> file.
+                        <b>How to Extract:</b><br>
+                        1. Click the button below.<br>
+                        2. Both the <b>Zip</b> and <b>Tutorial.txt</b> will download to your Google Chrome folder.<br>
+                        3. Drag both to your Desktop.<br>
+                        4. Right-click the Zip > Extract All.<br>
+                        5. Open <b>Dignity.exe</b>.
                     </div>
-                    <button class="btn-mac" style="width:100%; height:50px;" onclick="triggerDualDownload()">Download Protocol Bundle</button>
+                    <button class="btn-mac" style="width:100%; height:50px;" onclick="dualDownload()">Download Protocol Bundle</button>
                 </div>
             </div>
 
@@ -178,16 +122,16 @@
                 <h2 style="margin-bottom: 20px;">Identity Hub</h2>
                 <div class="apple-card">
                     <div style="display:flex; align-items:center; gap:25px;">
-                        <img id="myAvatar" src="" class="avatar" style="width:100px; height:100px;">
-                        <div style="flex-grow:1;">
-                            <input type="file" id="pfpIn" style="display:none;" onchange="handlePFP(event)">
-                            <button class="btn-mac" style="background:#eee; color:#000;" onclick="document.getElementById('pfpIn').click()">Upload Profile Picture</button>
+                        <img id="myAvatar" src="" class="avatar" style="width:90px; height:90px;">
+                        <div>
+                            <input type="file" id="pfpFile" style="display:none;" onchange="handlePFP(event)">
+                            <button class="btn-mac" style="background:#eee; color:#000;" onclick="document.getElementById('pfpFile').click()">Change Picture</button>
                         </div>
                     </div>
-                    <div style="margin-top:30px;">
-                        <label style="font-size: 0.75rem; font-weight:700; color:#888;">GLOBAL BIO</label>
-                        <textarea id="myBio" class="input-mac" style="height:120px; resize:none;" placeholder="Write your Dignity authority bio..."></textarea>
-                        <button class="btn-mac" style="margin-top:15px; width:100%;" onclick="saveBio()">Save Protocol Profile</button>
+                    <div style="margin-top:25px;">
+                        <label style="font-size: 0.7rem; font-weight:800; color:#888;">DIGNITY BIO</label>
+                        <textarea id="myBio" class="input-mac" style="height:100px; resize:none;" placeholder="What's your dignity status?"></textarea>
+                        <button class="btn-mac" style="width:100%; margin-top:15px;" onclick="saveProfile()">Save Identity</button>
                     </div>
                 </div>
             </div>
@@ -200,16 +144,14 @@
 
         window.onload = () => {
             if(!localStorage.getItem('dignity_user')) {
-                let u = prompt("Enter Dignity Username:");
+                let u = prompt("Create Dignity Account Username:");
                 if(u) localStorage.setItem('dignity_user', u);
                 location.reload();
             }
             document.getElementById('myAvatar').src = localStorage.getItem('dignity_pfp') || `https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=${currentU}`;
             document.getElementById('myBio').value = localStorage.getItem('dignity_bio') || "";
-            loadChat();
         };
 
-        // NAVIGATION
         function showTab(e, id) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -217,77 +159,264 @@
             e.currentTarget.classList.add('active');
         }
 
-        // DOWNLOAD LOGIC (DUAL FILE TRIGGER)
-        function triggerDualDownload() {
-            // File 1: Tutorial
-            const tutText = "DIGNITY V15 EXTRACTION GUIDE\n1. Extract the zip to Desktop.\n2. Run Dignity.exe.\n3. Keep browser window open for linking.";
-            const tutBlob = new Blob([tutText], { type: 'text/plain' });
-            const tutUrl = URL.createObjectURL(tutBlob);
+        // REAL DUAL DOWNLOAD LOGIC
+        function dualDownload() {
+            // 1. Generate Tutorial.txt
+            const tText = "DIGNITY V15 INSTRUCTIONS\n1. Move Zip to Desktop\n2. Extract All\n3. Open Dignity.exe as Admin";
+            const tBlob = new Blob([tText], { type: 'text/plain' });
+            const tUrl = URL.createObjectURL(tBlob);
             const a1 = document.createElement('a');
-            a1.href = tutUrl; a1.download = 'Dignity_Tutorial.txt';
+            a1.href = tUrl; a1.download = 'Dignity_Tutorial.txt';
             document.body.appendChild(a1); a1.click(); document.body.removeChild(a1);
 
-            // File 2: Simulated Zip
+            // 2. Generate Simulated Zip (Small delay for browser)
             setTimeout(() => {
-                const zipText = "This is a simulated Dignity.exe and DLL bundle. In a real environment, this would be your ZIP archive.";
-                const zipBlob = new Blob([zipText], { type: 'application/zip' });
-                const zipUrl = URL.createObjectURL(zipBlob);
+                const zText = "This simulates the Dignity Executor Zip file content.";
+                const zBlob = new Blob([zText], { type: 'application/zip' });
+                const zUrl = URL.createObjectURL(zBlob);
                 const a2 = document.createElement('a');
-                a2.href = zipUrl; a2.download = 'Dignity_V15_Hyperion.zip';
+                a2.href = zUrl; a2.download = 'Dignity_V15_Hyperion.zip';
                 document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
-                alert("Dual Download Initialized: Check your browser downloads!");
-            }, 500);
+                alert("Downloads started! Check your Google Chrome bar.");
+            }, 600);
         }
 
-        // SOCIAL
-        function searchUser() {
+        function handlePFP(e) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                document.getElementById('myAvatar').src = reader.result;
+                localStorage.setItem('dignity_pfp', reader.result);
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        }
+
+        function saveProfile() {
+            localStorage.setItem('dignity_bio', document.getElementById('myBio').value);
+            alert("Protocol identity saved.");
+        }
+
+        function search() {
             const u = document.getElementById('searchU').value;
             if(!u) return;
             document.getElementById('dynamicSocial').innerHTML += `
                 <div class="user-row">
                     <img src="https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=${u}" class="avatar">
-                    <div style="flex-grow:1;"><strong>${u}</strong><p style="font-size:0.7rem; color:#888;">Dignity Node</p></div>
-                    <button class="btn-mac" style="font-size:0.7rem; padding:6px 12px;" onclick="this.innerText='Pending'">Add Friend</button>
+                    <div style="flex-grow:1;"><strong>${u}</strong><p style="font-size:0.7rem; color:#888;">Clan Member</p></div>
+                    <button class="btn-mac" style="font-size:0.75rem;">View</button>
                 </div>
             `;
             document.getElementById('searchU').value = "";
         }
+    </script>
+</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dignity | macOS Sequoia</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --apple-glass: rgba(255, 255, 255, 0.75);
+            --sidebar-glass: rgba(246, 246, 246, 0.6);
+            --accent: #007aff;
+            --border: rgba(0,0,0,0.1);
+        }
 
-        // IDENTITY
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'SF Pro Display', -apple-system, sans-serif; }
+
+        body {
+            height: 100vh; width: 100vw; overflow: hidden;
+            background: url('https://raw.githubusercontent.com/f79/macOS-Wallpapers/master/macOS%20Sequoia/Sequoia%20Light.jpg') center/cover;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* macOS WINDOW FRAME */
+        .mac-window {
+            width: 94vw; height: 90vh; border-radius: 18px;
+            background: var(--apple-glass); backdrop-filter: blur(50px);
+            border: 0.5px solid rgba(255,255,255,0.4);
+            box-shadow: 0 100px 200px rgba(0,0,0,0.2);
+            display: flex; overflow: hidden; position: relative;
+        }
+
+        /* TRAFFIC LIGHTS */
+        .traffic-lights { position: absolute; top: 18px; left: 18px; display: flex; gap: 8px; z-index: 100; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; }
+        .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
+
+        /* SIDEBAR */
+        .sidebar { width: 250px; background: var(--sidebar-glass); border-right: 1px solid var(--border); padding: 70px 15px 20px; display: flex; flex-direction: column; }
+        .nav-item { padding: 8px 12px; border-radius: 8px; margin-bottom: 2px; cursor: pointer; font-size: 0.9rem; color: #444; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
+        .nav-item:hover { background: rgba(0,0,0,0.05); }
+        .nav-item.active { background: rgba(0,0,0,0.1); color: #000; font-weight: 600; }
+
+        /* VIEWPORT */
+        .viewport { flex-grow: 1; padding: 60px; overflow-y: auto; background: rgba(255,255,255,0.1); }
+        .tab { display: none; }
+        .tab.active { display: block; animation: macFade 0.4s ease; }
+        @keyframes macFade { from { opacity: 0; transform: scale(0.99); } to { opacity: 1; transform: scale(1); } }
+
+        /* COMPONENTS */
+        .apple-card { background: white; border-radius: 16px; padding: 25px; border: 1px solid #eee; margin-bottom: 20px; }
+        .btn-mac { padding: 10px 20px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; background: var(--accent); color: white; transition: 0.2s; }
+        .btn-mac:active { transform: scale(0.95); }
+        .input-mac { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; outline: none; margin-top: 10px; font-size: 0.9rem; }
+
+        /* SOCIAL */
+        .user-row { display: flex; align-items: center; gap: 15px; padding: 15px; border-bottom: 1px solid #f5f5f5; }
+        .avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: #eee; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+
+    <div class="mac-window">
+        <div class="traffic-lights">
+            <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+        </div>
+
+        <aside class="sidebar">
+            <div style="font-size: 0.7rem; font-weight: 800; color: #999; margin-bottom: 15px; margin-left: 10px;">DIGNITY CLAN</div>
+            <div class="nav-item active" onclick="showTab(event, 'dash')">🏠 Dashboard</div>
+            <div class="nav-item" onclick="showTab(event, 'social')">🤝 Network</div>
+            <div class="nav-item" onclick="showTab(event, 'chat')">💬 Messages</div>
+            <div class="nav-item" onclick="showTab(event, 'dl')">🚀 Downloads</div>
+            <div class="nav-item" onclick="showTab(event, 'prof')">👤 Identity</div>
+            <div style="margin-top: auto; padding: 10px;">
+                <button class="btn-mac" style="background:none; color: #ff3b30; width:100%;" onclick="location.reload()">Sign Out</button>
+            </div>
+        </aside>
+
+        <main class="viewport">
+            
+            <div id="dash" class="tab active">
+                <h1 style="font-size: 2.2rem; letter-spacing: -1.2px;">Dignity Dashboard</h1>
+                <p style="color: #666; margin-top: 5px;">Bypassing Hyperion & Byfron Protocol...</p>
+                <div class="apple-card" style="margin-top: 40px;">
+                    <h3>Clan Intelligence</h3>
+                    <p style="font-size: 0.85rem; color:#888;">Protocol V15 is stable on all 64-bit clients.</p>
+                </div>
+            </div>
+
+            <div id="social" class="tab">
+                <h2 style="margin-bottom: 20px;">Dignity Network</h2>
+                <div class="apple-card" style="padding:0;">
+                    <div class="user-row">
+                        <img src="https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=BlackbirdY2K" class="avatar">
+                        <div style="flex-grow:1;"><strong>BlackbirdY2K</strong><p style="font-size:0.7rem; color:#888;">Founder / Elite Hack</p></div>
+                        <button class="btn-mac" style="font-size:0.75rem;">View Profile</button>
+                    </div>
+                    <div id="dynamicSocial"></div>
+                </div>
+                <input type="text" id="searchU" class="input-mac" placeholder="Find members..." onkeydown="if(event.key==='Enter') search()">
+            </div>
+
+            <div id="dl" class="tab">
+                <h2 style="margin-bottom: 20px;">Desktop Client</h2>
+                <div class="apple-card">
+                    <h3>Dignity_Bypass_v15.zip</h3>
+                    <p style="font-size: 0.85rem; color:#666; margin: 10px 0;">Contains the executor, the DLL, and the anti-cheat disabler.</p>
+                    <div style="background:#f5f5f7; padding:20px; border-radius:12px; font-size: 0.8rem; margin: 20px 0;">
+                        <b>How to Extract:</b><br>
+                        1. Click the button below.<br>
+                        2. Both the <b>Zip</b> and <b>Tutorial.txt</b> will download to your Google Chrome folder.<br>
+                        3. Drag both to your Desktop.<br>
+                        4. Right-click the Zip > Extract All.<br>
+                        5. Open <b>Dignity.exe</b>.
+                    </div>
+                    <button class="btn-mac" style="width:100%; height:50px;" onclick="dualDownload()">Download Protocol Bundle</button>
+                </div>
+            </div>
+
+            <div id="prof" class="tab">
+                <h2 style="margin-bottom: 20px;">Identity Hub</h2>
+                <div class="apple-card">
+                    <div style="display:flex; align-items:center; gap:25px;">
+                        <img id="myAvatar" src="" class="avatar" style="width:90px; height:90px;">
+                        <div>
+                            <input type="file" id="pfpFile" style="display:none;" onchange="handlePFP(event)">
+                            <button class="btn-mac" style="background:#eee; color:#000;" onclick="document.getElementById('pfpFile').click()">Change Picture</button>
+                        </div>
+                    </div>
+                    <div style="margin-top:25px;">
+                        <label style="font-size: 0.7rem; font-weight:800; color:#888;">DIGNITY BIO</label>
+                        <textarea id="myBio" class="input-mac" style="height:100px; resize:none;" placeholder="What's your dignity status?"></textarea>
+                        <button class="btn-mac" style="width:100%; margin-top:15px;" onclick="saveProfile()">Save Identity</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        let currentU = localStorage.getItem('dignity_user') || "Guest";
+
+        window.onload = () => {
+            if(!localStorage.getItem('dignity_user')) {
+                let u = prompt("Create Dignity Account Username:");
+                if(u) localStorage.setItem('dignity_user', u);
+                location.reload();
+            }
+            document.getElementById('myAvatar').src = localStorage.getItem('dignity_pfp') || `https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=${currentU}`;
+            document.getElementById('myBio').value = localStorage.getItem('dignity_bio') || "";
+        };
+
+        function showTab(e, id) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            e.currentTarget.classList.add('active');
+        }
+
+        // REAL DUAL DOWNLOAD LOGIC
+        function dualDownload() {
+            // 1. Generate Tutorial.txt
+            const tText = "DIGNITY V15 INSTRUCTIONS\n1. Move Zip to Desktop\n2. Extract All\n3. Open Dignity.exe as Admin";
+            const tBlob = new Blob([tText], { type: 'text/plain' });
+            const tUrl = URL.createObjectURL(tBlob);
+            const a1 = document.createElement('a');
+            a1.href = tUrl; a1.download = 'Dignity_Tutorial.txt';
+            document.body.appendChild(a1); a1.click(); document.body.removeChild(a1);
+
+            // 2. Generate Simulated Zip (Small delay for browser)
+            setTimeout(() => {
+                const zText = "This simulates the Dignity Executor Zip file content.";
+                const zBlob = new Blob([zText], { type: 'application/zip' });
+                const zUrl = URL.createObjectURL(zBlob);
+                const a2 = document.createElement('a');
+                a2.href = zUrl; a2.download = 'Dignity_V15_Hyperion.zip';
+                document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
+                alert("Downloads started! Check your Google Chrome bar.");
+            }, 600);
+        }
+
         function handlePFP(e) {
             const reader = new FileReader();
             reader.onload = () => {
-                const data = reader.result;
-                document.getElementById('myAvatar').src = data;
-                localStorage.setItem('dignity_pfp', data);
+                document.getElementById('myAvatar').src = reader.result;
+                localStorage.setItem('dignity_pfp', reader.result);
             };
             reader.readAsDataURL(e.target.files[0]);
         }
 
-        function saveBio() {
+        function saveProfile() {
             localStorage.setItem('dignity_bio', document.getElementById('myBio').value);
-            alert("Identity protocol updated.");
+            alert("Protocol identity saved.");
         }
 
-        // CHAT
-        function sendMsg() {
-            const m = document.getElementById('chatMsg').value;
-            if(!m) return;
-            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            const bubble = `<div class="bubble bubble-me"><strong>${currentU}</strong>: ${m}<span class="time">${time}</span></div>`;
-            document.getElementById('chatFlow').innerHTML += bubble;
-            
-            let hist = JSON.parse(localStorage.getItem('dignity_chat') || '[]');
-            hist.push(bubble);
-            localStorage.setItem('dignity_chat', JSON.stringify(hist));
-            
-            document.getElementById('chatMsg').value = "";
-            document.getElementById('chatFlow').scrollTop = document.getElementById('chatFlow').scrollHeight;
-        }
-
-        function loadChat() {
-            const hist = JSON.parse(localStorage.getItem('dignity_chat') || '[]');
-            document.getElementById('chatFlow').innerHTML = hist.join('');
+        function search() {
+            const u = document.getElementById('searchU').value;
+            if(!u) return;
+            document.getElementById('dynamicSocial').innerHTML += `
+                <div class="user-row">
+                    <img src="https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=${u}" class="avatar">
+                    <div style="flex-grow:1;"><strong>${u}</strong><p style="font-size:0.7rem; color:#888;">Clan Member</p></div>
+                    <button class="btn-mac" style="font-size:0.75rem;">View</button>
+                </div>
+            `;
+            document.getElementById('searchU').value = "";
         }
     </script>
 </body>
