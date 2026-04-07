@@ -3,115 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dignity | Sequoia V19</title>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Dignity | Luau Executor V20</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
     <style>
-        :root { --accent: #007aff; --apple-bg: rgba(255, 255, 255, 0.9); }
+        :root {
+            --apple-glass: rgba(255, 255, 255, 0.85);
+            --accent: #007aff;
+            --terminal-bg: #111111;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'SF Pro Display', sans-serif; }
-        body { height: 100vh; width: 100vw; overflow: hidden; background: url('https://raw.githubusercontent.com/f79/macOS-Wallpapers/master/macOS%20Sequoia/Sequoia%20Light.jpg') center/cover; display: flex; align-items: center; justify-content: center; }
-        
-        .mac-window { width: 95vw; height: 92vh; border-radius: 20px; background: var(--apple-bg); backdrop-filter: blur(50px); border: 1px solid rgba(255,255,255,0.4); box-shadow: 0 50px 100px rgba(0,0,0,0.1); display: flex; overflow: hidden; position: relative; }
-        .controls { position: absolute; top: 20px; left: 20px; display: flex; gap: 8px; }
+
+        body {
+            height: 100vh; width: 100vw; overflow: hidden;
+            background: url('https://raw.githubusercontent.com/f79/macOS-Wallpapers/master/macOS%20Sequoia/Sequoia%20Light.jpg') center/cover;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        /* macOS MAIN WINDOW */
+        .mac-container {
+            width: 96vw; height: 94vh; border-radius: 22px;
+            background: var(--apple-glass); backdrop-filter: blur(60px);
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 100px 200px rgba(0,0,0,0.2);
+            display: flex; flex-direction: column; overflow: hidden;
+        }
+
+        /* HEADER / TRAFFIC LIGHTS */
+        .header {
+            height: 55px; padding: 0 20px; display: flex; align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05); position: relative;
+        }
+        .lights { display: flex; gap: 8px; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .r { background: #ff5f56; } .y { background: #ffbd2e; } .g { background: #27c93f; }
+        .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
+        .title { position: absolute; left: 50%; transform: translateX(-50%); font-weight: 600; font-size: 0.9rem; color: #333; }
 
-        .sidebar { width: 240px; background: rgba(245, 245, 247, 0.6); border-right: 1px solid rgba(0,0,0,0.05); padding: 70px 15px; }
-        .nav { padding: 10px 15px; border-radius: 8px; margin-bottom: 5px; cursor: pointer; color: #444; transition: 0.2s; }
-        .nav.active { background: rgba(0,0,0,0.08); font-weight: 600; color: #000; }
+        /* CONTENT SPLIT */
+        .content { display: flex; flex-grow: 1; overflow: hidden; }
 
-        .main { flex-grow: 1; padding: 60px; overflow-y: auto; }
-        .tab { display: none; }
-        .tab.active { display: block; animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        /* SIDEBAR */
+        .sidebar {
+            width: 240px; background: rgba(246, 246, 247, 0.4);
+            border-right: 1px solid rgba(0,0,0,0.05); padding: 20px 12px;
+            display: flex; flex-direction: column; gap: 4px;
+        }
+        .nav-item {
+            padding: 10px 14px; border-radius: 10px; cursor: pointer;
+            font-size: 0.9rem; color: #555; display: flex; align-items: center; gap: 10px; transition: 0.2s;
+        }
+        .nav-item:hover { background: rgba(0,0,0,0.05); }
+        .nav-item.active { background: rgba(0,0,0,0.1); color: #000; font-weight: 600; }
 
-        .card { background: white; border-radius: 18px; padding: 30px; border: 1px solid rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .btn { padding: 15px; border-radius: 12px; border: none; background: var(--accent); color: white; font-weight: 700; cursor: pointer; width: 100%; transition: 0.2s; }
-        .btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+        /* WORKSPACE / EXECUTOR AREA */
+        .workspace { flex-grow: 1; padding: 30px; display: flex; flex-direction: column; gap: 20px; background: rgba(255,255,255,0.2); }
 
-        /* REAL APP UI SIMULATION */
-        #dignityApp { display: none; position: fixed; width: 400px; height: 500px; background: #111; border-radius: 15px; border: 1px solid #333; z-index: 1000; box-shadow: 0 0 50px rgba(0,0,0,0.8); flex-direction: column; color: #0f0; font-family: 'JetBrains Mono', monospace; overflow: hidden; }
-        .app-header { background: #222; padding: 10px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; }
+        /* EDITOR UI */
+        .editor-container {
+            flex-grow: 1; background: var(--terminal-bg); border-radius: 15px;
+            display: flex; flex-direction: column; overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 1px solid #333;
+        }
+        .editor-header {
+            background: #1e1e1e; padding: 10px 20px; display: flex; 
+            justify-content: space-between; align-items: center; border-bottom: 1px solid #333;
+        }
+        #luaEditor {
+            width: 100%; flex-grow: 1; background: transparent; border: none;
+            padding: 20px; color: #dcdcaa; font-family: 'JetBrains Mono', monospace;
+            font-size: 14px; outline: none; resize: none; line-height: 1.5;
+        }
+
+        /* CONSOLE AREA */
+        .console {
+            height: 150px; background: #000; color: #bbb;
+            font-family: 'JetBrains Mono', monospace; font-size: 12px;
+            padding: 15px; overflow-y: auto; border-top: 1px solid #333;
+        }
+
+        /* BUTTONS */
+        .btn-group { display: flex; gap: 10px; margin-top: 10px; }
+        .btn-apple {
+            padding: 10px 25px; border-radius: 10px; border: none;
+            font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: 0.2s;
+        }
+        .attach { background: #34c759; color: white; }
+        .execute { background: var(--accent); color: white; }
+        .clear { background: #f0f0f0; color: #333; }
+        .btn-apple:active { transform: scale(0.95); opacity: 0.8; }
+
+        /* STATUS BADGES */
+        .status-bar { display: flex; gap: 20px; font-size: 0.75rem; color: #888; font-weight: 600; }
+        .online { color: #34c759; }
     </style>
 </head>
 <body>
 
-    <div id="dignityApp">
-        <div class="app-header">
-            <span style="font-size: 10px; color: #aaa;">Dignity_V19.exe</span>
-            <span onclick="closeApp()" style="cursor:pointer; color:red;">[X]</span>
+    <div class="mac-container">
+        <div class="header">
+            <div class="lights">
+                <div class="dot red"></div>
+                <div class="dot yellow"></div>
+                <div class="dot green"></div>
+            </div>
+            <div class="title">Dignity Sequoia - Unified Luau Environment</div>
         </div>
-        <div id="terminal" style="padding: 20px; font-size: 12px; line-height: 1.5; flex-grow: 1; overflow-y: auto;">
-            > Initializing Dignity Protocol...<br>
-            > Bypassing Hyperion 64-bit... [OK]<br>
-            > Disabling Byfron Watchdog... [OK]<br>
-            > Searching for Roblox.exe...
-        </div>
-    </div>
 
-    <div class="mac-window">
-        <div class="controls"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
-        <aside class="sidebar">
-            <div class="nav active" onclick="tab(event, 'dash')">🏠 Home</div>
-            <div class="nav" onclick="tab(event, 'dl')">🚀 App Center</div>
-        </aside>
-        <main class="main">
-            <div id="dash" class="tab active">
-                <h1>Dignity OS</h1>
-                <p>Status: <span style="color: green;">Undetected</span></p>
-            </div>
-            <div id="dl" class="tab">
-                <h2>Cross-Platform App</h2>
-                <div class="card">
-                    <p style="margin-bottom: 20px;">Download the <b>Dignity_Starter.bat</b>. This works on all Windows 10/11 PCs. No "App can't run" errors.</p>
-                    <button class="btn" onclick="downloadCompatible()">Download Compatible App</button>
+        <div class="content">
+            <aside class="sidebar">
+                <div class="nav-item active">💻 Luau Executor</div>
+                <div class="nav-item">🤝 Blackbird Clan</div>
+                <div class="nav-item">🚀 Script Hub</div>
+                <div class="nav-item">👤 Identity</div>
+                <div style="margin-top: auto;">
+                    <div class="nav-item" style="color: #ff3b30;" onclick="location.reload()">⚠️ Disconnect</div>
                 </div>
-            </div>
-        </main>
+            </aside>
+
+            <main class="workspace">
+                <div class="status-bar">
+                    <div>BYPASS: <span class="online">ACTIVE (V20)</span></div>
+                    <div>CLIENT: <span id="clientStatus">NOT FOUND</span></div>
+                    <div>LATENCY: 12ms</div>
+                </div>
+
+                <div class="editor-container">
+                    <div class="editor-header">
+                        <span style="color: #888; font-size: 0.75rem; font-weight: 700;">MAIN_EXEC.LUAU</span>
+                        <div style="display:flex; gap:15px; font-size: 0.75rem; color: #555;">
+                            <span>Lines: 12</span>
+                            <span>UTF-8</span>
+                        </div>
+                    </div>
+                    
+                    <textarea id="luaEditor" spellcheck="false">-- Dignity Luau V20
+-- Blackbird Clan Elite Protocol
+
+print("Dignity Executor Linked")
+
+local player = game.Players.LocalPlayer
+print("Welcome back, " .. player.Name)
+
+-- Insert your loadstring or scripts below</textarea>
+                    
+                    <div class="console" id="consoleOutput">
+                        [SYSTEM]: Ready for injection.
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn-apple execute" onclick="runScript()">Execute</button>
+                    <button class="btn-apple attach" onclick="attachClient()">Attach to Roblox</button>
+                    <button class="btn-apple clear" onclick="document.getElementById('luaEditor').value = ''">Clear</button>
+                </div>
+            </main>
+        </div>
     </div>
 
     <script>
-        function tab(e, id) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            e.currentTarget.classList.add('active');
+        let attached = false;
+
+        function log(msg, color = "#bbb") {
+            const con = document.getElementById('consoleOutput');
+            const time = new Date().toLocaleTimeString([], { hour12: false });
+            con.innerHTML += `<div style="color:${color}">[${time}] ${msg}</div>`;
+            con.scrollTop = con.scrollHeight;
         }
 
-        // THIS DOWNLOADS A FILE THAT ACTUALLY WORKS ON ALL WINDOWS PC
-        function downloadCompatible() {
-            const batchScript = `@echo off\ntitle Dignity Protocol V19\ncolor 0a\necho [!] INITIALIZING DIGNITY BYPASS\necho [!] CHECKING WINDOWS VERSION...\necho [!] PC COMPATIBLE: Windows 10/11 Found.\necho [!] BYPASSING BYFRON...\ntimeout /t 3 >nul\necho [!] SUCCESS: DIGNITY LINKED TO BROWSER.\npause`;
-            const blob = new Blob([batchScript], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Dignity_Starter.bat';
-            a.click();
-            
-            // Show the "UI" inside the web page too
+        function attachClient() {
+            log("Searching for process: RobloxPlayerBeta.exe...", "#007aff");
             setTimeout(() => {
-                document.getElementById('dignityApp').style.display = 'flex';
-                logToTerminal();
+                log("Process Found (PID: 14202).", "#34c759");
+                log("Injecting Dignity_Sequoia.dll...", "#ffbd2e");
+                setTimeout(() => {
+                    log("DLL Successfully Hooked. Hyperion Bypassed.", "#34c759");
+                    document.getElementById('clientStatus').innerText = "LINKED";
+                    document.getElementById('clientStatus').className = "online";
+                    attached = true;
+                }, 1000);
             }, 1000);
         }
 
-        function logToTerminal() {
-            const lines = [
-                "> Scanning for client updates...",
-                "> Client identified: Roblox_x64",
-                "> Injecting Dignity.dll...",
-                "> SUCCESS: You are now invisible to Byfron.",
-                "> Hub Linked. Close this window to logout."
-            ];
-            let i = 0;
-            const term = document.getElementById('terminal');
-            const iv = setInterval(() => {
-                term.innerHTML += `<br>> ${lines[i]}`;
-                i++;
-                if(i >= lines.length) clearInterval(iv);
-            }, 1000);
-        }
+        function runScript() {
+            if(!attached) {
+                log("ERROR: Please 'Attach to Roblox' before executing.", "#ff5f56");
+                return;
+            }
+            
+            const code = document.getElementById('luaEditor').value;
+            if(!code.trim()) return;
 
-        function closeApp() { document.getElementById('dignityApp').style.display = 'none'; }
+            log("Executing Luau Payload...", "#007aff");
+            
+            // This simulates the script running
+            setTimeout(() => {
+                // We check if the script has specific keywords to simulate response
+                if(code.includes("print")) {
+                    const match = code.match(/print\("(.*?)"\)/);
+                    if(match) log(`OUTPUT: ${match[1]}`, "#dcdcaa");
+                }
+                log("Script Finished Execution.", "#34c759");
+            }, 500);
+        }
     </script>
 </body>
 </html>
