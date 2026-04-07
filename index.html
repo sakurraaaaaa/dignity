@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEAM DIGNITY | SOVEREIGN</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #ff0000;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+        #logo {
+            width: 250px;
+            filter: drop-shadow(0 0 15px #ff0000);
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin: 0;
+            animation: flicker 2s infinite;
+        }
+        .btn {
+            background: transparent;
+            border: 2px solid #ff0000;
+            color: #ff0000;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        .btn:hover {
+            background: #ff0000;
+            color: #000;
+            box-shadow: 0 0 20px #ff0000;
+        }
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 22%, 24%, 55% { opacity: 0.2; }
+        }
+    </style>
+</head>
+<body>
+    <img id="logo" src="https://www.roblox.com/asset-thumbnail/image?assetId=74075165887004&width=420&height=420&format=png" alt="DIGNITY">
+    
+    <h1>Team Dignity</h1>
+    <p>THE ABSOLUTE SOVEREIGNTY</p>
+
+    <button class="btn" onclick="executeDignity()">Initialize Protocol</button>
+
+    <script>
+        function executeDignity() {
+            alert("PROTOCOL INITIALIZED: THE BLACKBIRD HAS LANDED.");
+            // You can add your more complex JavaScript here!
+            document.body.style.backgroundColor = "#1a0000";
+            setTimeout(() => {
+                document.body.style.backgroundColor = "#000";
+            }, 100);
+        }
+    </script>
+</body>
+</html>
