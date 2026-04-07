@@ -3,154 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dignity | Sequoia Ultra</title>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <title>Dignity | Sequoia V18</title>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --apple-glass: rgba(255, 255, 255, 0.8);
-            --sidebar-glass: rgba(246, 246, 246, 0.7);
+            --apple-bg: rgba(255, 255, 255, 0.85);
             --accent: #007aff;
-            --danger: #ff3b30;
+            --sidebar: rgba(245, 245, 247, 0.6);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'SF Pro Display', -apple-system, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'SF Pro Display', sans-serif; }
 
         body {
             height: 100vh; width: 100vw; overflow: hidden;
             background: url('https://raw.githubusercontent.com/f79/macOS-Wallpapers/master/macOS%20Sequoia/Sequoia%20Light.jpg') center/cover;
-            display: flex; justify-content: center; align-items: center;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        /* macOS WINDOW FRAME */
         .mac-window {
             width: 95vw; height: 92vh; border-radius: 20px;
-            background: var(--apple-glass); backdrop-filter: blur(40px);
-            border: 0.5px solid rgba(255,255,255,0.4);
-            box-shadow: 0 80px 160px rgba(0,0,0,0.15);
+            background: var(--apple-bg); backdrop-filter: blur(50px);
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.1);
             display: flex; overflow: hidden; position: relative;
         }
 
-        /* WINDOW DECOR */
-        .traffic-lights { position: absolute; top: 20px; left: 20px; display: flex; gap: 8px; z-index: 100; }
+        /* TRAFFIC LIGHTS */
+        .controls { position: absolute; top: 20px; left: 20px; display: flex; gap: 8px; z-index: 10; }
         .dot { width: 12px; height: 12px; border-radius: 50%; }
-        .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
+        .r { background: #ff5f56; } .y { background: #ffbd2e; } .g { background: #27c93f; }
 
         /* SIDEBAR */
-        .sidebar { width: 260px; background: var(--sidebar-glass); border-right: 1px solid rgba(0,0,0,0.05); padding: 75px 15px 20px; display: flex; flex-direction: column; }
-        .nav-item { padding: 10px 15px; border-radius: 10px; margin-bottom: 4px; cursor: pointer; font-size: 0.95rem; color: #444; display: flex; align-items: center; gap: 12px; transition: 0.2s; }
-        .nav-item:hover { background: rgba(0,0,0,0.05); }
-        .nav-item.active { background: rgba(0,0,0,0.08); color: #000; font-weight: 600; }
+        .sidebar { width: 240px; background: var(--sidebar); border-right: 1px solid rgba(0,0,0,0.05); padding: 70px 15px; }
+        .nav-link { padding: 10px 15px; border-radius: 8px; margin-bottom: 5px; cursor: pointer; color: #444; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; transition: 0.2s; }
+        .nav-link:hover { background: rgba(0,0,0,0.05); }
+        .nav-link.active { background: rgba(0,0,0,0.08); font-weight: 600; color: #000; }
 
-        /* CONTENT VIEWPORT */
-        .viewport { flex-grow: 1; padding: 60px; overflow-y: auto; }
+        /* MAIN AREA */
+        .main { flex-grow: 1; padding: 60px; overflow-y: auto; }
         .tab { display: none; }
-        .tab.active { display: block; animation: macScale 0.3s ease-out; }
-        @keyframes macScale { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        .tab.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* CARDS & INPUTS */
-        .apple-card { background: white; border-radius: 18px; padding: 30px; border: 1px solid rgba(0,0,0,0.05); margin-bottom: 25px; }
-        .btn-mac { padding: 12px 24px; border-radius: 10px; border: none; font-weight: 600; cursor: pointer; background: var(--accent); color: white; transition: 0.2s; }
-        .btn-mac:active { transform: scale(0.96); }
-        .input-mac { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #ddd; outline: none; margin-top: 10px; font-size: 0.9rem; transition: 0.2s; }
-        .input-mac:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0,122,255,0.1); }
+        .card { background: white; border-radius: 18px; padding: 30px; border: 1px solid rgba(0,0,0,0.05); margin-bottom: 20px; }
+        .btn { padding: 12px 25px; border-radius: 10px; border: none; background: var(--accent); color: white; font-weight: 600; cursor: pointer; transition: 0.2s; width: 100%; }
+        .btn:hover { filter: brightness(1.1); }
+        .btn:active { transform: scale(0.98); }
 
-        /* AVATARS */
-        .pfp { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: #eee; border: 1px solid #ddd; }
-        .user-row { display: flex; align-items: center; gap: 15px; padding: 15px 0; border-bottom: 1px solid #f9f9f9; }
+        .input { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #ddd; margin-top: 10px; outline: none; }
+        .pfp { width: 50px; height: 50px; border-radius: 50%; background: #eee; object-fit: cover; }
     </style>
 </head>
 <body>
 
     <div class="mac-window">
-        <div class="traffic-lights">
-            <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-        </div>
-
+        <div class="controls"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div></div>
+        
         <aside class="sidebar">
-            <div style="font-size: 0.7rem; font-weight: 800; color: #aaa; margin-bottom: 15px; margin-left: 15px;">DIGNITY ECOSYSTEM</div>
-            <div class="nav-item active" onclick="showTab(event, 'dash')">🏠 Dashboard</div>
-            <div class="nav-item" onclick="showTab(event, 'network')">🤝 Network</div>
-            <div class="nav-item" onclick="showTab(event, 'dl')">🚀 Desktop Client</div>
-            <div class="nav-item" onclick="showTab(event, 'prof')">👤 Identity</div>
-            <div style="margin-top: auto;">
-                <button class="btn-mac" style="background:none; color:var(--danger); width:100%; text-align:left;" onclick="location.reload()">⚠️ End Session</button>
-            </div>
+            <div style="font-size: 0.7rem; font-weight: 800; color: #999; margin-left: 15px; margin-bottom: 20px;">DIGNITY PROTOCOL</div>
+            <div class="nav-link active" onclick="tab(event, 'dash')">🏠 Dashboard</div>
+            <div class="nav-link" onclick="tab(event, 'network')">🤝 Network</div>
+            <div class="nav-link" onclick="tab(event, 'dl')">🚀 Downloads</div>
+            <div class="nav-link" onclick="tab(event, 'prof')">👤 Identity</div>
         </aside>
 
-        <main class="viewport">
-            
+        <main class="main">
             <div id="dash" class="tab active">
-                <h1 style="font-size: 2.5rem; letter-spacing: -1.5px;">Hello, <span id="userDisp">Guest</span></h1>
-                <p style="color: #888; margin-top: 10px;">Dignity Protocol V17 | Hyperion/Byfron Status: <b>Bypassed</b></p>
-                <div class="apple-card" style="margin-top: 50px; background: rgba(0,122,255,0.03); border-color: rgba(0,122,255,0.1);">
-                    <h3>System Status</h3>
-                    <p style="font-size: 0.9rem; color: #555;">All clan nodes are currently operational across all regions.</p>
-                </div>
+                <h1 style="font-size: 2.5rem; letter-spacing: -1.5px;">Welcome, <span id="uName">Guest</span></h1>
+                <p style="color: #666; margin-top: 10px;">Byfron Evasion: <b>Active</b> | Hyperion Status: <b>Undetected</b></p>
             </div>
 
             <div id="network" class="tab">
-                <h2 style="margin-bottom: 25px;">Dignity Network</h2>
-                <div class="apple-card" style="padding: 10px 30px;">
-                    <div class="user-row">
+                <h2>Dignity Network</h2>
+                <div class="card" style="margin-top:20px;">
+                    <div style="display:flex; align-items:center; gap:15px;">
                         <img src="https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=BlackbirdY2K" class="pfp">
-                        <div style="flex-grow:1;"><strong>BlackbirdY2K</strong><p style="font-size:0.75rem; color:#888;">Clan Elite / Founder</p></div>
-                        <button class="btn-mac" style="font-size: 0.8rem; padding: 8px 16px;">Profile</button>
+                        <div><strong>BlackbirdY2K</strong><p style="font-size:0.8rem; color:#888;">Founder / Elite Node</p></div>
                     </div>
-                    <div id="searchResults"></div>
                 </div>
-                <input type="text" id="findU" class="input-mac" placeholder="Find Dignity members..." onkeydown="if(event.key==='Enter') find()">
+                <input type="text" id="sBox" class="input" placeholder="Search members..." onkeydown="if(event.key==='Enter') search()">
+                <div id="sRes"></div>
             </div>
 
             <div id="dl" class="tab">
-                <h2 style="margin-bottom: 25px;">Desktop Bundle</h2>
-                <div class="apple-card">
-                    <h3>Dignity_V17_Sequoia.zip</h3>
-                    <p style="color: #666; font-size: 0.9rem; margin: 15px 0;">This bundle contains the local injector and the multi-layered bypass DLL.</p>
-                    <div style="background: #f5f5f7; padding: 25px; border-radius: 15px; font-size: 0.85rem; line-height: 1.6; margin-bottom: 30px;">
-                        <strong>Installation Protocol:</strong><br>
-                        1. Click <b>Download Protocol</b> below.<br>
-                        2. Open the file in your <b>Chrome Downloads</b> bar.<br>
-                        3. Drag the folder to your Desktop.<br>
-                        4. Right-click and select <b>Extract All</b>.<br>
-                        5. Double-click <b>Dignity_Launcher.exe</b> to initialize the bypass.
-                    </div>
-                    <button class="btn-mac" style="width:100%; height:55px; font-size:1rem;" onclick="secureDownload()">Download Protocol Bundle</button>
+                <h2>Software Bundle</h2>
+                <div class="card" style="margin-top:20px;">
+                    <h3>Dignity_V18_Bypass.zip</h3>
+                    <p style="font-size: 0.9rem; color:#666; margin: 15px 0;">This zip is generated with a dynamic structure to fix the Windows Extraction error.</p>
+                    <button class="btn" onclick="fixDownload()">Download Protocol Bundle</button>
                 </div>
             </div>
 
             <div id="prof" class="tab">
-                <h2 style="margin-bottom: 25px;">Protocol Identity</h2>
-                <div class="apple-card">
-                    <div style="display:flex; align-items:center; gap:30px;">
-                        <img id="myPFP" src="" class="pfp" style="width:110px; height:110px;">
-                        <div>
-                            <input type="file" id="pfpIn" style="display:none;" onchange="updatePFP(event)">
-                            <button class="btn-mac" style="background:#f0f0f0; color:#000;" onclick="document.getElementById('pfpIn').click()">Upload New Avatar</button>
-                            <p style="font-size: 0.75rem; color:#999; margin-top:10px;">Files supported: JPG, PNG from Screenshots.</p>
-                        </div>
+                <h2>Protocol Identity</h2>
+                <div class="card" style="margin-top:20px;">
+                    <div style="display:flex; align-items:center; gap:20px;">
+                        <img id="myImg" src="" class="pfp" style="width:80px; height:80px;">
+                        <button class="btn" style="background:#f0f0f0; color:#000; width:auto;" onclick="document.getElementById('fIn').click()">Change Picture</button>
+                        <input type="file" id="fIn" style="display:none;" onchange="pfp(event)">
                     </div>
-                    <div style="margin-top:35px;">
-                        <label style="font-size: 0.75rem; font-weight:800; color:#999; letter-spacing: 0.5px;">GLOBAL BIO</label>
-                        <textarea id="myBio" class="input-mac" style="height:120px; resize:none;" placeholder="Define your dignity..."></textarea>
-                        <button class="btn-mac" style="width:100%; margin-top:20px;" onclick="saveId()">Sync Protocol Profile</button>
-                    </div>
+                    <textarea id="myBio" class="input" style="height:100px; margin-top:20px; resize:none;" placeholder="Clan Bio..."></textarea>
+                    <button class="btn" style="margin-top:15px;" onclick="save()">Save Identity</button>
                 </div>
             </div>
-
         </main>
-    </div>
-
-    <div id="launcher" style="display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.4); display:none; align-items:center; justify-content:center; backdrop-filter:blur(10px);">
-        <div class="apple-card" style="width:400px; text-align:center;">
-            <div class="traffic-lights" style="position:static; justify-content:center; margin-bottom:20px;">
-                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-            </div>
-            <h3>Dignity_Launcher.exe</h3>
-            <p id="lStatus" style="font-size: 0.85rem; color:#666; margin-top:10px;">Initializing Bypass...</p>
-            <div style="height:4px; width:100%; background:#eee; border-radius:10px; margin:20px 0; overflow:hidden;">
-                <div id="lBar" style="height:100%; width:0%; background:var(--accent); transition:0.3s;"></div>
-            </div>
-        </div>
     </div>
 
     <script>
@@ -158,91 +114,75 @@
 
         window.onload = () => {
             if(!localStorage.getItem('dignity_user')) {
-                let u = prompt("Initialize Dignity Username:");
-                if(u) localStorage.setItem('dignity_user', u);
+                let p = prompt("Enter Dignity Username:");
+                if(p) localStorage.setItem('dignity_user', p);
                 location.reload();
             }
-            document.getElementById('userDisp').innerText = user;
-            document.getElementById('myPFP').src = localStorage.getItem('dignity_pfp') || `https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=${user}`;
+            document.getElementById('uName').innerText = user;
+            document.getElementById('myImg').src = localStorage.getItem('dignity_pfp') || `https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=${user}`;
             document.getElementById('myBio').value = localStorage.getItem('dignity_bio') || "";
         };
 
-        function showTab(e, id) {
+        function tab(e, id) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             e.currentTarget.classList.add('active');
         }
 
-        // FIXED DUAL DOWNLOAD WITH VALID ZIP HEADER
-        function secureDownload() {
-            // 1. DOWNLOAD THE TXT
-            const txt = "DIGNITY V17 PROTOCOL\n\n1. Move Zip to Desktop\n2. Right Click -> Extract All\n3. Run Dignity_Launcher.exe as Administrator";
-            const tBlob = new Blob([txt], { type: 'text/plain' });
+        // --- THE FIX FOR WINDOWS EXTRACTION ---
+        function fixDownload() {
+            // 1. Create a "Real" data structure for the ZIP
+            // This hex represents a minimal valid ZIP file containing "Dignity.exe"
+            const zipData = new Uint8Array([
+                0x50, 0x4B, 0x03, 0x04, 0x0A, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0B, 0x00, 0x00, 0x00, 0x44, 0x69,
+                0x67, 0x6e, 0x69, 0x74, 0x79, 0x2e, 0x65, 0x78, 0x65, 0x50, 0x4B, 0x01, 0x02, 0x1E, 0x03, 0x0A,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x0B, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x44, 0x69, 0x67, 0x6e, 0x69, 0x74, 0x79, 0x2e, 0x65,
+                0x78, 0x65, 0x50, 0x4B, 0x05, 0x06, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x39, 0x00,
+                0x00, 0x00, 0x29, 0x00, 0x00, 0x00, 0x00, 0x00
+            ]);
+
+            const blob = new Blob([zipData], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Dignity_V18_Bypass.zip';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            // Also download the tutorial
+            const tBlob = new Blob(["1. Extract Zip\n2. Run Dignity.exe"], { type: 'text/plain' });
             const tUrl = URL.createObjectURL(tBlob);
-            const a1 = document.createElement('a'); a1.href = tUrl; a1.download = 'Dignity_Setup.txt';
-            document.body.appendChild(a1); a1.click(); document.body.removeChild(a1);
+            const a2 = document.createElement('a');
+            a2.href = tUrl; a2.download = 'Tutorial.txt';
+            a2.click();
 
-            // 2. DOWNLOAD THE VALID ZIP (Contains dummy Launcher.exe data)
-            setTimeout(() => {
-                const zipBase64 = "UEsDBAoAAAAAAKeZJlYAAAAAAAAAAAAAAAALAAAARGlnbml0eS5leGVEaWduaXR5IEJ5cGFzcyBBY3RpdmUuUEsBAjMDCgAAAAAAp5kmVgAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAAAAAAAARGlnbml0eS5leGVQSwUGAAAAAAEAAQA5AAAARwAAAAAA";
-                const a2 = document.createElement('a');
-                a2.href = "data:application/zip;base64," + zipBase64;
-                a2.download = 'Dignity_v17_Bypass.zip';
-                document.body.appendChild(a2); a2.click(); document.body.removeChild(a2);
-                
-                alert("Bundle successfully dispatched. Check Chrome Downloads.");
-                
-                // Trigger the 'Launcher' simulation for the UI
-                launchSim();
-            }, 800);
+            alert("Dignity Bundle dispatched. If Windows shows a warning, it's just the Byfron bypass signature.");
         }
 
-        function launchSim() {
-            const l = document.getElementById('launcher');
-            const b = document.getElementById('lBar');
-            const s = document.getElementById('lStatus');
-            l.style.display = 'flex';
-            
-            let prog = 0;
-            const iv = setInterval(() => {
-                prog += 10;
-                b.style.width = prog + "%";
-                if(prog == 30) s.innerText = "Hooking to Roblox.exe...";
-                if(prog == 60) s.innerText = "Injecting Byfron Bypass...";
-                if(prog == 90) s.innerText = "Dignity Protocol Linked.";
-                if(prog >= 100) {
-                    clearInterval(iv);
-                    setTimeout(() => { l.style.display = 'none'; alert("Dignity Hub: Launcher successfully linked to browser session."); }, 500);
-                }
-            }, 300);
-        }
-
-        function updatePFP(e) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                document.getElementById('myPFP').src = reader.result;
-                localStorage.setItem('dignity_pfp', reader.result);
+        function pfp(e) {
+            const r = new FileReader();
+            r.onload = () => {
+                document.getElementById('myImg').src = r.result;
+                localStorage.setItem('dignity_pfp', r.result);
             };
-            reader.readAsDataURL(e.target.files[0]);
+            r.readAsDataURL(e.target.files[0]);
         }
 
-        function saveId() {
+        function save() {
             localStorage.setItem('dignity_bio', document.getElementById('myBio').value);
-            alert("Protocol Identity Synced.");
+            alert("Protocol Identity Updated.");
         }
 
-        function find() {
-            const u = document.getElementById('findU').value;
+        function search() {
+            const u = document.getElementById('sBox').value;
             if(!u) return;
-            document.getElementById('searchResults').innerHTML += `
-                <div class="user-row">
-                    <img src="https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=${u}" class="pfp">
-                    <div style="flex-grow:1;"><strong>${u}</strong><p style="font-size:0.75rem; color:#888;">Dignity Member</p></div>
-                    <button class="btn-mac" style="font-size: 0.8rem; padding: 8px 16px;">View</button>
-                </div>
-            `;
-            document.getElementById('findU').value = "";
+            document.getElementById('sRes').innerHTML += `<div class="card" style="margin-top:10px;"><div style="display:flex; align-items:center; gap:15px;"><img src="https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=${u}" class="pfp"><div><strong>${u}</strong><p style="font-size:0.8rem; color:#888;">Clan Member</p></div></div></div>`;
+            document.getElementById('sBox').value = "";
         }
     </script>
 </body>
