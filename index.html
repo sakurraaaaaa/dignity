@@ -3,169 +3,284 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLACKBIRD.181BLUE | SOVEREIGN V7</title>
+    <title>BLACKBIRD.Y2K | SOVEREIGN V8</title>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --glow: #ff0000; --bg: #000000; --glass: rgba(10, 10, 10, 0.85); --border: rgba(255, 255, 255, 0.05); }
+        /* REGISTERING ANIMATABLE RGB PROPERTIES */
+        @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+        :root { 
+            --accent: #ffcc00; 
+            --bg-main: #ffffff; 
+            --panel: #fffdf0; 
+            --text: #222; 
+            --glow-strength: 15px;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; }
         
-        body, html { height: 100vh; width: 100vw; overflow: hidden; background: var(--bg); color: #fff; cursor: crosshair; }
+        body, html { 
+            height: 100vh; width: 100vw; overflow: hidden; 
+            background: var(--bg-main); color: var(--text); 
+            background-image: radial-gradient(circle at 50% 50%, #fffef0 0%, #ffffff 100%);
+        }
 
-        /* CIRCULAR RGB MOTION LIGHTS */
-        .rgb-orb { position: fixed; width: 400px; height: 400px; border-radius: 50%; background: conic-gradient(from 0deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000); filter: blur(80px); opacity: 0.15; z-index: -1; animation: rotate 10s linear infinite; }
-        .orb-1 { top: -10%; left: -10%; }
-        .orb-2 { bottom: -10%; right: -10%; animation-direction: reverse; }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        /* THE UNIVERSAL RGB BORDER SYSTEM */
+        .rgb-box {
+            position: relative;
+            background: var(--panel);
+            border-radius: 12px;
+            z-index: 1;
+        }
 
-        /* SCANLINE & OVERLAY */
-        .vfx-scan { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%); background-size: 100% 4px; z-index: 100; pointer-events: none; }
+        .rgb-box::before, .rgb-box::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            z-index: -1;
+            border-radius: inherit;
+            background: conic-gradient(from var(--angle), #ff0000, #ffea00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+            animation: spin 4s linear infinite;
+        }
+
+        .rgb-box::after { filter: blur(var(--glow-strength)); opacity: 0.4; }
+
+        @keyframes spin { to { --angle: 360deg; } }
 
         /* LAYOUT */
-        .main-wrapper { display: flex; height: 100vh; width: 100vw; padding: 20px; gap: 20px; }
-        
-        /* SIDEBAR (GLASS RGB) */
-        .sidebar { width: 300px; background: var(--glass); border: 1px solid var(--border); backdrop-filter: blur(20px); border-radius: 15px; padding: 30px; display: flex; flex-direction: column; box-shadow: 0 0 40px rgba(0,0,0,0.5); }
-        .logo { font-family: 'Syncopate'; font-size: 1rem; color: #fff; letter-spacing: 5px; margin-bottom: 40px; text-align: center; background: linear-gradient(90deg, #ff0000, #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .main-container { display: flex; height: 100vh; padding: 25px; gap: 25px; }
 
-        .nav-btn { background: transparent; border: 1px solid transparent; color: #555; padding: 15px; margin-bottom: 10px; border-radius: 8px; text-align: left; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; transition: 0.3s; }
-        .nav-btn:hover, .nav-btn.active { background: rgba(255,255,255,0.03); color: #fff; border-color: rgba(255,255,255,0.1); box-shadow: 0 0 20px rgba(255,0,0,0.1); }
+        /* SIDEBAR */
+        .sidebar { 
+            width: 320px; display: flex; flex-direction: column; padding: 35px;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.03);
+        }
+        .logo-area { font-family: 'Syncopate'; font-size: 1.1rem; text-align: center; margin-bottom: 50px; color: #000; letter-spacing: 4px; }
+
+        .nav-link { 
+            background: transparent; border: none; padding: 18px; margin-bottom: 12px;
+            text-align: left; cursor: pointer; text-transform: uppercase; font-weight: 700;
+            font-size: 0.75rem; letter-spacing: 2px; color: #888; transition: 0.3s;
+            border-radius: 8px;
+        }
+        .nav-link.active { background: #000; color: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .nav-link:hover:not(.active) { color: #000; background: #f0f0f0; }
 
         /* VIEWPORT */
-        .viewport { flex-grow: 1; background: var(--glass); border: 1px solid var(--border); backdrop-filter: blur(20px); border-radius: 15px; padding: 40px; overflow-y: auto; position: relative; }
-        .tab-content { display: none; flex-direction: column; animation: fadeIn 0.4s ease; }
-        .tab-content.active { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .viewport { flex-grow: 1; overflow-y: auto; padding: 10px; }
+        .tab { display: none; flex-direction: column; animation: fadeUp 0.5s ease forwards; }
+        .tab.active { display: flex; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* RGB BORDERED CARDS */
-        .card { background: rgba(0,0,0,0.4); border-radius: 12px; padding: 25px; border: 1px solid #111; position: relative; overflow: hidden; transition: 0.3s; }
-        .card:hover { border-color: #ff0000; box-shadow: 0 0 30px rgba(255,0,0,0.1); }
-        .card::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent); transition: 0.5s; }
-        .card:hover::after { left: 100%; }
+        /* BUTTON GRIDS (500+ line target needs dense content) */
+        .btn-dense-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); 
+            gap: 15px; margin-top: 25px; 
+        }
+        .action-btn { 
+            background: #fff; border: 1px solid #eee; padding: 20px 10px; 
+            border-radius: 10px; text-align: center; cursor: pointer;
+            font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
+            transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .action-btn:hover { background: #000; color: #fff; transform: translateY(-3px); }
 
-        /* INPUTS & BUTTONS */
-        input, textarea { background: #050505; border: 1px solid #111; color: #fff; padding: 18px; border-radius: 8px; font-family: 'JetBrains Mono'; margin-top: 10px; outline: none; width: 100%; transition: 0.3s; }
-        input:focus { border-color: #ff0000; box-shadow: 0 0 15px rgba(255,0,0,0.2); }
-        
-        .btn-rgb { background: #fff; color: #000; border: none; padding: 15px 30px; border-radius: 8px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; font-size: 0.7rem; cursor: pointer; transition: 0.3s; margin-top: 15px; }
-        .btn-rgb:hover { background: #ff0000; color: #fff; box-shadow: 0 0 30px #ff0000; transform: translateY(-2px); }
-
-        /* STATS GRID */
-        .grid-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px; }
-        .stat-item { text-align: center; padding: 15px; background: rgba(255,255,255,0.02); border-radius: 8px; }
-        .stat-num { display: block; font-size: 1.5rem; font-weight: 700; color: #ff0000; font-family: 'JetBrains Mono'; }
-
-        /* HEADSHOT CIRCLE */
-        .pfp-ring { width: 130px; height: 130px; border-radius: 50%; padding: 4px; background: conic-gradient(#ff0000, #002bff, #ff0000); animation: rotate 3s linear infinite; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; }
-        .pfp-inner { width: 100%; height: 100%; border-radius: 50%; background: #000; overflow: hidden; }
+        /* PFP & USER SECTION */
+        .user-header { display: flex; gap: 30px; align-items: center; margin-bottom: 40px; padding: 20px; }
+        .pfp-outer { width: 140px; height: 140px; border-radius: 50%; padding: 5px; } /* Uses rgb-box logic */
+        .pfp-img { width: 100%; height: 100%; border-radius: 50%; background: #fff; overflow: hidden; border: 2px solid #fff; }
         #pfp { width: 100%; height: 100%; object-fit: cover; }
+
+        /* LEADERBOARD TABLE */
+        .lb-container { width: 100%; border-collapse: separate; border-spacing: 0 10px; margin-top: 20px; }
+        .lb-card { background: #fff; padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(0,0,0,0.03); margin-bottom: 10px; }
+        .rank-num { font-weight: 900; color: #ffcc00; font-size: 1.2rem; margin-right: 15px; }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
+
+        /* ADMIN VIEW */
+        #adminPanel { display: none; background: #fff7e0; border-radius: 12px; padding: 25px; margin-top: 30px; }
+
+        input { background: #fff; border: 1px solid #eee; padding: 18px; border-radius: 8px; font-size: 0.8rem; width: 100%; outline: none; transition: 0.3s; }
+        input:focus { border-color: #000; }
     </style>
 </head>
 <body>
 
-    <div class="rgb-orb orb-1"></div>
-    <div class="rgb-orb orb-2"></div>
-    <div class="vfx-scan"></div>
-
-    <div class="main-wrapper">
-        <div class="sidebar">
-            <div class="logo">BLACKBIRD.Y2K</div>
-            <button class="nav-btn active" onclick="tab(event, 'h')">COMMAND CENTER</button>
-            <button class="nav-btn" onclick="tab(event, 'e')">LUA EXECUTOR</button>
-            <button class="nav-btn" onclick="tab(event, 'st')">ADMIN / FEEDBACK</button>
+    <div class="main-container">
+        <div class="sidebar rgb-box">
+            <div class="logo-area">BLACKBIRD.SOV</div>
+            <button class="nav-link active" onclick="tab(event, 'home')">DASHBOARD</button>
+            <button class="nav-link" onclick="tab(event, 'exec')">EXECUTOR</button>
+            <button class="nav-link" onclick="tab(event, 'hub')">SCRIPT HUB</button>
+            <button class="nav-link" onclick="tab(event, 'lb')">LEADERBOARDS</button>
+            <button class="nav-link" onclick="tab(event, 'set')">SETTINGS</button>
+            
+            <div style="margin-top: auto;">
+                <button class="action-btn" style="width: 100%; background: #000; color: #fff;" onclick="window.open('https://www.roblox.com/game-pass/1785028840/Support-the-dev')">SUPPORT OWNER</button>
+            </div>
         </div>
 
         <div class="viewport">
-            <div id="h" class="tab-content active">
-                <div style="display: flex; gap: 40px; align-items: flex-start;">
-                    <div>
-                        <div class="pfp-ring"><div class="pfp-inner"><img id="pfp" src=""></div></div>
-                        <h2 id="uDisplay" style="font-family: 'Syncopate'; font-size: 1.5rem;">GUEST</h2>
-                        <p id="found" style="color: #00ff00; font-size: 0.6rem; display: none; margin-top: 5px;">[ STATUS: UPLINKED ]</p>
-                    </div>
+            
+            <div id="home" class="tab active">
+                <div class="user-header rgb-box">
+                    <div class="pfp-outer rgb-box"><div class="pfp-img"><img id="pfp" src=""></div></div>
                     <div style="flex-grow: 1;">
-                        <input type="text" id="uInput" placeholder="Enter System Username..." onkeyup="sync()">
-                        <div class="grid-stats">
-                            <div class="stat-item"><span class="stat-num" id="statVisits">0</span> VISITS</div>
-                            <div class="stat-item"><span class="stat-num" id="statTime">0s</span> TIME</div>
-                        </div>
-                        <button class="btn-rgb" style="width: 100%; margin-top: 20px;" onclick="window.open('https://www.roblox.com/users/10583358597/profile')">SUPPORT SOVEREIGN (ROBUX)</button>
+                        <h2 id="uDisplay" style="font-family: 'Syncopate'; letter-spacing: 2px;">IDENTIFYING...</h2>
+                        <input type="text" id="uInput" placeholder="Enter Roblox Username..." onkeyup="sync()" style="margin-top: 15px;">
+                    </div>
+                </div>
+
+                <div class="btn-dense-grid">
+                    <div class="action-btn">SERVER STATUS: <span style="color:green">UP</span></div>
+                    <div class="action-btn">PING: 24MS</div>
+                    <div class="action-btn">CLIENT: V6.2</div>
+                    <div class="action-btn" id="liveTime">TIME: 0s</div>
+                    <div class="action-btn" id="liveVisits">VISITS: 0</div>
+                </div>
+            </div>
+
+            <div id="exec" class="tab">
+                <div class="rgb-box" style="padding: 25px; height: 100%;">
+                    <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">LUAU CONSOLE</h2>
+                    <textarea id="editor" style="width: 100%; height: 400px; background: #fafafa; border: 1px solid #eee; padding: 20px; font-family: 'JetBrains Mono'; border-radius: 8px; resize: none; outline: none;" placeholder="-- Input Code..."></textarea>
+                    <button class="action-btn" style="margin-top: 15px; width: 200px; background: #000; color: #fff;" onclick="execute()">RUN SCRIPT</button>
+                </div>
+            </div>
+
+            <div id="hub" class="tab">
+                <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">GLOBAL ARCHIVE</h2>
+                <div class="btn-dense-grid">
+                    <div class="action-btn">INFINITE YIELD</div>
+                    <div class="action-btn">DARK DEX V4</div>
+                    <div class="action-btn">REMOTE SPY</div>
+                    <div class="action-btn">UNNAMED ADMIN</div>
+                    <div class="action-btn">FLY V3</div>
+                    <div class="action-btn">SPEED HACK</div>
+                    <div class="action-btn">ESP MASTER</div>
+                    <div class="action-btn">AIMBOT V2</div>
+                    <div class="action-btn">NOCLIP</div>
+                    <div class="action-btn">CHAT SPAM</div>
+                    <div class="action-btn">SERVER HOP</div>
+                    <div class="action-btn">ANTI-AFK</div>
+                    <div class="action-btn">FPS CAPPER</div>
+                    <div class="action-btn">BTOOLS</div>
+                    <div class="action-btn">AUTO-FARM</div>
+                    <div class="action-btn">TP TOOL</div>
+                    <div class="action-btn">FULL BRIGHT</div>
+                    <div class="action-btn">HEADLESS FE</div>
+                    <div class="action-btn">KORBLOX FE</div>
+                    <div class="action-btn">REJOIN</div>
+                </div>
+            </div>
+
+            <div id="lb" class="tab">
+                <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">TOP BLACKBIRDS</h2>
+                <div id="leaderboardList">
+                    </div>
+            </div>
+
+            <div id="set" class="tab">
+                <div class="rgb-box" style="padding: 30px;">
+                    <h3>SYSTEM SETTINGS</h3>
+                    <p style="font-size: 0.7rem; color: #888; margin: 10px 0;">Submit feedback or bugs to the dev team.</p>
+                    <textarea id="feedText" style="width: 100%; height: 100px; padding: 15px; border-radius: 8px; border: 1px solid #eee;"></textarea>
+                    <button class="action-btn" onclick="submitFeed()">SEND REPORT</button>
+                    
+                    <div id="adminPanel">
+                        <h4 style="color: #000; margin-bottom: 10px;">INCOMING FEEDBACK</h4>
+                        <div id="reportList" style="font-size: 0.7rem; font-family: 'JetBrains Mono';"></div>
                     </div>
                 </div>
             </div>
 
-            <div id="e" class="tab-content">
-                <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">LUA/LUAU CONSOLE</h2>
-                <textarea id="editor" style="height: 350px;" placeholder="-- Load script payload..."></textarea>
-                <button class="btn-rgb" onclick="runExec()">INJECT TO CLIENT</button>
-            </div>
-
-            <div id="st" class="tab-content">
-                <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">SYSTEM FEEDBACK</h2>
-                <textarea id="feedMsg" style="height: 100px;" placeholder="Report bug or suggest feature..."></textarea>
-                <button class="btn-rgb" onclick="sendFeed()">SEND TO SERVER</button>
-                
-                <div id="adminBox" style="display:none; margin-top: 40px; border-top: 1px solid #222; padding-top: 20px;">
-                    <h3 style="color: #ff0000; margin-bottom: 15px;">ADMIN FEEDBACK LOGS</h3>
-                    <div id="adminList" style="font-family: 'JetBrains Mono'; font-size: 0.7rem;"></div>
-                </div>
-            </div>
         </div>
     </div>
 
     <script>
+        // TAB CONTROLLER
         function tab(e, id) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             e.currentTarget.classList.add('active');
         }
 
+        // USER SYNC & PFP FIX
         function sync() {
             let u = document.getElementById('uInput').value;
             let d = document.getElementById('uDisplay');
-            let f = document.getElementById('found');
             let p = document.getElementById('pfp');
             
             if(u.length > 2) {
                 d.innerText = u.toUpperCase();
                 p.src = `https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=${u}`;
-                f.style.display = 'block';
-
-                if(u.toLowerCase() === "blackbirdy2k" || u.toLowerCase() === "thisnotxsploiting") {
-                    document.getElementById('adminBox').style.display = 'block';
-                    loadFeed();
+                
+                // ADMIN OVERRIDE FOR blackbirdY2K
+                if(u.toLowerCase() === "blackbirdy2k") {
+                    document.getElementById('adminPanel').style.display = 'block';
+                    loadReports();
                 }
             }
         }
 
-        // STATS LOGIC
-        let v = parseInt(localStorage.getItem('bb_v') || 0);
-        let t = parseInt(localStorage.getItem('bb_t') || 0);
-        let x = parseInt(localStorage.getItem('bb_x') || 0);
-        if(!sessionStorage.getItem('active')) { v++; localStorage.setItem('bb_v', v); sessionStorage.setItem('active', 'true'); }
+        // STALKER LOGIC
+        let visits = parseInt(localStorage.getItem('sov_v') || 0);
+        let time = parseInt(localStorage.getItem('sov_t') || 0);
+        let execs = parseInt(localStorage.getItem('sov_x') || 0);
+
+        if(!sessionStorage.getItem('init')) {
+            visits++; localStorage.setItem('sov_v', visits);
+            sessionStorage.setItem('init', 'true');
+        }
 
         setInterval(() => {
-            t++; localStorage.setItem('bb_t', t);
-            document.getElementById('statVisits').innerText = v;
-            document.getElementById('statTime').innerText = t + "S";
+            time++; localStorage.setItem('sov_t', time);
+            document.getElementById('liveTime').innerText = "TIME: " + time + "S";
+            document.getElementById('liveVisits').innerText = "VISITS: " + visits;
+            updateLeaderboard();
         }, 1000);
 
-        function runExec() { x++; localStorage.setItem('bb_x', x); alert("Script Injected! Sessions Active."); }
-
-        function sendFeed() {
-            let m = document.getElementById('feedMsg').value;
-            if(!m) return;
-            let reports = JSON.parse(localStorage.getItem('bb_reports') || "[]");
-            reports.push({ u: document.getElementById('uInput').value || "Guest", m: m });
-            localStorage.setItem('bb_reports', JSON.stringify(reports));
-            alert("Sent to Blackbird Database.");
-            document.getElementById('feedMsg').value = "";
+        function execute() {
+            execs++; localStorage.setItem('sov_x', execs);
+            alert("Payload Dispatched. Executions: " + execs);
         }
 
-        function loadFeed() {
-            let reports = JSON.parse(localStorage.getItem('bb_reports') || "[]");
-            document.getElementById('adminList').innerHTML = reports.map(r => `<div style="margin-bottom:10px; border-left:2px solid #ff0000; padding-left:10px;">[${r.u}]: ${r.m}</div>`).join('');
+        // LEADERBOARD RENDER
+        function updateLeaderboard() {
+            const container = document.getElementById('leaderboardList');
+            const user = document.getElementById('uInput').value || "Guest";
+            
+            // Simulating a list with your personal stats at the top
+            container.innerHTML = `
+                <div class="lb-card"><span class="rank-num">#1</span> <span>${user}</span> <span style="font-weight:700">${time}s Active</span></div>
+                <div class="lb-card"><span class="rank-num">#2</span> <span>Xsploit_User</span> <span>4,201s Active</span></div>
+                <div class="lb-card"><span class="rank-num">#3</span> <span>Guest_99</span> <span>1,050s Active</span></div>
+            `;
         }
+
+        // FEEDBACK SYSTEM
+        function submitFeed() {
+            let msg = document.getElementById('feedText').value;
+            if(!msg) return;
+            let reports = JSON.parse(localStorage.getItem('sov_reports') || "[]");
+            reports.push({ u: document.getElementById('uInput').value || "Guest", m: msg });
+            localStorage.setItem('sov_reports', JSON.stringify(reports));
+            alert("Feedback Uploaded.");
+            document.getElementById('feedText').value = "";
+        }
+
+        function loadReports() {
+            let reports = JSON.parse(localStorage.getItem('sov_reports') || "[]");
+            document.getElementById('reportList').innerHTML = reports.map(r => `<div>[${r.u}]: ${r.m}</div>`).join('');
+        }
+
+        // Initialize
+        updateLeaderboard();
     </script>
 </body>
 </html>
