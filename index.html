@@ -3,198 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BLACKBIRD.Y2K | SOVEREIGN V6 EXTREME</title>
+    <title>BLACKBIRD.181BLUE | SOVEREIGN V6.2</title>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --glow: #ff0000; --bg: #000000; --glass: rgba(5, 5, 5, 0.95); --border: rgba(255, 0, 0, 0.3); --accent: #ff3333; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; -webkit-font-smoothing: antialiased; }
-        
+        :root { --glow: #ff0000; --bg: #000000; --glass: rgba(5, 5, 5, 0.95); --border: rgba(255, 0, 0, 0.3); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; }
         body, html { height: 100vh; width: 100vw; overflow: hidden; background: var(--bg); color: #fff; cursor: crosshair; }
 
-        /* VFX & BACKGROUND 100+ GRAPHICS */
+        /* VFX BACKGROUND */
         .vfx-main { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-        .vfx-lightning { position: absolute; width: 100%; height: 100%; background: url('https://wallpapers.com/images/featured/red-lightning-background-628p7f1cjkidly9h.jpg') center/cover; opacity: 0.25; filter: contrast(1.5) brightness(0.8); animation: flicker 5s infinite; }
-        .vfx-scanlines { position: absolute; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03)); background-size: 100% 3px, 3px 100%; pointer-events: none; }
-        .vfx-vignette { position: absolute; width: 100%; height: 100%; background: radial-gradient(circle, transparent 30%, black 95%); }
-
+        .vfx-lightning { position: absolute; width: 100%; height: 100%; background: url('https://wallpapers.com/images/featured/red-lightning-background-628p7f1cjkidly9h.jpg') center/cover; opacity: 0.25; animation: flicker 5s infinite; }
+        .vfx-scanlines { position: absolute; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%); background-size: 100% 3px; pointer-events: none; }
         @keyframes flicker { 0%, 90%, 100% { opacity: 0.25; } 92% { opacity: 0.5; } 95% { opacity: 0.1; } }
 
-        /* SIDEBAR ARCHITECTURE */
-        .sidebar {
-            position: fixed; left: 0; top: 0; width: 260px; height: 100%;
-            background: rgba(0,0,0,0.95); border-right: 1px solid var(--border);
-            display: flex; flex-direction: column; padding: 25px; z-index: 1000;
-            backdrop-filter: blur(10px);
-        }
-        .logo-box { padding-bottom: 30px; border-bottom: 1px solid #222; margin-bottom: 20px; text-align: center; }
-        .logo-main { font-family: 'Syncopate'; font-size: 0.9rem; color: var(--glow); letter-spacing: 4px; text-shadow: 0 0 15px red; }
-        
-        .nav-group { overflow-y: auto; flex-grow: 1; padding-right: 5px; }
-        .nav-btn {
-            width: 100%; background: transparent; border: 1px solid transparent; color: #666;
-            padding: 12px 15px; margin-bottom: 5px; text-align: left; cursor: pointer;
-            text-transform: uppercase; font-size: 0.65rem; letter-spacing: 2px; transition: 0.2s;
-            display: flex; align-items: center; justify-content: space-between;
-        }
+        /* SIDEBAR */
+        .sidebar { position: fixed; left: 0; top: 0; width: 260px; height: 100%; background: rgba(0,0,0,0.95); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 25px; z-index: 1000; backdrop-filter: blur(10px); }
+        .logo-main { font-family: 'Syncopate'; font-size: 0.9rem; color: var(--glow); letter-spacing: 4px; text-shadow: 0 0 15px red; text-align: center; margin-bottom: 30px; }
+        .nav-btn { width: 100%; background: transparent; border: 1px solid transparent; color: #666; padding: 12px 15px; margin-bottom: 5px; text-align: left; cursor: pointer; text-transform: uppercase; font-size: 0.65rem; letter-spacing: 2px; transition: 0.2s; }
         .nav-btn:hover, .nav-btn.active { color: #fff; border-left: 3px solid var(--glow); background: rgba(255,0,0,0.08); }
-        .nav-btn span { font-size: 0.5rem; opacity: 0.5; }
 
-        /* MAIN INTERFACE */
-        .viewport { margin-left: 260px; height: 100%; width: calc(100% - 260px); position: relative; padding: 40px; }
-        .tab-content {
-            display: none; height: 100%; width: 100%; background: var(--glass);
-            border: 1px solid var(--border); border-radius: 4px; padding: 40px;
-            flex-direction: column; animation: slideIn 0.3s ease-out;
-            overflow-y: auto;
-        }
+        /* MAIN VIEWPORT */
+        .viewport { margin-left: 260px; height: 100%; width: calc(100% - 260px); position: relative; padding: 40px; overflow-y: auto; }
+        .tab-content { display: none; flex-direction: column; animation: slideIn 0.3s ease-out; }
         .tab-content.active { display: flex; }
-
         @keyframes slideIn { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        /* PROFILE COMPONENT */
-        .id-card { display: flex; align-items: center; gap: 25px; background: rgba(255,255,255,0.02); padding: 30px; border-radius: 8px; margin-bottom: 40px; border: 1px solid #111; }
-        .pfp-frame { width: 110px; height: 110px; border: 2px solid var(--glow); border-radius: 5px; background: #000; position: relative; box-shadow: 0 0 20px rgba(255,0,0,0.3); }
-        #pfp { width: 100%; height: 100%; object-fit: cover; }
-        .status-tag { position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); background: var(--glow); color: #000; font-size: 0.5rem; font-weight: 900; padding: 2px 8px; }
-        
-        .name-found { color: #00ff00; font-size: 0.7rem; font-weight: bold; margin-top: 10px; display: none; text-transform: uppercase; letter-spacing: 2px; }
-
-        /* INPUTS & BUTTONS */
-        input { background: #080808; border: 1px solid #222; color: #fff; padding: 15px; width: 100%; max-width: 400px; margin-top: 15px; outline: none; transition: 0.3s; }
-        input:focus { border-color: var(--glow); box-shadow: 0 0 15px rgba(255,0,0,0.1); }
-
-        .btn-action { background: var(--glow); color: #000; border: none; padding: 12px 25px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; transition: 0.2s; margin: 5px; }
-        .btn-action:hover { box-shadow: 0 0 25px var(--glow); transform: translateY(-2px); }
-        .btn-outline { background: transparent; border: 1px solid #444; color: #888; padding: 12px 25px; cursor: pointer; font-size: 0.7rem; transition: 0.2s; }
-        .btn-outline:hover { border-color: var(--glow); color: #fff; }
-
-        /* GRID SYSTEMS */
+        /* CARDS & UI ELEMENTS */
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; }
-        .grid-card { background: rgba(255,255,255,0.01); border: 1px solid #111; padding: 20px; border-radius: 4px; transition: 0.3s; }
+        .grid-card { background: rgba(255,255,255,0.02); border: 1px solid #111; padding: 20px; border-radius: 4px; transition: 0.3s; }
         .grid-card:hover { border-color: var(--glow); background: rgba(255,0,0,0.03); }
-
-        /* SCRIPTING ACADEMY SCROLLBOX */
-        .academy-box { flex-grow: 1; overflow-y: auto; padding-right: 15px; }
-        .code-snippet { background: #050505; color: #00ffea; padding: 15px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; border-left: 3px solid var(--glow); margin: 15px 0; line-height: 1.5; }
-
-        /* EXECUTOR AREA */
-        .exec-wrap { flex-grow: 1; display: flex; flex-direction: column; }
-        textarea { flex-grow: 1; background: #000; color: #00ff00; border: 1px solid #111; padding: 20px; font-family: 'JetBrains Mono', monospace; resize: none; outline: none; font-size: 0.85rem; margin-bottom: 20px; }
-
-        /* SCROLLBAR */
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: var(--glow); }
-
+        .pfp-frame { width: 110px; height: 110px; border: 2px solid var(--glow); background: #000; position: relative; box-shadow: 0 0 20px rgba(255,0,0,0.3); margin-bottom: 15px; }
+        #pfp { width: 100%; height: 100%; object-fit: cover; }
+        
+        input, textarea { background: #080808; border: 1px solid #222; color: #fff; padding: 15px; width: 100%; outline: none; margin-top: 10px; font-family: 'JetBrains Mono', monospace; }
+        input:focus { border-color: var(--glow); }
+        .btn-action { background: var(--glow); color: #000; border: none; padding: 12px 25px; font-weight: 900; cursor: pointer; text-transform: uppercase; font-size: 0.7rem; margin-top: 10px; }
+        
+        /* LEADERBOARD & ADMIN */
+        .lb-table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.75rem; }
+        .lb-table td { padding: 10px; border-bottom: 1px solid #111; }
+        .lb-val { color: var(--glow); font-weight: bold; text-align: right; }
+        #adminBox { display: none; border: 1px solid gold; padding: 15px; margin-top: 20px; background: rgba(255,215,0,0.05); }
     </style>
 </head>
 <body>
 
-    <div class="vfx-main"><div class="vfx-lightning"></div><div class="vfx-scanlines"></div><div class="vfx-vignette"></div></div>
+    <div class="vfx-main"><div class="vfx-lightning"></div><div class="vfx-scanlines"></div></div>
 
     <div class="sidebar">
-        <div class="logo-box"><div class="logo-main">BLACKBIRD.Y2K</div></div>
-        <div class="nav-group">
-            <button class="nav-btn active" onclick="tab(event, 'h')">COMMAND CENTER <span>01</span></button>
-            <button class="nav-btn" onclick="tab(event, 'e')">LUA EXECUTOR <span>02</span></button>
-            <button class="nav-btn" onclick="tab(event, 's')">SCRIPT HUB <span>03</span></button>
-            <button class="nav-btn" onclick="tab(event, 'a')">SCRIPTING ACADEMY <span>04</span></button>
-            <button class="nav-btn" onclick="tab(event, 'l')">GAME LAUNCHER <span>05</span></button>
-            <button class="nav-btn" onclick="tab(event, 'st')">SETTINGS <span>06</span></button>
-            <button class="nav-btn" onclick="tab(event, 'cl')">CLAN LOGS <span>07</span></button>
-        </div>
-        <div style="font-size: 0.5rem; color: #333; text-align: center; margin-top: 10px;">BUILD 06.04.2026_SOVEREIGN</div>
+        <div class="logo-main">BLACKBIRD.181</div>
+        <button class="nav-btn active" onclick="tab(event, 'h')">UPLINK</button>
+        <button class="nav-btn" onclick="tab(event, 'e')">EXECUTOR</button>
+        <button class="nav-btn" onclick="tab(event, 's')">SCRIPT HUB</button>
+        <button class="nav-btn" onclick="tab(event, 'a')">ACADEMY</button>
+        <button class="nav-btn" onclick="tab(event, 'st')">SETTINGS</button>
     </div>
 
     <div class="viewport">
-        
         <div id="h" class="tab-content active">
-            <h2 style="font-family: 'Syncopate'; margin-bottom: 30px; letter-spacing: 5px;">// SYSTEM STATUS</h2>
-            <div class="id-card">
-                <div class="pfp-frame"><img id="pfp" src="https://tr.rbxcdn.com/30day/150/150/AvatarHeadshot/Png"><div class="status-tag">ACTIVE</div></div>
+            <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">COMMAND CENTER</h2>
+            <div style="display: flex; gap: 30px; align-items: center; background: rgba(255,255,255,0.01); padding: 25px; border: 1px solid #0a0a0a;">
+                <div class="pfp-frame"><img id="pfp" src=""></div>
                 <div style="flex-grow: 1;">
-                    <h3 id="uDisplay" style="font-family: 'Syncopate'; color: var(--glow);">GUEST_USER</h3>
-                    <p id="found" class="name-found">NAME FOUND! UPLINK ESTABLISHED.</p>
+                    <h3 id="uDisplay" style="color: var(--glow); font-family: 'Syncopate';">GUEST_USER</h3>
+                    <p id="found" style="color: #00ff00; font-size: 0.6rem; display: none; margin-top: 5px;">NAME FOUND! UPLINK ESTABLISHED.</p>
                     <input type="text" id="uInput" placeholder="Enter Roblox Username..." onkeyup="sync()">
                 </div>
             </div>
+
             <div class="grid-3">
-                <div class="grid-card"><h4>UPLINK</h4><p style="color: #444; font-size: 0.7rem;">Status: STABLE</p></div>
-                <div class="grid-card"><h4>RANK</h4><p style="color: #444; font-size: 0.7rem;">Identity: UNKNOWN</p></div>
-                <div class="grid-card"><h4>REGION</h4><p style="color: #444; font-size: 0.7rem;">Node: GLOBAL</p></div>
+                <div class="grid-card">
+                    <h4>SUPPORT</h4>
+                    <p style="font-size: 0.6rem; color: #555; margin-bottom: 10px;">Donate Robux to the Sovereign.</p>
+                    <button class="btn-action" style="background: #28a745; color: #fff; width: 100%;" onclick="window.open('https://www.roblox.com/users/10583358597/profile')">DONATE</button>
+                </div>
+                <div class="grid-card">
+                    <h4>STALKER STATS</h4>
+                    <p id="statVisits" style="font-size: 0.7rem;">Visits: 0</p>
+                    <p id="statTime" style="font-size: 0.7rem;">Time: 0s</p>
+                    <p id="statExecs" style="font-size: 0.7rem;">Executions: 0</p>
+                </div>
+                <div class="grid-card">
+                    <h4>SYSTEM</h4>
+                    <p style="font-size: 0.6rem; color: #555;">Status: <span style="color: #00ff00;">STABLE</span></p>
+                    <p style="font-size: 0.6rem; color: #555;">Uptime: 99.9%</p>
+                </div>
             </div>
         </div>
 
         <div id="e" class="tab-content">
-            <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">LUA/LUAU EXECUTOR</h2>
-            <div class="exec-wrap">
-                <textarea id="code" placeholder="-- Sovereign payload goes here..."></textarea>
-                <div>
-                    <button class="btn-action" onclick="exec()">EXECUTE</button>
-                    <button class="btn-outline" onclick="attach()">ATTACH</button>
-                    <button class="btn-outline" onclick="document.getElementById('code').value=''">CLEAR</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="s" class="tab-content">
-            <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">SCRIPT HUB (PRELOADED)</h2>
-            <div class="grid-3">
-                <div class="grid-card"><h4>Infinite Yield</h4><button class="btn-action" style="padding: 5px 10px; font-size: 0.5rem;">LOAD</button></div>
-                <div class="grid-card"><h4>Dark Dex V4</h4><button class="btn-action" style="padding: 5px 10px; font-size: 0.5rem;">LOAD</button></div>
-                <div class="grid-card"><h4>Nameless Admin</h4><button class="btn-action" style="padding: 5px 10px; font-size: 0.5rem;">LOAD</button></div>
-                <div class="grid-card"><h4>Remote Spy</h4><button class="btn-action" style="padding: 5px 10px; font-size: 0.5rem;">LOAD</button></div>
-                <div class="grid-card"><h4>UNC Test</h4><button class="btn-action" style="padding: 5px 10px; font-size: 0.5rem;">LOAD</button></div>
-                <div class="grid-card"><h4>Simple Spy</h4><button class="btn-action" style="padding: 5px 10px; font-size: 0.5rem;">LOAD</button></div>
-                <div class="grid-card"><h4>Audio Logger</h4><button class="btn-action" style="padding: 5px 10px; font-size: 0.5rem;">LOAD</button></div>
-                <div class="grid-card"><h4>Anti-Afk</h4><button class="btn-action" style="padding: 5px 10px; font-size: 0.5rem;">LOAD</button></div>
-                <div class="grid-card"><h4>ESP Master</h4><button class="btn-action" style="padding: 5px 10px; font-size: 0.5rem;">LOAD</button></div>
-            </div>
-        </div>
-
-        <div id="a" class="tab-content">
-            <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">SCRIPTING ACADEMY</h2>
-            <div class="academy-box">
-                <h3>01. MODULE SCRIPTS</h3>
-                <p style="font-size: 0.8rem; color: #777;">ModuleScripts are the foundation of clean engine architecture. Use them for global variables and shared functions.</p>
-                <div class="code-snippet">local BlackbirdModule = {}<br>function BlackbirdModule.Announce(msg)<br>  print("[SOVEREIGN]: " .. msg)<br>end<br>return BlackbirdModule</div>
-                
-                <h3>02. SERVERSIDE EXPLOITING</h3>
-                <p style="font-size: 0.8rem; color: #777;">Requires a backdoor. Once injected, you have 'require()' access to server-protected modules.</p>
-                <div class="code-snippet">require(74075165887004):Fire("blackbirdY2K")</div>
-
-                <h3>03. LOCAL SCRIPTING</h3>
-                <p style="font-size: 0.8rem; color: #777;">Runs on the client. Good for UI and movement hacks, but won't replicate to others without Remotes.</p>
-                <div class="code-snippet">game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100</div>
-            </div>
-        </div>
-
-        <div id="l" class="tab-content">
-            <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">GAME LAUNCHER</h2>
-            <input type="text" id="game" placeholder="Exact Game Name...">
-            <button class="btn-action" onclick="launch()">INITIALIZE INTERCEPT</button>
-            <div class="grid-3" id="gameSuggestions">
-                <div class="grid-card" onclick="document.getElementById('game').value='Blox Fruits'">Blox Fruits</div>
-                <div class="grid-card" onclick="document.getElementById('game').value='Bedwars'">Bedwars</div>
-                <div class="grid-card" onclick="document.getElementById('game').value='Murder Mystery 2'">MM2</div>
-            </div>
+            <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">LUA EXECUTOR</h2>
+            <textarea id="editor" style="height: 300px;" placeholder="-- Paste Sovereign Script Here..."></textarea>
+            <button class="btn-action" onclick="runExec()">EXECUTE</button>
         </div>
 
         <div id="st" class="tab-content">
-            <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">CORE SETTINGS</h2>
-            <div class="grid-3">
-                <button class="btn-action">TOGGLE GLOW</button>
-                <button class="btn-action">RESET CACHE</button>
-                <button class="btn-action">ENABLE OVERRIDE</button>
-                <button class="btn-action">DEBUG MODE</button>
-                <button class="btn-action">API BYPASS</button>
-                <button class="btn-action" onclick="alert('Settings Saved Locally.')">SAVE ALL</button>
+            <h2 style="font-family: 'Syncopate'; margin-bottom: 20px;">SETTINGS & FEEDBACK</h2>
+            <div class="grid-card">
+                <h4>SUBMIT FEEDBACK</h4>
+                <textarea id="feedMsg" style="height: 80px;" placeholder="Report a bug..."></textarea>
+                <button class="btn-action" onclick="sendFeed()">SUBMIT</button>
+            </div>
+
+            <div id="adminBox">
+                <h4 style="color: gold;">[ ADMIN ] FEEDBACK LOGS</h4>
+                <div id="adminList" style="font-size: 0.65rem; margin-top: 10px;"></div>
             </div>
         </div>
-
     </div>
 
     <script>
+        // TAB LOGIC
         function tab(e, id) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -202,44 +121,62 @@
             e.currentTarget.classList.add('active');
         }
 
+        // 1. FIXED HEADSHOT & ADMIN CHECK
         function sync() {
             let u = document.getElementById('uInput').value;
-            let display = document.getElementById('uDisplay');
-            let found = document.getElementById('found');
-            let pfp = document.getElementById('pfp');
+            let d = document.getElementById('uDisplay');
+            let f = document.getElementById('found');
+            let p = document.getElementById('pfp');
             
             if(u.length > 2) {
-                display.innerText = u.toUpperCase();
-                pfp.src = `https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=${u}`;
-                found.style.display = 'block';
-            } else {
-                display.innerText = "GUEST_USER";
-                found.style.display = 'none';
+                d.innerText = u.toUpperCase();
+                p.src = `https://www.roblox.com/headshot-thumbnail/image?width=150&height=150&format=png&username=${u}`;
+                f.style.display = 'block';
+
+                // ADMIN CHECK for blackbirdY2K
+                if(u.toLowerCase() === "blackbirdy2k" || u.toLowerCase() === "thisnotxsploiting") {
+                    document.getElementById('adminBox').style.display = 'block';
+                    loadFeed();
+                }
             }
         }
 
-        let isAttached = false;
-        function attach() {
-            alert("Connecting to local host... Searching for Roblox process...");
-            setTimeout(() => {
-                alert("ATTACHED SUCCESS: Version 2.64.0 (x64)");
-                isAttached = true;
-            }, 1000);
+        // 2. STALKER STATS
+        let v = parseInt(localStorage.getItem('bb_v') || 0);
+        let t = parseInt(localStorage.getItem('bb_t') || 0);
+        let x = parseInt(localStorage.getItem('bb_x') || 0);
+
+        if(!sessionStorage.getItem('active')) {
+            v++; localStorage.setItem('bb_v', v);
+            sessionStorage.setItem('active', 'true');
         }
 
-        function exec() {
-            if(!isAttached) {
-                alert("Open Roblox first and join a game!");
-            } else {
-                alert("Script Injected via Sovereign Bridge.");
-            }
+        setInterval(() => {
+            t++; localStorage.setItem('bb_t', t);
+            document.getElementById('statVisits').innerText = "Visits: " + v;
+            document.getElementById('statTime').innerText = "Time: " + t + "s";
+            document.getElementById('statExecs').innerText = "Executions: " + x;
+        }, 1000);
+
+        function runExec() {
+            x++; localStorage.setItem('bb_x', x);
+            alert("Script Injected! Total Execs: " + x);
         }
 
-        function launch() {
-            let g = document.getElementById('game').value;
-            if(!g) return alert("Enter a valid game name.");
-            alert("Searching for universe: " + g);
-            window.location.href = "roblox://";
+        // 3. FEEDBACK
+        function sendFeed() {
+            let m = document.getElementById('feedMsg').value;
+            if(!m) return;
+            let reports = JSON.parse(localStorage.getItem('bb_reports') || "[]");
+            reports.push({ u: document.getElementById('uInput').value || "Guest", m: m });
+            localStorage.setItem('bb_reports', JSON.stringify(reports));
+            alert("Report sent.");
+            document.getElementById('feedMsg').value = "";
+        }
+
+        function loadFeed() {
+            let reports = JSON.parse(localStorage.getItem('bb_reports') || "[]");
+            document.getElementById('adminList').innerHTML = reports.map(r => `<div>[${r.u}]: ${r.m}</div>`).join('');
         }
     </script>
 </body>
