@@ -3,72 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEAM DIGNITY | SOVEREIGN</title>
+    <title>TEAM DIGNITY | SOVEREIGN COMMAND</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #ff0000;
+            --bg: #050505;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 0, 0, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
         body {
-            background-color: #000;
-            color: #ff0000;
-            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Pulse */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1a0000 0%, #000 70%);
+            z-index: -1;
+            animation: pulse 8s infinite alternate;
+        }
+
+        @keyframes pulse { 0% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* Navigation Bar */
+        nav {
+            position: fixed;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            width: 90%; max-width: 800px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        nav a {
+            color: #aaa;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        nav a:hover { color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+
+        /* Sections */
+        section {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
+            padding: 100px 20px;
             text-align: center;
         }
-        #logo {
-            width: 250px;
-            filter: drop-shadow(0 0 15px #ff0000);
-            margin-bottom: 20px;
-        }
-        h1 {
-            font-size: 3rem;
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 8vw, 5rem);
+            color: var(--primary);
             text-transform: uppercase;
-            letter-spacing: 5px;
-            margin: 0;
-            animation: flicker 2s infinite;
+            letter-spacing: 10px;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 0 20px rgba(255,0,0,0.5));
         }
+
+        .hero p { font-size: 1.2rem; color: #888; max-width: 600px; line-height: 1.6; }
+
+        /* Card System for Sections */
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            backdrop-filter: blur(5px);
+            transition: 0.4s;
+        }
+
+        .card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 0 30px rgba(255,0,0,0.1); }
+
+        h2 { font-family: 'Orbitron', sans-serif; color: var(--primary); margin-bottom: 20px; text-transform: uppercase; }
+
         .btn {
-            background: transparent;
-            border: 2px solid #ff0000;
-            color: #ff0000;
-            padding: 15px 30px;
-            font-size: 1.2rem;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            border-radius: 5px;
             cursor: pointer;
             margin-top: 30px;
             transition: 0.3s;
-            text-transform: uppercase;
         }
-        .btn:hover {
-            background: #ff0000;
-            color: #000;
-            box-shadow: 0 0 20px #ff0000;
-        }
-        @keyframes flicker {
-            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-            20%, 22%, 24%, 55% { opacity: 0.2; }
-        }
+
+        .btn:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--primary); }
+
+        /* Hidden Class for Tabs */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
     </style>
 </head>
 <body>
-    <img id="logo" src="https://www.roblox.com/asset-thumbnail/image?assetId=74075165887004&width=420&height=420&format=png" alt="DIGNITY">
-    
-    <h1>Team Dignity</h1>
-    <p>THE ABSOLUTE SOVEREIGNTY</p>
 
-    <button class="btn" onclick="executeDignity()">Initialize Protocol</button>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#ranks">Ranks</a>
+        <a href="#media">Media</a>
+    </nav>
+
+    <section id="home" class="hero">
+        <img src="https://www.roblox.com/asset-thumbnail/image?assetId=74075165887004&width=420&height=420&format=png" style="width: 200px; margin-bottom: 20px; filter: drop-shadow(0 0 10px red);" alt="Blackbird">
+        <h1>DIGNITY</h1>
+        <p>Hello, You probably heard about us, or searched us up.</p>
+        <button class="btn" onclick="location.href='#about'">ENTER PROTOCOL</button>
+    </section>
+
+    <section id="about" class="reveal">
+        <div class="card">
+            <h2>The Mission</h2>
+            <p>Team Dignity isn't just a clan. It's a Sovereign Movement. We operate in the shadows of the Roblox engine, delivering the Apocalypse to those who stand in the way of the Blackbird.</p>
+        </div>
+    </section>
+
+    <section id="ranks" class="reveal">
+        <div class="card">
+            <h2>Elite Ranks</h2>
+            <p>Absolute Sovereign: ThisNotXsploiting</p>
+            <hr style="border: 0.5px solid var(--border); margin: 20px 0;">
+            <p>Blackbird Council: [CLASSIFIED]</p>
+            <p>Operatives: [ACTIVE]</p>
+        </div>
+    </section>
+
+    <section id="media" class="reveal">
+        <div class="card">
+            <h2>The Archive</h2>
+            <p>View our latest script executions and server purges.</p>
+            <button class="btn" onclick="alert('ACCESS DENIED: LEVEL 5 CLEARANCE REQUIRED')">VIEW CLASSIFIED</button>
+        </div>
+    </section>
 
     <script>
-        function executeDignity() {
-            alert("PROTOCOL INITIALIZED: THE BLACKBIRD HAS LANDED.");
-            // You can add your more complex JavaScript here!
-            document.body.style.backgroundColor = "#1a0000";
-            setTimeout(() => {
-                document.body.style.backgroundColor = "#000";
-            }, 100);
+        // Scroll Reveal Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
         }
+        window.addEventListener("scroll", reveal);
     </script>
+
 </body>
 </html>
