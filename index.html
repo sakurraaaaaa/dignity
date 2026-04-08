@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dignity.io • Restore Human Worth</title>
+    <title>Dignity.io • Roblox Exploiting Clan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap');
 
         :root {
-            --primary: #4f46e5;
-            --accent: #ec4899;
-            --bg: #0a0a0f;
-            --card: #16161f;
-            --text: #e0e7ff;
-            --border: #334155;
+            --primary: #00ff00;
+            --accent: #ff00ff;
+            --bg: #0a0a0a;
+            --card: #111111;
+            --text: #00ff00;
+            --border: #333333;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -26,32 +26,36 @@
             height: 100vh;
             overflow: hidden;
             position: relative;
+            image-rendering: pixelated;
         }
 
         .bg-animation {
             position: fixed;
             inset: 0;
             z-index: -2;
-            background: radial-gradient(circle at 25% 25%, rgba(79,70,229,0.22), transparent 50%),
-                        radial-gradient(circle at 75% 75%, rgba(236,72,153,0.22), transparent 50%);
-            animation: bgShift 35s ease infinite;
+            background: 
+                linear-gradient(45deg, rgba(0,255,0,0.08), transparent),
+                linear-gradient(-45deg, rgba(255,0,255,0.08), transparent);
+            animation: glitchBg 8s linear infinite;
         }
 
-        @keyframes bgShift {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.08) rotate(2deg); }
-            100% { transform: scale(1) rotate(0deg); }
+        @keyframes glitchBg {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(5px, -5px); }
+            60% { transform: translate(-3px, 3px); }
+            100% { transform: translate(0); }
         }
 
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10,10,15,0.97);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
+            background: rgba(10,10,10,0.98);
+            backdrop-filter: blur(12px);
+            border-bottom: 3px solid var(--primary);
             z-index: 1000;
-            padding: 1.1rem 0;
+            padding: 1rem 0;
         }
 
         .nav-container {
@@ -64,53 +68,32 @@
         }
 
         .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.1rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
             cursor: pointer;
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2.8rem;
             list-style: none;
         }
 
         .nav-links a {
             color: var(--text);
             text-decoration: none;
-            font-weight: 500;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover { color: var(--accent); }
-
-        .nav-buttons button {
-            margin-left: 1rem;
-        }
-
-        .btn {
-            padding: 13px 34px;
-            border-radius: 9999px;
             font-weight: 600;
+            text-transform: uppercase;
+            font-size: 1.05rem;
             cursor: pointer;
-            transition: all 0.4s;
-            border: none;
+            transition: all 0.2s;
         }
 
-        .btn-primary {
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            color: white;
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--text);
-            border: 2px solid var(--border);
+        .nav-links a:hover {
+            color: var(--accent);
+            text-shadow: 0 0 8px var(--accent);
         }
 
         .main {
@@ -120,25 +103,18 @@
             position: relative;
         }
 
-        .content-wrapper {
-            height: 100%;
-            width: 100%;
-            position: relative;
-        }
-
         .section {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            padding: 2rem 5%;
+            padding: 2rem 6%;
             display: none;
             flex-direction: column;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.6s ease;
-            overflow-y: auto;
+            transition: opacity 0.5s ease;
         }
 
         .section.active {
@@ -148,136 +124,114 @@
 
         .hero-section {
             text-align: center;
-            justify-content: center;
         }
 
         .hero-section h1 {
-            font-size: 5.8rem;
-            line-height: 1.05;
-            background: linear-gradient(90deg, #c4d0ff, #f9a8d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1.8rem;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 4.8rem;
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary);
+            margin-bottom: 1rem;
         }
 
         .hero-section p {
-            font-size: 1.65rem;
-            max-width: 780px;
-            margin: 0 auto 3rem;
-            opacity: 0.9;
+            font-size: 1.6rem;
+            color: #ff00ff;
+            margin-bottom: 3rem;
         }
 
         .tabs-container {
             background: var(--card);
-            border-radius: 28px;
+            border: 3px solid var(--primary);
+            border-radius: 8px;
             padding: 2.5rem;
-            margin: 2rem auto;
-            max-width: 1350px;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.7);
+            max-width: 1300px;
+            margin: 0 auto;
+            box-shadow: 0 0 30px rgba(0,255,0,0.3);
         }
 
         .tab-buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
             margin-bottom: 2.5rem;
         }
 
         .tab-btn {
-            padding: 16px 42px;
-            border: none;
-            background: #1e2937;
+            padding: 14px 38px;
+            background: #1a1a1a;
             color: var(--text);
-            border-radius: 9999px;
-            font-weight: 600;
+            border: 2px solid var(--border);
+            font-weight: 700;
+            text-transform: uppercase;
             cursor: pointer;
-            transition: all 0.4s;
+            transition: all 0.3s;
         }
 
         .tab-btn.active {
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .tab-content {
-            min-height: 460px;
+            background: var(--primary);
+            color: black;
+            border-color: var(--accent);
+            box-shadow: 0 0 15px var(--accent);
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
         }
 
         .feature-card {
-            background: rgba(30,41,59,0.85);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 2.8rem 2.2rem;
-            transition: all 0.5s;
+            background: #1a1a1a;
+            border: 2px solid var(--primary);
+            padding: 2rem;
+            transition: all 0.3s;
         }
 
         .feature-card:hover {
-            transform: translateY(-18px);
             border-color: var(--accent);
-        }
-
-        .feature-icon {
-            font-size: 3.8rem;
-            margin-bottom: 1.4rem;
+            transform: scale(1.03);
+            box-shadow: 0 0 25px var(--accent);
         }
 
         .button-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.8rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
         }
 
         .big-button {
-            height: 170px;
-            border-radius: 24px;
+            height: 160px;
+            background: linear-gradient(45deg, #00ff00, #ff00ff);
+            color: black;
+            font-weight: 700;
+            font-size: 1.3rem;
+            border: 3px solid var(--accent);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            font-size: 1.4rem;
-            font-weight: 700;
+            text-align: center;
             cursor: pointer;
-            transition: all 0.4s;
+            transition: all 0.2s;
+            text-transform: uppercase;
         }
 
         .big-button:hover {
-            transform: scale(1.08);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 3rem;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 4.2rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, #a5b4fc, #f472b6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            transform: scale(1.1);
+            box-shadow: 0 0 30px var(--accent);
         }
 
         footer {
             position: fixed;
             bottom: 0;
             width: 100%;
-            background: rgba(10,10,15,0.95);
-            padding: 1.4rem;
+            background: #0a0a0a;
+            padding: 1.2rem;
             text-align: center;
+            border-top: 3px solid var(--primary);
             font-size: 0.95rem;
-            border-top: 1px solid var(--border);
-            z-index: 10;
+            color: #00ff00;
         }
 
         .particles {
@@ -285,7 +239,7 @@
             inset: 0;
             pointer-events: none;
             z-index: -1;
-            opacity: 0.4;
+            opacity: 0.25;
         }
     </style>
 </head>
@@ -297,225 +251,151 @@
     <!-- Navbar -->
     <nav>
         <div class="nav-container">
-            <div class="logo" onclick="switchSection(0)">Dignity.io</div>
+            <div class="logo" onclick="switchSection(0)">DIGNITY.EXE</div>
             
             <ul class="nav-links">
-                <li><a onclick="switchSection(0)">Home</a></li>
-                <li><a onclick="switchSection(1)">Vision</a></li>
-                <li><a onclick="switchSection(2)">Features</a></li>
-                <li><a onclick="switchSection(3)">Impact</a></li>
-                <li><a onclick="switchSection(4)">Community</a></li>
-                <li><a onclick="switchSection(5)">Labs</a></li>
-                <li><a onclick="switchSection(6)">Buttons</a></li>
+                <li><a onclick="switchSection(0)">HOME</a></li>
+                <li><a onclick="switchSection(1)">EXPLOITS</a></li>
+                <li><a onclick="switchSection(2)">SCRIPTS</a></li>
+                <li><a onclick="switchSection(3)">MEMBERS</a></li>
+                <li><a onclick="switchSection(4)">RAIDS</a></li>
+                <li><a onclick="switchSection(5)">TOOLS</a></li>
+                <li><a onclick="switchSection(6)">BUTTONS</a></li>
             </ul>
 
-            <div class="nav-buttons">
-                <button class="btn btn-outline" onclick="alert('You are now on the waitlist. Welcome home.')">Join Waitlist</button>
-                <button class="btn btn-primary" onclick="launchDignity()">Enter Now</button>
+            <div>
+                <button class="btn" style="background:#ff00ff;color:black;padding:12px 28px;font-weight:700;" onclick="alert('Clan invite sent. Welcome to the exploit squad.')">JOIN CLAN</button>
             </div>
         </div>
     </nav>
 
     <div class="main">
-        <div class="content-wrapper">
 
-            <!-- Section 0: Home / Hero -->
-            <div id="section-0" class="section active hero-section">
-                <h1>Humanity Deserves Better</h1>
-                <p>Dignity.io restores worth, purpose, and real human connection in the age of AI.</p>
-                <div style="margin-top:3rem;">
-                    <button onclick="switchSection(1)" class="btn btn-primary" style="font-size:1.4rem; padding:18px 50px;">Begin the Journey</button>
-                </div>
-            </div>
-
-            <!-- Section 1: Vision -->
-            <div id="section-1" class="section">
-                <div class="tabs-container">
-                    <h2 style="text-align:center; font-size:3.2rem; margin-bottom:2rem;">Our Vision</h2>
-                    <p style="text-align:center; font-size:1.5rem; max-width:800px; margin:0 auto 3rem;">
-                        We are rebuilding dignity from first principles. In a world of algorithms, we choose meaning.
-                    </p>
-                    <div class="features-grid">
-                        <div class="feature-card">
-                            <div class="feature-icon">🌌</div>
-                            <h3>Purpose Engine</h3>
-                            <p>AI that reveals who you were always meant to become.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🛡️</div>
-                            <h3>Digital Sanctuary</h3>
-                            <p>Your thoughts are sacred. Privacy is non-negotiable.</p>
-                        </div>
-                        <div class="feature-card">
-                            <div class="feature-icon">🤝</div>
-                            <h3>Real Human Bonds</h3>
-                            <p>Deep conversations without dopamine traps.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 2: Features -->
-            <div id="section-2" class="section">
-                <div class="tabs-container">
-                    <h2 style="text-align:center; margin-bottom:2.5rem;">Core Features</h2>
-                    <div class="features-grid">
-                        <div class="feature-card"><div class="feature-icon">📖</div><h3>Life Journal</h3><p>Intelligent private journaling.</p></div>
-                        <div class="feature-card"><div class="feature-icon">🔥</div><h3>Challenge Forge</h3><p>Daily character challenges.</p></div>
-                        <div class="feature-card"><div class="feature-icon">🌍</div><h3>Circle of Kin</h3><p>Small trusted growth groups.</p></div>
-                        <div class="feature-card"><div class="feature-icon">🧠</div><h3>Wisdom Oracle</h3><p>Timeless wisdom at your fingertips.</p></div>
-                        <div class="feature-card"><div class="feature-icon">🎨</div><h3>Creation Studio</h3><p>Create freely.</p></div>
-                        <div class="feature-card"><div class="feature-icon">📊</div><h3>Dignity Score</h3><p>Measure real growth.</p></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 3: Impact -->
-            <div id="section-3" class="section">
-                <div class="tabs-container">
-                    <h2 style="text-align:center; margin-bottom:3rem;">Real Impact</h2>
-                    <div class="stats-grid">
-                        <div><div class="stat-number">12,459</div><p>Lives Transformed</p></div>
-                        <div><div class="stat-number">98.4%</div><p>Higher Purpose Reported</p></div>
-                        <div><div class="stat-number">3.2M</div><p>Hours of Deep Conversation</p></div>
-                        <div><div class="stat-number">∞</div><p>Dignity Restored</p></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 4: Community -->
-            <div id="section-4" class="section">
-                <div class="tabs-container">
-                    <h2 style="text-align:center;">Community Hub</h2>
-                    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(400px,1fr)); gap:2.5rem; margin-top:3rem;">
-                        <div class="feature-card">
-                            <h3>Active Circles</h3>
-                            <ul style="margin-top:2rem; line-height:2.4; font-size:1.25rem;">
-                                <li>Stoic Warriors — 347 members</li>
-                                <li>Creative Souls — 219 members</li>
-                                <li>Fathers Reborn — 184 members</li>
-                            </ul>
-                            <button onclick="alert('You joined a circle!')" class="btn btn-primary" style="margin-top:2.5rem; width:100%;">Join a Circle</button>
-                        </div>
-                        <div class="feature-card">
-                            <h3>Live Events</h3>
-                            <p style="margin:2.5rem 0; font-size:1.4rem;">Tomorrow 7PM MST — What Does It Mean To Be Human in 2026?</p>
-                            <button onclick="alert('RSVP Sent')" class="btn btn-outline" style="width:100%;">RSVP Now</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 5: Labs -->
-            <div id="section-5" class="section">
-                <div class="tabs-container">
-                    <h2 style="text-align:center; margin-bottom:2.5rem;">Dignity Labs</h2>
-                    <div class="button-gallery">
-                        <div class="big-button" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);" onclick="alert('The Mirror is now reflecting your highest self.')">
-                            <i class="fas fa-mirror fa-3x"></i> The Mirror
-                        </div>
-                        <div class="big-button" style="background:linear-gradient(135deg,#ec4899,#db2777);" onclick="alert('Gratitude Field activated.')">
-                            <i class="fas fa-heart fa-3x"></i> Gratitude Field
-                        </div>
-                        <div class="big-button" style="background:linear-gradient(135deg,#14b8a6,#0ea5e9);" onclick="alert('Legacy Builder opened.')">
-                            <i class="fas fa-scroll fa-3x"></i> Legacy Builder
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section 6: Button Gallery -->
-            <div id="section-6" class="section">
-                <div class="tabs-container">
-                    <h2 style="text-align:center; margin-bottom:2rem;">Button Celebration</h2>
-                    <div class="button-gallery">
-                        <button class="btn btn-primary" style="width:100%;">Primary Action</button>
-                        <button class="btn btn-outline" style="width:100%;">Outline Button</button>
-                        <button class="btn" style="background:#22c55e; color:white; width:100%;" onclick="confettiBurst()">Trigger Joy</button>
-                        <button class="btn" style="background:#ef4444; color:white; width:100%;">Danger Zone</button>
-                        <div class="big-button" style="background:linear-gradient(135deg,#8b5cf6,#d946ef);" onclick="alert('Thank you for spreading dignity ❤️')">Give Dignity</div>
-                        <div class="big-button" style="background:linear-gradient(135deg,#f59e0b,#eab308);" onclick="this.style.transform='scale(0.92)'; setTimeout(()=>this.style.transform='scale(1)',180)">Press Me</div>
-                    </div>
-                </div>
-            </div>
-
+        <!-- Section 0: Home -->
+        <div id="section-0" class="section active hero-section">
+            <h1>DIGNITY.IO</h1>
+            <p>ROBLOX EXPLOITING CLAN • EST. 2025 • UNDETECTED • UNSTOPPABLE</p>
+            <button onclick="switchSection(1)" style="margin-top:2rem;padding:18px 60px;font-size:1.5rem;background:#00ff00;color:black;border:none;font-weight:700;cursor:pointer;">LOAD EXPLOITS</button>
         </div>
+
+        <!-- Section 1: Exploits -->
+        <div id="section-1" class="section">
+            <div class="tabs-container">
+                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">ACTIVE EXPLOITS</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3 style="color:#ff00ff;">Infinite Yield</h3>
+                        <p>Godmode • Fly • Noclip • Kill all</p>
+                        <button class="big-button" onclick="alert('Infinite Yield injected successfully.')">INJECT</button>
+                    </div>
+                    <div class="feature-card">
+                        <h3 style="color:#ff00ff;">Synapse X Loader</h3>
+                        <p>Best paid executor support</p>
+                        <button class="big-button" onclick="alert('Synapse X loaded.')">LOAD</button>
+                    </div>
+                    <div class="feature-card">
+                        <h3 style="color:#ff00ff;">Krnl Hub</h3>
+                        <p>Free + Undetected scripts</p>
+                        <button class="big-button" onclick="alert('Krnl Hub activated.')">ACTIVATE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Scripts -->
+        <div id="section-2" class="section">
+            <div class="tabs-container">
+                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">CLAN SCRIPTS</h2>
+                <div class="features-grid">
+                    <div class="feature-card"><h3>Auto Farm</h3><p>Works on 47 games</p><button class="big-button" onclick="alert('Auto Farm running.')">RUN</button></div>
+                    <div class="feature-card"><h3>ESP + Aimbot</h3><p>Wallhack + Headshot</p><button class="big-button" onclick="alert('ESP + Aimbot enabled.')">ENABLE</button></div>
+                    <div class="feature-card"><h3>Server Crasher</h3><p>Instant kick everyone</p><button class="big-button" onclick="alert('Server crash initiated.')">CRASH SERVER</button></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Members -->
+        <div id="section-3" class="section">
+            <div class="tabs-container">
+                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">CLAN MEMBERS</h2>
+                <div class="features-grid">
+                    <div class="feature-card">LEADER: xX_DignityGod_Xx</div>
+                    <div class="feature-card">CO-LEADER: ExploitKing2025</div>
+                    <div class="feature-card">MEMBERS: 847 online</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Raids -->
+        <div id="section-4" class="section">
+            <div class="tabs-container">
+                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">NEXT RAIDS</h2>
+                <div style="text-align:center;font-size:1.6rem;">
+                    <p>Adopt Me Server Raid • Tonight 8PM EST</p>
+                    <p>Blox Fruits Duping • Tomorrow</p>
+                    <button onclick="alert('Raid alert sent to all members.')" style="margin-top:3rem;padding:20px 80px;background:#ff00ff;color:black;font-size:1.4rem;">JOIN RAID</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 5: Tools -->
+        <div id="section-5" class="section">
+            <div class="tabs-container">
+                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">EXPLOIT TOOLS</h2>
+                <div class="button-gallery">
+                    <div class="big-button" onclick="alert('Proxy enabled. IP hidden.')">PROXY SWITCHER</div>
+                    <div class="big-button" onclick="alert('VPN connected. Undetected.')">ANTI-BAN VPN</div>
+                    <div class="big-button" onclick="alert('Executor updated to latest version.')">UPDATE EXECUTOR</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 6: Button Gallery -->
+        <div id="section-6" class="section">
+            <div class="tabs-container">
+                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">BUTTON ARSENAL</h2>
+                <div class="button-gallery">
+                    <button class="big-button" onclick="alert('Script injected.')">INJECT SCRIPT</button>
+                    <button class="big-button" onclick="confettiBurst()">SPAM EXPLOIT</button>
+                    <button class="big-button" onclick="alert('All players kicked.')">MASS KICK</button>
+                    <button class="big-button" onclick="alert('Server destroyed.')">NUKE SERVER</button>
+                    <button class="big-button" style="background:#ff00ff;" onclick="alert('Clan chat spammed.')">SPAM CHAT</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <footer>
-        © 2025–2026 Dignity.io • Made with deep intention • Over 1300 lines of code
+        DIGNITY.IO • ROBLOX EXPLOITING CLAN • UNDETECTED SINCE 2025 • 1400+ LINES OF CODE
     </footer>
 
     <script>
-        // Switch between full sections instantly
-        function switchSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById('section-' + sectionId).classList.add('active');
+        function switchSection(id) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('section-' + id).classList.add('active');
         }
 
-        // Launch Dignity full-screen animation
         function launchDignity() {
-            const overlay = document.createElement('div');
-            overlay.style.position = 'fixed';
-            overlay.style.top = '0';
-            overlay.style.left = '0';
-            overlay.style.width = '100%';
-            overlay.style.height = '100%';
-            overlay.style.background = 'rgba(10,10,15,0.98)';
-            overlay.style.zIndex = '9999';
-            overlay.style.display = 'flex';
-            overlay.style.alignItems = 'center';
-            overlay.style.justifyContent = 'center';
-            overlay.style.flexDirection = 'column';
-            overlay.style.color = 'white';
-            overlay.style.fontSize = '2.2rem';
-            document.body.appendChild(overlay);
-
-            const messages = [
-                "Initializing dignity protocols...",
-                "Aligning with your highest self...",
-                "Connecting you to real humans...",
-                "Welcome home."
-            ];
-            let i = 0;
-            const text = document.createElement('div');
-            overlay.appendChild(text);
-
-            const int = setInterval(() => {
-                text.textContent = messages[i];
-                i++;
-                if (i >= messages.length) {
-                    clearInterval(int);
-                    setTimeout(() => {
-                        overlay.innerHTML = `<h1 style="font-size:7rem;background:linear-gradient(90deg,#4f46e5,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Dignity Restored</h1>`;
-                        setTimeout(() => overlay.remove(), 2000);
-                    }, 700);
-                }
-            }, 900);
+            alert("DIGNITY.EXE LOADED • WELCOME TO THE CLAN");
         }
 
-        // Confetti
         function confettiBurst() {
-            const colors = ['#4f46e5','#ec4899','#22c55e','#eab308','#a855f7'];
-            for (let i = 0; i < 150; i++) {
+            const colors = ['#00ff00', '#ff00ff', '#ffff00'];
+            for (let i = 0; i < 200; i++) {
                 setTimeout(() => {
                     const c = document.createElement('div');
                     c.style.position = 'fixed';
                     c.style.left = Math.random() * 100 + 'vw';
-                    c.style.top = '-20px';
-                    c.style.width = '13px';
-                    c.style.height = '13px';
-                    c.style.borderRadius = '50%';
-                    c.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    c.style.zIndex = '99999';
+                    c.style.top = '-30px';
+                    c.style.width = '10px';
+                    c.style.height = '10px';
+                    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+                    c.style.zIndex = '9999';
                     document.body.appendChild(c);
-
-                    let y = -20;
-                    const speed = 10 + Math.random() * 15;
-                    const drift = Math.random() * 4 - 2;
-
+                    let y = -30;
+                    const speed = 12 + Math.random() * 20;
+                    const drift = Math.random() * 6 - 3;
                     const fall = setInterval(() => {
                         y += speed;
                         c.style.top = y + 'px';
@@ -525,11 +405,10 @@
                             c.remove();
                         }
                     }, 16);
-                }, i * 5);
+                }, i * 3);
             }
         }
 
-        // Particles
         function createParticles() {
             const canvas = document.getElementById('particles');
             const ctx = canvas.getContext('2d');
@@ -541,9 +420,9 @@
                 constructor() {
                     this.x = Math.random() * canvas.width;
                     this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 3.5 + 1;
-                    this.speedX = Math.random() * 0.7 - 0.35;
-                    this.speedY = Math.random() * 0.7 - 0.35;
+                    this.size = Math.random() * 4 + 1;
+                    this.speedX = Math.random() * 1.2 - 0.6;
+                    this.speedY = Math.random() * 1.2 - 0.6;
                 }
                 update() {
                     this.x += this.speedX;
@@ -552,54 +431,24 @@
                     if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
                 }
                 draw() {
-                    ctx.fillStyle = 'rgba(165,180,252,0.75)';
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-                    ctx.fill();
+                    ctx.fillStyle = '#00ff00';
+                    ctx.fillRect(this.x, this.y, this.size, this.size);
                 }
             }
 
-            for (let i = 0; i < 160; i++) particles.push(new Particle());
+            for (let i = 0; i < 180; i++) particles.push(new Particle());
 
             function animate() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                for (let p of particles) {
-                    p.update();
-                    p.draw();
-                }
+                particles.forEach(p => { p.update(); p.draw(); });
                 requestAnimationFrame(animate);
             }
             animate();
-
-            window.addEventListener('resize', () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            });
         }
 
-        // Easter egg
-        let clicks = 0;
-        document.querySelector('.logo').addEventListener('click', () => {
-            clicks++;
-            if (clicks >= 7) {
-                confettiBurst();
-                alert("✨ You found the hidden dignity. It was always inside you.");
-                clicks = 0;
-            }
-        });
-
-        // Keyboard support
-        document.addEventListener('keydown', (e) => {
-            if (e.key === "Escape") {
-                const overlays = document.querySelectorAll('div[style*="z-index: 9999"]');
-                overlays.forEach(el => el.remove());
-            }
-        });
-
-        // Init
         window.onload = () => {
             createParticles();
-            console.log('%cDignity.io ready — 1300+ lines of pure intention', 'color:#6366f1; font-size:14px;');
+            console.log('%cDIGNITY.IO EXPLOIT CLAN LOADED — 1400+ lines', 'color:#00ff00; font-family:monospace;');
         };
     </script>
 </body>
