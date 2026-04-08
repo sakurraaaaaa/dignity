@@ -6,18 +6,18 @@
     <title>Dignity.io • Roblox Exploiting Clan</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
 
         :root {
-            --primary: #00ff00;
-            --accent: #ff00ff;
             --bg: #0a0a0a;
             --card: #111111;
-            --text: #00ff00;
+            --primary: #ffd700;     /* Yellow */
+            --accent: #ffffff;      /* White */
+            --text: #e0e0e0;
             --border: #333333;
         }
 
-        * { margin:0; padding:0; box-sizing:border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -26,52 +26,41 @@
             height: 100vh;
             overflow: hidden;
             position: relative;
-            image-rendering: pixelated;
         }
 
-        .bg-animation {
+        .bg {
             position: fixed;
             inset: 0;
             z-index: -2;
-            background: 
-                linear-gradient(45deg, rgba(0,255,0,0.08), transparent),
-                linear-gradient(-45deg, rgba(255,0,255,0.08), transparent);
-            animation: glitchBg 8s linear infinite;
-        }
-
-        @keyframes glitchBg {
-            0% { transform: translate(0); }
-            20% { transform: translate(-5px, 5px); }
-            40% { transform: translate(5px, -5px); }
-            60% { transform: translate(-3px, 3px); }
-            100% { transform: translate(0); }
+            background: radial-gradient(circle at 50% 30%, rgba(255, 215, 0, 0.12), transparent 70%);
         }
 
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10,10,10,0.98);
-            backdrop-filter: blur(12px);
-            border-bottom: 3px solid var(--primary);
+            background: rgba(10, 10, 10, 0.96);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--primary);
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 1.1rem 0;
         }
 
         .nav-container {
-            max-width: 1450px;
+            max-width: 1480px;
             margin: 0 auto;
-            padding: 0 2.5rem;
+            padding: 0 3rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
         .logo {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 2.1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
             color: var(--primary);
-            text-shadow: 0 0 10px var(--primary);
+            letter-spacing: -1px;
             cursor: pointer;
         }
 
@@ -85,15 +74,13 @@
             color: var(--text);
             text-decoration: none;
             font-weight: 600;
-            text-transform: uppercase;
             font-size: 1.05rem;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: color 0.3s;
         }
 
         .nav-links a:hover {
-            color: var(--accent);
-            text-shadow: 0 0 8px var(--accent);
+            color: var(--primary);
         }
 
         .main {
@@ -109,12 +96,12 @@
             left: 0;
             width: 100%;
             height: 100%;
-            padding: 2rem 6%;
+            padding: 3rem 6%;
             display: none;
             flex-direction: column;
             justify-content: center;
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.6s ease;
         }
 
         .section.active {
@@ -122,104 +109,126 @@
             opacity: 1;
         }
 
-        .hero-section {
+        .hero {
             text-align: center;
         }
 
-        .hero-section h1 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 4.8rem;
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 5.2rem;
+            font-weight: 700;
             color: var(--primary);
-            text-shadow: 0 0 20px var(--primary);
             margin-bottom: 1rem;
         }
 
-        .hero-section p {
-            font-size: 1.6rem;
-            color: #ff00ff;
-            margin-bottom: 3rem;
+        .hero p {
+            font-size: 1.7rem;
+            max-width: 720px;
+            margin: 0 auto 3rem;
+            opacity: 0.9;
         }
 
         .tabs-container {
             background: var(--card);
-            border: 3px solid var(--primary);
-            border-radius: 8px;
-            padding: 2.5rem;
-            max-width: 1300px;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+            padding: 3rem;
+            max-width: 1380px;
             margin: 0 auto;
-            box-shadow: 0 0 30px rgba(0,255,0,0.3);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.15);
         }
 
         .tab-buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 12px;
             justify-content: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
         }
 
         .tab-btn {
-            padding: 14px 38px;
+            padding: 16px 44px;
             background: #1a1a1a;
             color: var(--text);
-            border: 2px solid var(--border);
-            font-weight: 700;
-            text-transform: uppercase;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.4s;
         }
 
         .tab-btn.active {
             background: var(--primary);
-            color: black;
-            border-color: var(--accent);
-            box-shadow: 0 0 15px var(--accent);
+            color: #000;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
         }
 
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 2.2rem;
         }
 
         .feature-card {
             background: #1a1a1a;
-            border: 2px solid var(--primary);
-            padding: 2rem;
-            transition: all 0.3s;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.4s;
         }
 
         .feature-card:hover {
-            border-color: var(--accent);
-            transform: scale(1.03);
-            box-shadow: 0 0 25px var(--accent);
+            border-color: var(--primary);
+            transform: translateY(-8px);
         }
 
         .button-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.8rem;
         }
 
         .big-button {
-            height: 160px;
-            background: linear-gradient(45deg, #00ff00, #ff00ff);
-            color: black;
+            height: 165px;
+            background: linear-gradient(135deg, #ffd700, #ffea80);
+            color: #000;
+            font-size: 1.35rem;
             font-weight: 700;
-            font-size: 1.3rem;
-            border: 3px solid var(--accent);
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s;
-            text-transform: uppercase;
+            transition: all 0.4s;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
         }
 
         .big-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 30px var(--accent);
+            transform: translateY(-6px) scale(1.04);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Join Modal */
+        .modal {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #111;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            width: 420px;
+            padding: 2.5rem;
+            text-align: center;
         }
 
         footer {
@@ -227,11 +236,10 @@
             bottom: 0;
             width: 100%;
             background: #0a0a0a;
-            padding: 1.2rem;
+            padding: 1.4rem;
             text-align: center;
-            border-top: 3px solid var(--primary);
+            border-top: 1px solid var(--primary);
             font-size: 0.95rem;
-            color: #00ff00;
         }
 
         .particles {
@@ -239,177 +247,235 @@
             inset: 0;
             pointer-events: none;
             z-index: -1;
-            opacity: 0.25;
+            opacity: 0.2;
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-animation"></div>
+    <div class="bg"></div>
     <canvas id="particles" class="particles"></canvas>
 
     <!-- Navbar -->
     <nav>
         <div class="nav-container">
-            <div class="logo" onclick="switchSection(0)">DIGNITY.EXE</div>
+            <div class="logo" onclick="switchSection(0)">DIGNITY.io</div>
             
             <ul class="nav-links">
-                <li><a onclick="switchSection(0)">HOME</a></li>
-                <li><a onclick="switchSection(1)">EXPLOITS</a></li>
-                <li><a onclick="switchSection(2)">SCRIPTS</a></li>
-                <li><a onclick="switchSection(3)">MEMBERS</a></li>
-                <li><a onclick="switchSection(4)">RAIDS</a></li>
-                <li><a onclick="switchSection(5)">TOOLS</a></li>
-                <li><a onclick="switchSection(6)">BUTTONS</a></li>
+                <li><a onclick="switchSection(0)">Home</a></li>
+                <li><a onclick="switchSection(1)">Exploits</a></li>
+                <li><a onclick="switchSection(2)">Scripts</a></li>
+                <li><a onclick="switchSection(3)">Members</a></li>
+                <li><a onclick="switchSection(4)">Raids</a></li>
+                <li><a onclick="switchSection(5)">Tools</a></li>
+                <li><a onclick="switchSection(6)">Gallery</a></li>
             </ul>
 
-            <div>
-                <button class="btn" style="background:#ff00ff;color:black;padding:12px 28px;font-weight:700;" onclick="alert('Clan invite sent. Welcome to the exploit squad.')">JOIN CLAN</button>
-            </div>
+            <button onclick="showJoinModal()" class="big-button" style="height:52px; width:180px; font-size:1.1rem; padding:0;">
+                JOIN CLAN
+            </button>
         </div>
     </nav>
 
     <div class="main">
 
-        <!-- Section 0: Home -->
-        <div id="section-0" class="section active hero-section">
-            <h1>DIGNITY.IO</h1>
-            <p>ROBLOX EXPLOITING CLAN • EST. 2025 • UNDETECTED • UNSTOPPABLE</p>
-            <button onclick="switchSection(1)" style="margin-top:2rem;padding:18px 60px;font-size:1.5rem;background:#00ff00;color:black;border:none;font-weight:700;cursor:pointer;">LOAD EXPLOITS</button>
+        <!-- Home -->
+        <div id="section-0" class="section active hero">
+            <h1>DIGNITY.io</h1>
+            <p>Elite Roblox Exploiting Clan • Professional • Private • Powerful</p>
+            <button onclick="switchSection(1)" class="big-button" style="margin-top:2rem; height:68px; width:320px; font-size:1.4rem;">
+                Explore Exploits
+            </button>
         </div>
 
-        <!-- Section 1: Exploits -->
+        <!-- Exploits -->
         <div id="section-1" class="section">
             <div class="tabs-container">
-                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">ACTIVE EXPLOITS</h2>
+                <h2 style="text-align:center; font-size:3rem; margin-bottom:2.5rem; color:var(--primary);">Our Exploits</h2>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <h3 style="color:#ff00ff;">Infinite Yield</h3>
-                        <p>Godmode • Fly • Noclip • Kill all</p>
-                        <button class="big-button" onclick="alert('Infinite Yield injected successfully.')">INJECT</button>
+                        <h3 style="color:#ffd700;">Advanced Movement</h3>
+                        <p>Fly • Speed • Noclip • Teleport</p>
                     </div>
                     <div class="feature-card">
-                        <h3 style="color:#ff00ff;">Synapse X Loader</h3>
-                        <p>Best paid executor support</p>
-                        <button class="big-button" onclick="alert('Synapse X loaded.')">LOAD</button>
+                        <h3 style="color:#ffd700;">Visual Assistance</h3>
+                        <p>ESP • Tracers • Item Glow</p>
                     </div>
                     <div class="feature-card">
-                        <h3 style="color:#ff00ff;">Krnl Hub</h3>
-                        <p>Free + Undetected scripts</p>
-                        <button class="big-button" onclick="alert('Krnl Hub activated.')">ACTIVATE</button>
+                        <h3 style="color:#ffd700;">Automation</h3>
+                        <p>Auto Farm • Auto Collect • Anti-AFK</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Section 2: Scripts -->
+        <!-- Scripts -->
         <div id="section-2" class="section">
             <div class="tabs-container">
-                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">CLAN SCRIPTS</h2>
+                <h2 style="text-align:center; font-size:3rem; margin-bottom:2.5rem; color:var(--primary);">Clan Scripts</h2>
                 <div class="features-grid">
-                    <div class="feature-card"><h3>Auto Farm</h3><p>Works on 47 games</p><button class="big-button" onclick="alert('Auto Farm running.')">RUN</button></div>
-                    <div class="feature-card"><h3>ESP + Aimbot</h3><p>Wallhack + Headshot</p><button class="big-button" onclick="alert('ESP + Aimbot enabled.')">ENABLE</button></div>
-                    <div class="feature-card"><h3>Server Crasher</h3><p>Instant kick everyone</p><button class="big-button" onclick="alert('Server crash initiated.')">CRASH SERVER</button></div>
+                    <div class="feature-card">
+                        <h3>Game-Specific Scripts</h3>
+                        <p>Optimized for popular titles</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Custom Tools</h3>
+                        <p>Made by clan developers</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Weekly Updates</h3>
+                        <p>New scripts every week</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Section 3: Members -->
+        <!-- Members -->
         <div id="section-3" class="section">
             <div class="tabs-container">
-                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">CLAN MEMBERS</h2>
-                <div class="features-grid">
-                    <div class="feature-card">LEADER: xX_DignityGod_Xx</div>
-                    <div class="feature-card">CO-LEADER: ExploitKing2025</div>
-                    <div class="feature-card">MEMBERS: 847 online</div>
+                <h2 style="text-align:center; font-size:3rem; margin-bottom:2.5rem; color:var(--primary);">Clan Members</h2>
+                <div style="text-align:center; font-size:1.6rem; padding:3rem; background:#1a1a1a; border-radius:16px;">
+                    <p><strong>Leader:</strong> blackbirdY2K</p>
+                    <p style="margin-top:2rem; opacity:0.7;">Currently recruiting serious members only.</p>
                 </div>
             </div>
         </div>
 
-        <!-- Section 4: Raids -->
+        <!-- Raids -->
         <div id="section-4" class="section">
             <div class="tabs-container">
-                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">NEXT RAIDS</h2>
-                <div style="text-align:center;font-size:1.6rem;">
-                    <p>Adopt Me Server Raid • Tonight 8PM EST</p>
-                    <p>Blox Fruits Duping • Tomorrow</p>
-                    <button onclick="alert('Raid alert sent to all members.')" style="margin-top:3rem;padding:20px 80px;background:#ff00ff;color:black;font-size:1.4rem;">JOIN RAID</button>
+                <h2 style="text-align:center; font-size:3rem; margin-bottom:2.5rem; color:var(--primary);">Upcoming Raids</h2>
+                <div style="text-align:center; font-size:1.5rem;">
+                    <p>Private server raids every weekend</p>
+                    <p style="margin:2rem 0;">Next raid: Saturday 9PM EST</p>
+                    <button onclick="alert('Raid notification will be sent via clan Discord when you join.')" class="big-button" style="height:60px; width:280px; margin:0 auto;">
+                        Get Notified
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- Section 5: Tools -->
+        <!-- Tools -->
         <div id="section-5" class="section">
             <div class="tabs-container">
-                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">EXPLOIT TOOLS</h2>
+                <h2 style="text-align:center; font-size:3rem; margin-bottom:2.5rem; color:var(--primary);">Clan Tools</h2>
                 <div class="button-gallery">
-                    <div class="big-button" onclick="alert('Proxy enabled. IP hidden.')">PROXY SWITCHER</div>
-                    <div class="big-button" onclick="alert('VPN connected. Undetected.')">ANTI-BAN VPN</div>
-                    <div class="big-button" onclick="alert('Executor updated to latest version.')">UPDATE EXECUTOR</div>
+                    <div class="big-button" onclick="alert('Proxy settings updated for better protection.')">Proxy Manager</div>
+                    <div class="big-button" onclick="alert('Anti-detect system active.')">Anti-Detection</div>
+                    <div class="big-button" onclick="alert('Latest script pack downloaded (demo).')">Script Vault</div>
                 </div>
             </div>
         </div>
 
-        <!-- Section 6: Button Gallery -->
+        <!-- Gallery / Buttons -->
         <div id="section-6" class="section">
             <div class="tabs-container">
-                <h2 style="text-align:center;color:#00ff00;font-size:2.8rem;margin-bottom:2rem;">BUTTON ARSENAL</h2>
+                <h2 style="text-align:center; font-size:3rem; margin-bottom:2.5rem; color:var(--primary);">Button Gallery</h2>
                 <div class="button-gallery">
-                    <button class="big-button" onclick="alert('Script injected.')">INJECT SCRIPT</button>
-                    <button class="big-button" onclick="confettiBurst()">SPAM EXPLOIT</button>
-                    <button class="big-button" onclick="alert('All players kicked.')">MASS KICK</button>
-                    <button class="big-button" onclick="alert('Server destroyed.')">NUKE SERVER</button>
-                    <button class="big-button" style="background:#ff00ff;" onclick="alert('Clan chat spammed.')">SPAM CHAT</button>
+                    <div class="big-button" onclick="alert('Request sent to clan leadership.')">Request Help</div>
+                    <div class="big-button" onclick="confettiBurst()">Celebrate Win</div>
+                    <div class="big-button" onclick="alert('Message broadcasted to all members.')">Clan Announce</div>
+                    <div class="big-button" onclick="alert('Thank you for being part of Dignity.')">Show Respect</div>
                 </div>
             </div>
         </div>
 
     </div>
 
+    <!-- Join Clan Modal -->
+    <div id="joinModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color:var(--primary); margin-bottom:1.5rem;">Join Dignity.io</h2>
+            <p style="margin-bottom:2rem;">Enter your email to receive the invite link.</p>
+            
+            <input type="email" id="emailInput" placeholder="your@email.com" 
+                   style="width:100%; padding:16px; border-radius:12px; border:1px solid var(--primary); background:#1a1a1a; color:white; margin-bottom:1.5rem; font-size:1.1rem;">
+            
+            <button onclick="submitJoinRequest()" 
+                    style="width:100%; padding:16px; background:var(--primary); color:black; border:none; border-radius:12px; font-weight:700; font-size:1.2rem; cursor:pointer;">
+                SEND INVITE
+            </button>
+            
+            <button onclick="hideJoinModal()" 
+                    style="margin-top:1rem; background:transparent; border:none; color:#888; cursor:pointer;">
+                Cancel
+            </button>
+        </div>
+    </div>
+
     <footer>
-        DIGNITY.IO • ROBLOX EXPLOITING CLAN • UNDETECTED SINCE 2025 • 1400+ LINES OF CODE
+        DIGNITY.io • Elite Roblox Exploiting Clan • blackbirdY2K • Modern UI 2026
     </footer>
 
     <script>
+        // Tab / Section Switcher
         function switchSection(id) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
             document.getElementById('section-' + id).classList.add('active');
         }
 
-        function launchDignity() {
-            alert("DIGNITY.EXE LOADED • WELCOME TO THE CLAN");
+        // Join Modal
+        function showJoinModal() {
+            document.getElementById('joinModal').style.display = 'flex';
+            document.getElementById('emailInput').focus();
         }
 
+        function hideJoinModal() {
+            document.getElementById('joinModal').style.display = 'none';
+        }
+
+        function submitJoinRequest() {
+            const email = document.getElementById('emailInput').value.trim();
+            if (!email) {
+                alert("Please enter a valid email address.");
+                return;
+            }
+            
+            hideJoinModal();
+            
+            // Simulate sending email
+            setTimeout(() => {
+                alert(`✅ Email sent to ${email}\n\nHello,\n\nWe received a request that you wanted to join Dignity.io.\n\nCheck your inbox (and spam folder) for the invite link.\n\nWelcome to the clan.`);
+            }, 600);
+        }
+
+        // Confetti for wins
         function confettiBurst() {
-            const colors = ['#00ff00', '#ff00ff', '#ffff00'];
-            for (let i = 0; i < 200; i++) {
+            const colors = ['#ffd700', '#ffffff', '#ffea80'];
+            for (let i = 0; i < 180; i++) {
                 setTimeout(() => {
                     const c = document.createElement('div');
                     c.style.position = 'fixed';
                     c.style.left = Math.random() * 100 + 'vw';
-                    c.style.top = '-30px';
-                    c.style.width = '10px';
-                    c.style.height = '10px';
-                    c.style.background = colors[Math.floor(Math.random()*colors.length)];
+                    c.style.top = '-40px';
+                    c.style.width = '12px';
+                    c.style.height = '12px';
+                    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    c.style.borderRadius = '50%';
                     c.style.zIndex = '9999';
                     document.body.appendChild(c);
-                    let y = -30;
-                    const speed = 12 + Math.random() * 20;
-                    const drift = Math.random() * 6 - 3;
+
+                    let y = -40;
+                    const speed = 10 + Math.random() * 18;
+                    const drift = Math.random() * 5 - 2.5;
+
                     const fall = setInterval(() => {
                         y += speed;
                         c.style.top = y + 'px';
                         c.style.left = (parseFloat(c.style.left) + drift) + 'vw';
-                        if (y > window.innerHeight) {
+                        if (y > window.innerHeight + 50) {
                             clearInterval(fall);
                             c.remove();
                         }
                     }, 16);
-                }, i * 3);
+                }, i * 4);
             }
         }
 
-        function createParticles() {
+        // Particles
+        function initParticles() {
             const canvas = document.getElementById('particles');
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
@@ -420,9 +486,9 @@
                 constructor() {
                     this.x = Math.random() * canvas.width;
                     this.y = Math.random() * canvas.height;
-                    this.size = Math.random() * 4 + 1;
-                    this.speedX = Math.random() * 1.2 - 0.6;
-                    this.speedY = Math.random() * 1.2 - 0.6;
+                    this.size = Math.random() * 3 + 1;
+                    this.speedX = Math.random() * 0.8 - 0.4;
+                    this.speedY = Math.random() * 0.8 - 0.4;
                 }
                 update() {
                     this.x += this.speedX;
@@ -431,12 +497,12 @@
                     if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
                 }
                 draw() {
-                    ctx.fillStyle = '#00ff00';
+                    ctx.fillStyle = '#ffd700';
                     ctx.fillRect(this.x, this.y, this.size, this.size);
                 }
             }
 
-            for (let i = 0; i < 180; i++) particles.push(new Particle());
+            for (let i = 0; i < 140; i++) particles.push(new Particle());
 
             function animate() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -444,11 +510,25 @@
                 requestAnimationFrame(animate);
             }
             animate();
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
         }
 
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") {
+                const modal = document.getElementById('joinModal');
+                if (modal.style.display === 'flex') hideJoinModal();
+            }
+        });
+
+        // Init
         window.onload = () => {
-            createParticles();
-            console.log('%cDIGNITY.IO EXPLOIT CLAN LOADED — 1400+ lines', 'color:#00ff00; font-family:monospace;');
+            initParticles();
+            console.log('%cDIGNITY.io loaded — Modern clean UI ready', 'color:#ffd700; font-size:14px;');
         };
     </script>
 </body>
