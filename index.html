@@ -7,268 +7,467 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;700&family=Space+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;500;600;700&display=swap');
 
         :root {
-            --coco-dark: #2d1b15; /* Deep, dark coconut shell */
-            --void-red: #ff3b30; /* Vivid Apple/Void Red */
-            --white: #ffffff;
-            --off-white: #f5f5f7;
-            --glass: rgba(255, 255, 255, 0.95);
-            --shadow: 0 20px 40px rgba(0,0,0,0.1);
+            --bg: #000000;
+            --text: #f5f5f7;
+            --text-muted: #86868b;
+            --accent: #ff3b30;
+            --card: #111111;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: "SF Pro Display", -apple-system, sans-serif;
-            background: var(--off-white);
-            height: 100vh;
-            overflow: hidden; /* No scrolling allowed */
-            display: flex;
-            flex-direction: column;
-            color: var(--coco-dark);
+            font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.1;
         }
 
-        /* Nav - Ultra Clean */
+        /* Apple-style Top Nav */
         nav {
-            padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--glass);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 44px;
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            z-index: 100;
-        }
-
-        .logo { font-weight: 700; font-size: 22px; cursor: pointer; color: var(--coco-dark); }
-        .logo span { color: var(--void-red); }
-
-        .nav-links { display: flex; gap: 40px; list-style: none; }
-        .nav-links a { 
-            text-decoration: none; color: #86868b; font-size: 14px; font-weight: 500; 
-            transition: 0.2s; cursor: pointer;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--void-red); }
-
-        /* App Container */
-        .app-view {
-            flex: 1;
-            position: relative;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
-        .section {
-            position: absolute;
+        .nav-container {
+            max-width: 1200px;
             width: 100%;
-            max-width: 1100px;
-            opacity: 0;
-            transform: scale(0.98);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
         }
 
-        .section.active {
-            opacity: 1;
-            transform: scale(1);
-            pointer-events: auto;
-        }
-
-        /* UI Cards */
-        .card {
-            background: var(--white);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(0,0,0,0.02);
-        }
-
-        .hero h1 { font-size: 85px; letter-spacing: -4px; line-height: 0.9; margin-bottom: 20px; }
-        .hero p { font-size: 22px; color: #86868b; margin-bottom: 30px; }
-
-        /* Script Hub Grid */
-        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-        .item {
-            background: var(--off-white);
-            padding: 25px;
-            border-radius: 20px;
-            transition: 0.3s;
-            border: 1px solid transparent;
-        }
-        .item:hover { transform: translateY(-5px); border-color: var(--void-red); }
-        .item h3 { margin: 10px 0 5px 0; font-size: 18px; }
-        .item p { font-size: 13px; color: #86868b; margin-bottom: 15px; }
-
-        /* Buttons */
-        .btn {
-            background: var(--void-red);
+        .logo {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
             color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .logo span { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text);
+        }
+
+        .nav-right button {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 6px 18px;
+            border-radius: 999px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 15px rgba(255, 59, 48, 0.3);
-        }
-        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
-        .btn-copy {
-            background: var(--coco-dark);
-            width: 100%;
-            font-size: 12px;
+            transition: all 0.3s;
         }
 
-        /* Modal Fix */
+        .nav-right button:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Hero - Apple Style */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 44px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 110px;
+            font-weight: 700;
+            letter-spacing: -6px;
+            line-height: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .hero .subtitle {
+            font-size: 28px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 9999px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: #ff5a4f;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid #86868b;
+        }
+
+        .btn-secondary:hover {
+            border-color: white;
+        }
+
+        /* Sections */
+        section {
+            padding: 120px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 48px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        /* Library - Clean Grid */
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 40px;
+        }
+
+        .library-card {
+            background: var(--card);
+            border-radius: 18px;
+            padding: 40px 32px;
+            text-align: center;
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .library-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(255, 59, 48, 0.15);
+        }
+
+        .library-card i {
+            font-size: 48px;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .library-card h3 {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .library-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn-copy {
+            width: 100%;
+            background: #1c1c1e;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 9999px;
+            font-size: 14px;
+        }
+
+        /* Coconut AI - Full-width elegant chat */
+        .ai-section {
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-container {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            gap: 40px;
+            height: 85vh;
+        }
+
+        .ai-chat {
+            flex: 1;
+            background: var(--card);
+            border-radius: 28px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #222;
+        }
+
+        .chat-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid #222;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-header i {
+            color: var(--accent);
+            font-size: 32px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 16px 24px;
+            border-radius: 20px;
+            line-height: 1.5;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: var(--accent);
+            color: white;
+        }
+
+        .message.ai {
+            align-self: flex-start;
+            background: #1c1c1e;
+        }
+
+        .chat-input {
+            padding: 24px;
+            border-top: 1px solid #222;
+            display: flex;
+            gap: 12px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            background: #1c1c1e;
+            border: 1px solid #333;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 9999px;
+            font-size: 17px;
+        }
+
+        /* Changelog */
+        .changelog-item {
+            background: var(--card);
+            padding: 32px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+        }
+
+        /* Modal */
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.9);
             display: none;
-            justify-content: center;
             align-items: center;
-            z-index: 1000;
-        }
-        .modal-card {
-            background: white;
-            padding: 40px;
-            border-radius: 35px;
-            width: 400px;
-            text-align: center;
-        }
-        input {
-            width: 100%;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 15px;
-            border: 1px solid #ddd;
-            background: #f9f9f9;
-            outline: none;
+            justify-content: center;
+            z-index: 2000;
         }
 
-        /* Changelog style */
-        .log-item {
-            text-align: left;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .log-tag {
-            background: var(--void-red);
-            color: white;
-            font-size: 10px;
-            padding: 3px 8px;
-            border-radius: 5px;
-            margin-right: 10px;
+        .modal-card {
+            background: #111;
+            padding: 60px 50px;
+            border-radius: 28px;
+            width: 420px;
+            text-align: center;
+            border: 1px solid #333;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo" onclick="nav(0)">DIGNITY<span>.</span>IO</div>
-        <ul class="nav-links">
-            <li><a id="l0" class="active" onclick="nav(0)">Home</a></li>
-            <li><a id="l1" onclick="nav(1)">Library</a></li>
-            <li><a id="l2" onclick="nav(2)">Changelog</a></li>
-        </ul>
-        <button class="btn" onclick="openModal()">Get Access 🥥</button>
+        <div class="nav-container">
+            <div class="logo" onclick="nav(0)">DIGNITY<span>.</span></div>
+            <ul class="nav-links">
+                <li><a id="l0" class="active" onclick="nav(0)">Home</a></li>
+                <li><a id="l1" onclick="nav(1)">Library</a></li>
+                <li><a id="l2" onclick="nav(2)">Changelog</a></li>
+                <li><a id="l3" onclick="nav(3)">Coconut AI</a></li>
+            </ul>
+            <div class="nav-right">
+                <button onclick="openModal()">Get Access 🥥</button>
+            </div>
+        </div>
     </nav>
 
-    <div class="app-view">
-        <div id="s0" class="section active hero">
-            <h1>Coconut<br><span>Protocol</span></h1>
-            <p>The Sovereign Architect's Choice.</p>
-            <div style="display: flex; gap: 15px; justify-content: center;">
-                <button class="btn" onclick="nav(1)">View Hub</button>
-                <button class="btn" style="background:#000;" onclick="window.open('https://github.com/profile67/dignity')">GitHub</button>
+    <!-- HERO -->
+    <section class="hero" id="s0">
+        <div class="hero-content">
+            <h1>Coconut<br>Protocol</h1>
+            <p class="subtitle">The Sovereign Architect's Choice.</p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="nav(3)">Talk to Coconut AI</button>
+                <button class="btn btn-secondary" onclick="window.open('https://github.com/profile67/dignity')">View on GitHub</button>
             </div>
         </div>
+    </section>
 
-        <div id="s1" class="section">
-            <div class="card">
-                <h2 style="margin-bottom: 20px;">Coconut Hub Library</h2>
-                <div class="grid">
-                    <div class="item">
-                        <i class="fa-solid fa-bolt" style="color:var(--void-red)"></i>
-                        <h3>Infinite Yield</h3>
-                        <p>Total server command authority.</p>
-                        <button class="btn btn-copy" onclick="copy('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source')">COPY LOADSTRING</button>
+    <!-- LIBRARY -->
+    <section id="s1" style="display:none;">
+        <h2>Coconut Hub Library</h2>
+        <div class="library-grid">
+            <div class="library-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Infinite Yield</h3>
+                <p>Total server command authority.</p>
+                <button class="btn btn-copy" onclick="copy('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source')">Copy Loadstring</button>
+            </div>
+            <div class="library-card">
+                <i class="fa-solid fa-eye"></i>
+                <h3>Dark Dex</h3>
+                <p>High-level workspace exploration.</p>
+                <button class="btn btn-copy" onclick="copy('https://raw.githubusercontent.com/DarkNetworks/Infinite-Yield/main/dex.lua')">Copy Loadstring</button>
+            </div>
+            <div class="library-card">
+                <i class="fa-solid fa-ghost"></i>
+                <h3>Void Hub</h3>
+                <p>Universal multi-game script suite.</p>
+                <button class="btn btn-copy" onclick="copy('https://raw.githubusercontent.com/scriptblox/scripts/main/Universal%20HUB.lua')">Copy Loadstring</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHANGELOG -->
+    <section id="s2" style="display:none;">
+        <h2>System Updates</h2>
+        <div class="changelog-item">
+            <strong style="color:var(--accent);">NEW</strong> V2.1 Coconut Rebrand — Pure black Apple-inspired UI
+        </div>
+        <div class="changelog-item">
+            <strong style="color:#86868b;">FIX</strong> Script Hub — Faster loading and smoother experience
+        </div>
+        <div class="changelog-item">
+            <strong style="color:#ff9500;">VOID</strong> Enhanced anti-detection patches
+        </div>
+    </section>
+
+    <!-- COCONUT AI -->
+    <section class="ai-section" id="s3" style="display:none;">
+        <div class="ai-container">
+            <div class="ai-chat">
+                <div class="chat-header">
+                    <i class="fa-solid fa-brain"></i>
+                    <div>
+                        <strong>Coconut AI</strong><br>
+                        <span style="color:var(--text-muted); font-size:14px;">Your intelligent scripting companion</span>
                     </div>
-                    <div class="item">
-                        <i class="fa-solid fa-eye" style="color:var(--void-red)"></i>
-                        <h3>Dark Dex</h3>
-                        <p>High-level workspace exploration.</p>
-                        <button class="btn btn-copy" onclick="copy('https://raw.githubusercontent.com/DarkNetworks/Infinite-Yield/main/dex.lua')">COPY LOADSTRING</button>
-                    </div>
-                    <div class="item">
-                        <i class="fa-solid fa-ghost" style="color:var(--void-red)"></i>
-                        <h3>Void Hub</h3>
-                        <p>Universal multi-game script suite.</p>
-                        <button class="btn btn-copy" onclick="copy('https://raw.githubusercontent.com/scriptblox/scripts/main/Universal%20HUB.lua')">COPY LOADSTRING</button>
-                    </div>
+                </div>
+                <div id="chat-messages" class="chat-messages"></div>
+                <div class="chat-input">
+                    <input type="text" id="ai-input" placeholder="Ask Coconut anything..." onkeypress="if(event.key==='Enter') sendAI()">
+                    <button onclick="sendAI()" style="background:var(--accent); color:white; border:none; width:52px; height:52px; border-radius:50%;">→</button>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div id="s2" class="section">
-            <div class="card" style="max-width: 600px; width: 100%;">
-                <h2 style="margin-bottom: 20px;">System Updates</h2>
-                <div class="log-item">
-                    <span class="log-tag">NEW</span> <b>V2.0 Coconut Rebrand</b> - UI optimized for speed.
-                </div>
-                <div class="log-item">
-                    <span class="log-tag">FIX</span> <b>Script Hub</b> - Fixed loadstring copy delays.
-                </div>
-                <div class="log-item">
-                    <span class="log-tag">VOID</span> <b>Blackbird Logic</b> - Ground unanchor patches added.
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Modal -->
     <div id="modal" class="modal">
         <div class="modal-card">
-            <h2>Join Dignity</h2>
-            <p style="color:#86868b; font-size:14px; margin-top:10px;">Enter email to request whitelist.</p>
-            <input type="email" id="email" placeholder="architect@dignity.io">
-            <button class="btn" style="width:100%;" onclick="send()">Send Request 🥥</button>
-            <p style="margin-top:20px; font-size:12px; cursor:pointer;" onclick="closeModal()">Cancel</p>
+            <h2 style="margin-bottom:20px;">Join Dignity</h2>
+            <p style="color:var(--text-muted); margin-bottom:30px;">Enter your email for whitelist access.</p>
+            <input type="email" id="email" placeholder="your@email.com" style="width:100%; padding:16px; background:#1c1c1e; border:1px solid #333; color:white; border-radius:12px; margin-bottom:20px;">
+            <button class="btn btn-primary" style="width:100%;" onclick="send()">Send Request 🥥</button>
+            <p style="margin-top:25px; cursor:pointer; color:var(--text-muted);" onclick="closeModal()">Cancel</p>
         </div>
     </div>
 
     <script>
-        // Use YOUR Public Key here
         emailjs.init("ureqP_2CEqZYFUGI3");
 
+        let currentChat = [];
+
         function nav(id) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('section').forEach(s => s.style.display = 'none');
+            document.getElementById('s' + id).style.display = 'block';
+            
             document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
-            document.getElementById('s' + id).classList.add('active');
             document.getElementById('l' + id).classList.add('active');
+            
+            if (id === 3) loadChat();
         }
 
-        function openModal() { document.getElementById('modal').style.display = 'flex'; }
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        function openModal() {
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
 
         async function send() {
-            const mail = document.getElementById('email').value;
-            if(!mail.includes('@')) return alert("Invalid Email");
-            
+            const mail = document.getElementById('email').value.trim();
+            if (!mail.includes('@')) return alert("Invalid email");
             try {
-                await emailjs.send("service_eg9dtmr", "template_41ndmki", {
-                    user_email: mail,
-                    status: "WHITELIST_REQUEST"
-                });
-                alert("Request Sent to Dignity Servers! 🥥");
+                await emailjs.send("service_eg9dtmr", "template_41ndmki", { user_email: mail, status: "WHITELIST_REQUEST" });
+                alert("Request sent! 🥥");
                 closeModal();
             } catch (e) {
-                alert("System Error. Check Service/Template IDs.");
+                alert("Error sending request.");
             }
         }
 
@@ -277,6 +476,58 @@
             navigator.clipboard.writeText(code);
             alert("Coconut Script Copied! 🥥");
         }
+
+        // Coconut AI
+        function addMessage(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const msg = document.createElement('div');
+            msg.className = `message ${sender}`;
+            msg.textContent = text;
+            container.appendChild(msg);
+            container.scrollTop = container.scrollHeight;
+            currentChat.push({role: sender, content: text});
+            localStorage.setItem('coconutChat', JSON.stringify(currentChat));
+        }
+
+        function sendAI() {
+            const input = document.getElementById('ai-input');
+            const text = input.value.trim();
+            if (!text) return;
+            addMessage(text, 'user');
+            input.value = '';
+
+            setTimeout(() => {
+                const replies = [
+                    "Understood, Architect. Coconut Protocol engaged.",
+                    "Analyzing request at sovereign level...",
+                    "Here's the cleanest solution I recommend:",
+                    "Void logic activated. Proceeding."
+                ];
+                addMessage(replies[Math.floor(Math.random()*replies.length)] + "\n\nHow else can I assist you today?", 'ai');
+            }, 700);
+        }
+
+        function loadChat() {
+            const saved = localStorage.getItem('coconutChat');
+            const container = document.getElementById('chat-messages');
+            container.innerHTML = '';
+            if (saved) {
+                currentChat = JSON.parse(saved);
+                currentChat.forEach(m => {
+                    const div = document.createElement('div');
+                    div.className = `message ${m.role}`;
+                    div.textContent = m.content;
+                    container.appendChild(div);
+                });
+            } else {
+                addMessage("Hello Architect. I'm Coconut AI — your sovereign scripting companion. What would you like to build today?", 'ai');
+            }
+        }
+
+        // Init
+        window.onload = () => {
+            nav(0); // start on home
+        };
     </script>
 </body>
 </html>
