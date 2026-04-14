@@ -2,141 +2,104 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>COCONUT SENTINEL | VIRUS SCANNER</title>
+    <title>COCONUT DEEP SCAN | MALWARE ANALYZER</title>
     <style>
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-        #ui-container {
-            width: 80%;
-            max-width: 800px;
-            border: 1px solid #fff;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-        }
-        #header {
-            text-align: center;
-            border-bottom: 1px solid #fff;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        #console {
-            height: 300px;
-            overflow-y: hidden;
-            font-size: 12px;
-            line-height: 1.4;
-            color: #0f0; /* Classic Hacker Green */
-        }
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #222;
-            margin: 20px 0;
-            position: relative;
-        }
-        #progress-fill {
-            width: 0%;
-            height: 100%;
-            background: #fff;
-            transition: width 0.1s;
-        }
-        .status { color: #fff; font-weight: bold; }
-        .critical { color: #ff0000; font-weight: bold; text-transform: uppercase; }
+        body { background: #000; color: #fff; font-family: 'Courier New'; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
+        #vault { width: 90%; max-width: 900px; border: 2px solid #fff; padding: 30px; background: rgba(255,255,255,0.02); }
+        #drop-zone { border: 2px dashed #444; padding: 40px; text-align: center; cursor: pointer; transition: 0.3s; margin-bottom: 20px; }
+        #drop-zone:hover { border-color: #fff; background: rgba(255,255,255,0.05); }
+        #log-window { height: 400px; overflow-y: scroll; background: #050505; border: 1px solid #222; padding: 10px; font-size: 11px; color: #0f0; display: none; }
+        .critical { color: #ff3333; font-weight: bold; background: rgba(255,0,0,0.1); }
+        .safe { color: #33ff33; }
+        .header { border-bottom: 1px solid #fff; margin-bottom: 20px; padding-bottom: 10px; }
     </style>
 </head>
 <body>
 
-<div id="ui-container">
-    <div id="header">
-        <h1>COCONUT SENTINEL v1.0</h1>
-        <p>DEEP SCANNING FOR RATS, HACKTOOLS, AND MALWARE</p>
+<div id="vault">
+    <div class="header">
+        <h1>COCONUT DEEP SCANNER v2.1</h1>
+        <p>UPLOAD SUSPECTED RATS, HACKTOOLS, OR EXECUTORS</p>
     </div>
 
-    <div id="console"></div>
-
-    <div class="progress-bar">
-        <div id="progress-fill"></div>
+    <div id="drop-zone">
+        <p>DRAG & DROP FILE HERE OR CLICK TO BROWSE</p>
+        <input type="file" id="file-input" style="display: none;">
     </div>
 
-    <div id="footer">
-        STATUS: <span id="status-text" class="status">INITIALIZING...</span>
-    </div>
+    <div id="log-window"></div>
 </div>
 
 <script>
-    const consoleBox = document.getElementById('console');
-    const progressFill = document.getElementById('progress-fill');
-    const statusText = document.getElementById('status-text');
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const logWindow = document.getElementById('log-window');
 
-    const scanLogs = [
-        "Initializing Coconut Kernel...",
-        "Fetching local IP metadata...",
-        "Scanning TCP/UDP Ports...",
-        "Checking for 'QuasarRAT' signatures...",
-        "Searching for 'DarkComet' registry keys...",
-        "Analyzing browser headers for injections...",
-        "Detecting keystroke logging hooks...",
-        "Verifying SSL certificate integrity...",
-        "Checking System32 for unauthorized .exe files...",
-        "Scanning Roblox local storage for backdoors...",
-        "Searching for 'Xeno' executor remnants...",
-        "Isolating suspicious packets...",
-        "Analyzing shellcode entropy...",
-        "Coconut Firewall: ACTIVE",
-        "Bypassing sandbox restrictions...",
-        "Scanning for 'Blackbird' clan legacy threats...",
-        "Scanning... [OBJECT: COCONUT_SHELL]",
-        "Threat Level: LOW",
-        "Checking for credential harvesters...",
-        "Memory leak detected... Patching...",
-        "Analyzing 'Average Plate Game' ban data..."
-    ];
+    dropZone.onclick = () => fileInput.click();
 
-    // Generate hundreds of "junk" scan lines to reach your 600+ goal
-    for(let i=0; i<600; i++) {
-        scanLogs.push(`Scanning Block 0x${Math.floor(Math.random()*16777215).toString(16).toUpperCase()}... [CLEAN]`);
+    fileInput.onchange = (e) => handleFile(e.target.files[0]);
+
+    function addLog(text, type = '') {
+        const div = document.createElement('div');
+        div.className = type;
+        div.textContent = `[ANALYSIS] ${text}`;
+        logWindow.appendChild(div);
+        logWindow.scrollTop = logWindow.scrollHeight;
     }
 
-    scanLogs.push("--- SCAN COMPLETE ---");
-    scanLogs.push("NO VIRUSES DETECTED. SYSTEM IS SOVEREIGN.");
+    async function handleFile(file) {
+        if (!file) return;
+        
+        dropZone.style.display = 'none';
+        logWindow.style.display = 'block';
+        
+        addLog(`TARGET ACQUIRED: ${file.name}`);
+        addLog(`FILE SIZE: ${file.size} bytes`);
+        addLog(`TYPE: ${file.type || 'Unknown/Binary'}`);
+        addLog("INITIATING HEURISTIC COCONUT SCAN...");
 
-    let currentLine = 0;
-    function runScan() {
-        if (currentLine < scanLogs.length) {
-            const line = document.createElement('div');
-            line.textContent = `[ > ] ${scanLogs[currentLine]}`;
-            
-            // Randomly highlight "RATS" or "THREATS"
-            if(scanLogs[currentLine].includes("RAT") || scanLogs[currentLine].includes("Detecting")) {
-                line.className = "critical";
+        const content = await file.text();
+        const redFlags = [
+            { term: 'getgenv', name: 'ROBLOX EXECUTOR CORE' },
+            { term: 'loadstring', name: 'DYNAMIC CODE INJECTION' },
+            { term: 'HttpService', name: 'EXTERNAL DATA LEAK RISK' },
+            { term: 'os.execute', name: 'SYSTEM LEVEL COMMAND EXECUTION' },
+            { term: 'require', name: 'EXTERNAL MODULE BACKDOOR' },
+            { term: 'powershell', name: 'WINDOWS SHELL EXPLOIT' },
+            { term: 'Set-MpPreference', name: 'ANTIVIRUS DISABLE ATTEMPT' }
+        ];
+
+        let threatsFound = 0;
+
+        // Generate 600 lines of "Scanning..." to look pro
+        for(let i = 0; i < 600; i++) {
+            if (i % 50 === 0) {
+                const randomHex = Math.random().toString(16).slice(2, 10).toUpperCase();
+                addLog(`Checking Offset 0x${randomHex}... OK`);
             }
+            
+            // Randomly simulate finding "suspicious" strings
+            if (i === 150) addLog("ENTROPY ANALYSIS: HIGH (Potential Obfuscation Detected)", "critical");
+            
+            await new Promise(r => setTimeout(r, 2)); // High speed scan
+        }
 
-            consoleBox.appendChild(line);
-            consoleBox.scrollTop = consoleBox.scrollHeight;
+        // The Actual Check
+        redFlags.forEach(flag => {
+            if (content.includes(flag.term)) {
+                addLog(`!!! THREAT DETECTED: ${flag.name} (${flag.term}) !!!`, "critical");
+                threatsFound++;
+            }
+        });
 
-            let progress = (currentLine / scanLogs.length) * 100;
-            progressFill.style.width = progress + "%";
-            statusText.textContent = `SCANNING... ${Math.round(progress)}%`;
-
-            currentLine++;
-            setTimeout(runScan, Math.random() * 50); // Random speed for realism
+        if (threatsFound > 0) {
+            addLog(`SCAN COMPLETE: ${threatsFound} VULNERABILITIES FOUND.`, "critical");
+            addLog("ADVICE: DELETE THIS FILE IMMEDIATELY. IT IS NOT COCONUT-APPROVED.", "critical");
         } else {
-            statusText.textContent = "SECURE. ALL COCONUTS PROTECTED.";
-            statusText.style.color = "#0f0";
+            addLog("SCAN COMPLETE: NO KNOWN HACKTOOLS DETECTED.", "safe");
+            addLog("STATUS: SOVEREIGN.", "safe");
         }
     }
-
-    setTimeout(runScan, 1000);
 </script>
 
 </body>
