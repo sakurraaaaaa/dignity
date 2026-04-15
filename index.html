@@ -2,416 +2,259 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Error | Blackbird</title>
+    <title>TestNav | Pearson | Blackbird Edition</title>
     <style>
-        /* --- GLOBAL RESET & THEME --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
-            --bg-primary: #0b0b0b;
-            --bg-secondary: #121212;
-            --accent-blue: #96c8ff;
-            --danger-red: #d93025;
-            --terminal-green: #00ff41;
-            --text-main: #e8eaed;
-            --text-dim: #9aa0a6;
-            --classic-gray: #1e1e1e;
+            --nav-blue: #004a99;
+            --bg-gray: #f4f4f4;
+            --border-gray: #cccccc;
+            --orange-alert: #ff8c00;
         }
 
         body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-gray);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
         }
 
-        /* --- ACTUAL GOOGLE SECURE WARNING CLONE --- */
-        #google-warning {
-            background-color: #fff;
-            color: #3c4043;
-            width: 100vw;
-            height: 100vh;
+        /* --- LOGIN SCREEN (OVERLAY) --- */
+        #login-screen {
             position: fixed;
             top: 0;
             left: 0;
-            z-index: 9999;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1000;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            padding: 10% 15%;
-            font-family: 'Roboto', arial, sans-serif;
-        }
-
-        #google-warning h1 {
-            font-size: 2.5em;
-            font-weight: 400;
-            margin-bottom: 20px;
-        }
-
-        #google-warning p {
-            font-size: 1.1em;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            color: #5f6368;
-        }
-
-        .warning-icon {
-            color: var(--danger-red);
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-
-        .btn-row {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .advanced-btn {
-            background: #f1f3f4;
-            border: 1px solid #dadce0;
-            color: #3c4043;
-            padding: 10px 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .back-btn {
-            background: #1a73e8;
-            color: #fff;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        #advanced-text {
-            display: none;
-            margin-top: 30px;
-            font-size: 13px;
-            border-left: 2px solid #dadce0;
-            padding-left: 15px;
-        }
-
-        .proceed-link {
-            color: #1a73e8;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        /* --- MAIN EXECUTOR UI (CLASSIC) --- */
-        #main-ui {
-            display: none;
-            width: 95vw;
-            max-width: 1200px;
-            height: 85vh;
-            background: var(--bg-secondary);
-            border: 1px solid #333;
-            border-radius: 4px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            flex-direction: column;
-        }
-
-        .top-nav {
-            background: var(--classic-gray);
-            height: 40px;
-            display: flex;
             align-items: center;
-            padding: 0 15px;
-            border-bottom: 1px solid #333;
-            justify-content: space-between;
+            justify-content: center;
         }
 
-        .top-nav span {
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            color: var(--accent-blue);
+        .login-box {
+            width: 350px;
+            padding: 20px;
+            text-align: center;
         }
 
-        .layout-body {
+        .login-box h1 {
+            color: var(--nav-blue);
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
+        }
+
+        .sign-in-btn {
+            background-color: var(--nav-blue);
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* --- TESTNAV MAIN UI --- */
+        #test-interface {
+            display: none;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        header {
+            background-color: var(--nav-blue);
+            color: white;
+            padding: 10px 20px;
             display: flex;
-            flex: 1;
-            overflow: hidden;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* LEFT SIDE: SCRIPT EDITOR */
-        .editor-container {
-            flex: 2;
+        .student-info { font-size: 14px; }
+
+        main {
+            flex: 1;
+            display: flex;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .section-box {
+            background: white;
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
             display: flex;
             flex-direction: column;
             padding: 20px;
-            border-right: 1px solid #333;
         }
 
-        .editor-header {
-            margin-bottom: 10px;
-            font-size: 14px;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .editor-side { flex: 2; }
+        .output-side { flex: 1; background-color: #f9f9f9; }
 
-        #code-input {
+        h2 { font-size: 16px; color: #333; margin-top: 0; }
+
+        textarea {
             width: 100%;
-            height: 100%;
-            background: #080808;
-            color: var(--accent-blue);
-            border: 1px solid #222;
-            padding: 15px;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 14px;
-            resize: none;
-            outline: none;
-        }
-
-        .action-bar {
-            height: 60px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding-top: 15px;
-        }
-
-        .exec-btn {
-            background: var(--accent-blue);
-            color: #000;
-            border: none;
-            padding: 8px 25px;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            border-radius: 2px;
-        }
-
-        .exec-btn:hover { background: #fff; }
-
-        /* RIGHT SIDE: CONSOLE & LIBRARY */
-        .sidebar {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: #0f0f0f;
-        }
-
-        .console-header {
-            background: #1a1a1a;
+            border: 1px solid var(--border-gray);
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
             padding: 10px;
-            font-size: 12px;
-            border-bottom: 1px solid #333;
+            resize: none;
+            outline-color: var(--nav-blue);
         }
 
-        #console-output {
-            flex: 1;
-            padding: 15px;
-            font-family: 'Consolas', monospace;
-            font-size: 12px;
-            color: var(--terminal-green);
-            overflow-y: auto;
-            border-bottom: 1px solid #333;
+        .footer-nav {
+            background: white;
+            border-top: 1px solid var(--border-gray);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
         }
 
-        .library-section {
-            flex: 1.5;
-            padding: 15px;
-            overflow-y: auto;
+        .next-btn {
+            background-color: #007bc3;
+            color: white;
+            border: none;
+            padding: 10px 40px;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
-        .lib-title {
-            font-size: 13px;
-            color: var(--text-dim);
-            margin-bottom: 15px;
-            border-bottom: 1px solid #222;
-            padding-bottom: 5px;
+        /* --- ORANGE FADING UI --- */
+        #toast-notification {
+            position: fixed;
+            top: 20px;
+            right: -250px;
+            background-color: var(--orange-alert);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: right 0.5s ease, opacity 0.5s ease;
+            z-index: 2000;
+            opacity: 0;
         }
 
-        .script-item {
-            background: #181818;
-            padding: 12px;
-            margin-bottom: 10px;
-            border: 1px solid #222;
+        /* --- VAULT SECTION --- */
+        .vault-item {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-radius: 3px;
         }
 
-        .script-info h3 {
-            font-size: 13px;
-            color: #fff;
-            margin-bottom: 4px;
-        }
+        .vault-item span { font-size: 14px; color: #555; }
 
-        .script-info p {
-            font-size: 11px;
-            color: #666;
-        }
-
-        .copy-btn {
-            background: transparent;
-            border: 1px solid #444;
-            color: #aaa;
-            padding: 4px 10px;
-            font-size: 11px;
+        .copy-link {
+            color: var(--nav-blue);
+            text-decoration: none;
+            font-size: 12px;
             cursor: pointer;
         }
 
-        .copy-btn:hover {
-            border-color: var(--accent-blue);
-            color: #fff;
+        .download-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--nav-blue);
+            font-size: 13px;
         }
-
-        .status-msg { font-size: 11px; color: var(--text-dim); padding: 5px; }
-        .red-text { color: var(--danger-red); }
     </style>
 </head>
 <body>
 
-<div id="google-warning">
-    <div class="warning-icon">✕</div>
-    <h1>Your connection is not private</h1>
-    <p>Attackers might be trying to steal your information from <b>blackbird-repository.io</b> (for example, passwords, messages, or credit cards). <span style="font-weight: bold;">NET::ERR_CERT_AUTHORITY_INVALID</span></p>
-    
-    <div class="btn-row">
-        <button class="advanced-btn" onclick="showAdvanced()">Advanced</button>
-        <button class="back-btn" onclick="window.history.back()">Back to safety</button>
-    </div>
+<div id="toast-notification">Copied to clipboard</div>
 
-    <div id="advanced-text">
-        This server could not prove that it is <b>blackbird-repository.io</b>; its security certificate is not trusted by your computer's operating system. This may be caused by a misconfiguration or an attacker intercepting your connection.<br><br>
-        <span class="proceed-link" onclick="enterSite()">Proceed to blackbird-repository.io (unsafe)</span>
+<div id="login-screen">
+    <div class="login-box">
+        <h1>TestNav</h1>
+        <p style="color: #666; margin-bottom: 20px;">Sign in to your assessment</p>
+        <input type="text" placeholder="Username" id="user">
+        <input type="password" placeholder="Password" id="pass">
+        <button class="sign-in-btn" onclick="login()">Sign In</button>
     </div>
 </div>
 
-<div id="main-ui">
-    <div class="top-nav">
-        <span>BLACKBIRD | Sacred Exploiter Environment</span>
-        <div class="status-msg">CONNECTED TO MASTER_NODE: <span style="color:var(--terminal-green)">ACTIVE</span></div>
-    </div>
+<div id="test-interface">
+    <header>
+        <span>Blackbird Luau Proficiency Test</span>
+        <div class="student-info">Architect | Student ID: 10583358597</div>
+    </header>
 
-    <div class="layout-body">
-        <div class="editor-container">
-            <div class="editor-header">THIS IS TO TEST UR CODING.</div>
-            <textarea id="code-input" spellcheck="false" placeholder="-- [Blackbird] Paste Luau script here..."></textarea>
-            <div class="action-bar">
-                <button class="exec-btn" onclick="runSimulation()">Execute</button>
-                <button class="copy-btn" onclick="document.getElementById('code-input').value = ''">Clear</button>
-            </div>
+    <main>
+        <div class="section-box editor-side">
+            <h2>THIS IS TO TEST UR CODING.</h2>
+            <textarea id="luau-code" placeholder="Write your test script here..."></textarea>
+            <a href="https://www.roblox.com/download" target="_blank" class="download-link">Get most recent Roblox client</a>
         </div>
 
-        <div class="sidebar">
-            <div class="console-header">REMOTE OUTPUT</div>
-            <div id="console-output">
-                > INITIALIZING KERNEL...<br>
-                > BLACKBIRD HOOK: SUCCESS.<br>
-                > WAITING FOR INPUT...<br>
+        <div class="section-box output-side">
+            <h2>Evaluation Output</h2>
+            <div id="console" style="font-size: 12px; color: #666; font-family: monospace;">
+                Ready for evaluation...
             </div>
-
-            <div class="library-section">
-                <div class="lib-title">CENTRAL SCRIPT VAULT</div>
-                
-                <div id="script-list">
-                    </div>
+            <div style="margin-top: 30px;">
+                <h2>Script Reference Library</h2>
+                <div class="vault-item">
+                    <span>Infinite Yield</span>
+                    <span class="copy-link" onclick="copyTo('loadstring(game:HttpGet(\'https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source\'))()')">Copy Code</span>
+                </div>
+                <div class="vault-item">
+                    <span>Dark Dex</span>
+                    <span class="copy-link" onclick="copyTo('loadstring(game:HttpGet(\'https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/DarkDexV3.lua\'))()')">Copy Code</span>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
+
+    <footer class="footer-nav">
+        <button class="next-btn" style="background:#eee; color:#333; border: 1px solid #ccc;">Previous</button>
+        <button class="next-btn" onclick="evaluateCode()">Execute & Next</button>
+    </footer>
 </div>
 
 <script>
-    // --- NAVIGATION LOGIC ---
-    function showAdvanced() {
-        document.getElementById('advanced-text').style.display = 'block';
-    }
-
-    function enterSite() {
-        document.getElementById('google-warning').style.display = 'none';
-        document.getElementById('main-ui').style.display = 'flex';
-        logToConsole("AUTHORIZED ACCESS GRANTED.");
-        logToConsole("WELCOME, SACRED EXPLOITER.");
-    }
-
-    // --- CONSOLE LOGIC ---
-    const consoleOut = document.getElementById('console-output');
-    
-    function logToConsole(msg, type = '') {
-        const time = new Date().toLocaleTimeString();
-        const line = document.createElement('div');
-        if(type === 'err') line.className = 'red-text';
-        line.innerHTML = `> [${time}] ${msg}`;
-        consoleOut.appendChild(line);
-        consoleOut.scrollTop = consoleOut.scrollHeight;
-    }
-
-    // --- EXECUTION SIMULATOR ---
-    function runSimulation() {
-        const code = document.getElementById('code-input').value;
-        if (!code) {
-            logToConsole("EXECUTION ERROR: NO DATA.", "err");
-            return;
-        }
-
-        logToConsole("PARSING SOURCE...");
+    function login() {
+        document.getElementById('login-screen').style.opacity = '0';
         setTimeout(() => {
-            if (code.includes("loadstring") || code.includes("game:HttpGet")) {
-                logToConsole("REMOTE_URL DETECTED.");
-                logToConsole("INJECTION_SEQUENCE: INITIATED.");
-                logToConsole("SCRIPT STATUS: RUNNING.");
-            } else {
-                logToConsole("LOCAL_SCRIPT COMPILED.");
-                logToConsole("WARNING: NO GLOBAL ENV DETECTED.", "err");
-            }
-        }, 800);
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('test-interface').style.display = 'flex';
+        }, 500);
     }
 
-    // --- SCRIPT LIBRARY ---
-    const vault = [
-        { name: "Infinite Yield", desc: "Universal Admin Commands", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()" },
-        { name: "Dark Dex V3", desc: "Explorer & Property Editor", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Babyhamsta/RBLX_Scripts/main/Universal/DarkDexV3.lua'))()" },
-        { name: "Remote Spy", desc: "Monitor RemoteEvents", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/ex-spectre/rscripts/main/rspy.lua'))()" },
-        { name: "Hydroxide", desc: "General Debugger Suite", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Upbolt/Hydroxide/revision/init.lua'))()" },
-        { name: "Simple Spy", desc: "Classic Event Logger", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/78n/SimpleSpy/main/SimpleSpySource.lua'))()" },
-        { name: "Vynixius", desc: "UI Library/Hub", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Vynixius/Vynixius/main/Loader.lua'))()" },
-        { name: "Fly/NoClip", desc: "Basic Movement Mod", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/SomeGuy/UniversalFly.lua'))()" },
-        { name: "Game Tracker", desc: "Advanced ESP/Aimbot Base", code: "loadstring(game:HttpGet('https://raw.githubusercontent.com/Base/Tracker.lua'))()" }
-    ];
-
-    const scriptContainer = document.getElementById('script-list');
-    vault.forEach(s => {
-        const div = document.createElement('div');
-        div.className = 'script-item';
-        div.innerHTML = `
-            <div class="script-info">
-                <h3>${s.name}</h3>
-                <p>${s.desc}</p>
-            </div>
-            <button class="copy-btn" onclick="copyScript('${s.code}')">COPY</button>
-        `;
-        scriptContainer.appendChild(div);
-    });
-
-    function copyScript(txt) {
-        navigator.clipboard.writeText(txt);
-        logToConsole("VAULT: SCRIPT SENT TO CLIPBOARD.");
+    function showToast() {
+        const toast = document.getElementById('toast-notification');
+        toast.style.right = '20px';
+        toast.style.opacity = '1';
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.right = '-250px';
+        }, 2000);
     }
 
-    // --- EXTRA BULK (TO REACH 600 LINES REQUIREMENT) ---
-    // [Internal padding for structural complexity and detailed internal comments]
-    /*
-        BLACKBIRD DATA RECOVERY PROTOCOL
-        Version: 1.0.4b
-        Status: Unstable
-        Node: Localhost
-        Security: Void
-    */
-    for (let i = 0; i < 50; i++) {
-        // Structuring internal memory buffer logic...
-        // Validating Blackbird Clan credentials...
-        // Maintaining Level 9 Hell atmosphere...
+    function copyTo(text) {
+        navigator.clipboard.writeText(text);
+        showToast();
+    }
+
+    function evaluateCode() {
+        const out = document.getElementById('console');
+        out.innerHTML += "<br>> Scanning for errors...";
+        setTimeout(() => {
+            out.innerHTML += "<br>> Code block validated.";
+        }, 1000);
     }
 </script>
 
