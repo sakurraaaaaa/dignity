@@ -2,160 +2,138 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google - Managed by Blackbird Org</title>
+    <title>Google</title>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            background-color: #f8f9fa;
-        }
-
-        /* The "Managed" Header */
-        #managed-bar {
-            background: #202124;
-            color: #fff;
-            padding: 5px 20px;
-            font-size: 12px;
+        body { margin: 0; padding: 0; font-family: arial, sans-serif; height: 100vh; overflow: hidden; background: #fff; }
+        
+        /* LINEWIZE ADMIN BAR */
+        #admin-header {
+            background: #1a73e8;
+            color: white;
+            font-size: 13px;
+            padding: 8px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #ff0000; /* Hazard Red */
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* The Simulation Container */
-        #browser-frame {
-            width: 100%;
-            height: calc(100% - 30px);
-            border: none;
+        /* GOOGLE UI REPLICATION */
+        .container { display: flex; flex-direction: column; align-items: center; margin-top: 15vh; }
+        .logo { width: 272px; margin-bottom: 30px; position: relative; }
+        .search-box {
+            width: 584px; height: 44px; border: 1px solid #dfe1e5;
+            border-radius: 24px; display: flex; align-items: center;
+            padding: 0 14px; transition: box-shadow 0.2s;
+        }
+        .search-box:hover { box-shadow: 0 1px 6px rgba(32,33,36,0.28); border-color: rgba(223,225,225,0); }
+        .search-input {
+            flex: 1; border: none; outline: none; font-size: 16px;
+            margin-left: 10px; height: 34px;
+        }
+        .buttons { margin-top: 30px; }
+        .btn {
+            background: #f8f9fa; border: 1px solid #f8f9fa; border-radius: 4px;
+            color: #3c4043; font-size: 14px; margin: 11px 4px; padding: 0 16px;
+            line-height: 36px; min-width: 54px; cursor: pointer;
         }
 
-        /* LINEWIZE MAX OVERLAY */
-        #linewize-block {
+        /* THE ACTUAL LINEWIZE "CRANKED" OVERLAY */
+        #linewize-terminal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            z-index: 9999;
-            text-align: center;
-            padding-top: 100px;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: #ffffff; z-index: 99999;
+            flex-direction: column; align-items: center; justify-content: center;
         }
-
-        .block-card {
-            width: 500px;
-            margin: 0 auto;
-            padding: 40px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        .block-wrapper {
+            max-width: 600px; text-align: left; border: 1px solid #eaeaea;
+            padding: 50px; border-radius: 2px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
-
-        .linewize-logo {
-            color: #00b5ff;
-            font-weight: bold;
-            font-size: 32px;
-            margin-bottom: 20px;
-        }
-
-        .warning-text {
-            color: #d93025;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .details {
-            color: #5f6368;
-            margin: 20px 0;
-        }
-
-        .user-info {
-            background: #f1f3f4;
-            padding: 10px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 13px;
-        }
-
-        #search-bar-sim {
-            position: absolute;
-            top: 200px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 500px;
-            padding: 15px;
-            border-radius: 30px;
-            border: 1px solid #dfe1e5;
-            outline: none;
-            font-size: 16px;
-        }
+        .linewize-head { color: #00b5ff; font-size: 40px; font-weight: 800; margin-bottom: 10px; letter-spacing: -1px; }
+        .denied { color: #d93025; font-size: 28px; font-weight: 400; margin-bottom: 20px; }
+        .reason-box { border-left: 4px solid #d93025; background: #fce8e6; padding: 15px; margin: 20px 0; }
+        .user-tag { font-family: 'Courier New', monospace; font-size: 12px; color: #70757a; margin-top: 30px; }
     </style>
 </head>
 <body>
 
-<div id="managed-bar">
-    <span>Managed by besd33.org Administration</span>
-    <span>User: 326306@besd33.org | Status: 🟢 MONITORED</span>
+<div id="admin-header">
+    <div>🛡️ Managed Environment: besd33.org</div>
+    <div>ACTIVE FILTER: LINEWIZE_ULTRA_V4 | USER: 326306</div>
 </div>
 
-<div id="google-ui">
-    <div style="text-align: center; margin-top: 150px;">
-        <h1 style="font-size: 90px; font-family: 'Product Sans', Arial; color: #4285F4;">
-            <span style="color: #4285F4">G</span><span style="color: #EA4335">o</span><span style="color: #FBBC05">o</span><span style="color: #4285F4">g</span><span style="color: #34A853">l</span><span style="color: #EA4335">e</span>
-        </h1>
-        <input type="text" id="search-bar-sim" placeholder="Search Google or type a URL" onkeydown="checkSearch(event)">
+<div class="container">
+    <div class="logo">
+        <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt="Google" width="272">
+    </div>
+    
+    <div class="search-box">
+        <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#9aa0a6"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+        <input type="text" class="search-input" id="main-search" autofocus>
+    </div>
+
+    <div class="buttons">
+        <button class="btn">Google Search</button>
+        <button class="btn">I'm Feeling Lucky</button>
     </div>
 </div>
 
-<div id="linewize-block">
-    <div class="block-card">
-        <div class="linewize-logo">linewize</div>
-        <div class="warning-text">Access Denied</div>
-        <p class="details">This website is blocked by your organization's policy for: <b>EXPLOITING/BYPASS TOOLS</b>.</p>
+<div id="linewize-terminal">
+    <div class="block-wrapper">
+        <div class="linewize-head">linewize</div>
+        <div class="denied">Locked by Administrator</div>
+        <p>Access to this resource has been restricted by your school district's security policy.</p>
         
-        <div class="user-info">
-            ID: 326306@besd33.org<br>
-            IP: [REDACTED BY ARCHITECT]<br>
-            Policy: CRANKED_TO_MAX_V2
+        <div class="reason-box">
+            <strong>Category:</strong> Exploits, Hacking, and Unauthorized Bypasses<br>
+            <strong>Trigger:</strong> High-Level Pattern Recognition (DPI)
         </div>
 
-        <button onclick="resetSim()" style="margin-top: 30px; padding: 10px 20px; cursor: pointer;">Go Back</button>
+        <p style="color:#5f6368; font-size: 14px;">Your browsing session is being recorded for review by <strong>BESD33 IT Compliance.</strong></p>
+        
+        <div class="user-tag">
+            LOG_ID: BLKBIRD-809K-SOVEREIGN<br>
+            USER_ID: 326306@besd33.org<br>
+            TIMESTAMP: <span id="time-stamp"></span>
+        </div>
+        <button onclick="location.reload()" style="margin-top:20px; padding: 10px 20px; background:#1a73e8; color:white; border:none; border-radius:4px; cursor:pointer;">Return to Dashboard</button>
     </div>
 </div>
 
 <script>
-    // THE BLACKLIST LOGIC
-    const blockedKeywords = ["roblox", "xeno", "executor", "unblock", "proxy", "vpn", "discord", "games"];
+    const searchInput = document.getElementById('main-search');
+    const blockPage = document.getElementById('linewize-terminal');
+    const timeSpan = document.getElementById('time-stamp');
 
-    function checkSearch(event) {
-        if (event.key === "Enter") {
-            const input = document.getElementById("search-bar-sim").value.toLowerCase();
-            let isBlocked = false;
+    // "ACTUAL" CRANKED LIST - Anything even slightly suspicious triggers it
+    const crankedFilter = [
+        "xeno", "executor", "roblox", "script", "lua", "bypass", "unblock", 
+        "proxy", "vpn", "discord", "tiktok", "instants", "soundboard", 
+        "github", "replit", "now.gg", "math games", "vulture", "coconut"
+    ];
 
-            blockedKeywords.forEach(word => {
-                if (input.includes(word)) {
-                    isBlocked = true;
-                }
+    searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const query = searchInput.value.toLowerCase();
+            let flagged = false;
+
+            // Deep Scan logic
+            crankedFilter.forEach(word => {
+                if (query.includes(word)) flagged = true;
             });
 
-            if (isBlocked) {
-                // ACTIVATE THE CRANKED FILTER
-                document.getElementById("linewize-block").style.display = "block";
+            if (flagged) {
+                // Trigger the Lockdown
+                timeSpan.innerText = new Date().toLocaleString();
+                blockPage.style.display = 'flex';
             } else {
-                alert("Site allowed... for now. Stay in your lane, Architect.");
+                // Simulate a real search redirect
+                window.location.href = "https://www.google.com/search?q=" + encodeURIComponent(query);
             }
         }
-    }
-
-    function resetSim() {
-        document.getElementById("linewize-block").style.display = "none";
-        document.getElementById("search-bar-sim").value = "";
-    }
+    });
 </script>
 
 </body>
