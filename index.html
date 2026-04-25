@@ -2,49 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dignity | Xeno Override</title>
+    <title>Dignity | Xeno Protocol</title>
     <style>
         body { background: #050505; color: #1e90ff; font-family: 'Courier New', monospace; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-        .terminal { border: 1px solid #1e90ff; padding: 25px; background: #000; box-shadow: 0 0 30px #1e90ff22; width: 450px; text-align: center; }
-        .header { color: #ff4d4d; border-bottom: 1px solid #ff4d4d; margin-bottom: 20px; padding-bottom: 10px; font-weight: bold; letter-spacing: 2px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        button { background: transparent; border: 1px solid #1e90ff; color: #1e90ff; padding: 15px; cursor: pointer; text-transform: uppercase; font-size: 10px; transition: 0.2s; }
+        .terminal { border: 1px solid #1e90ff; padding: 20px; background: #000; box-shadow: 0 0 30px #1e90ff22; width: 480px; text-align: center; }
+        .header { color: #ff4d4d; border-bottom: 1px solid #ff4d4d; margin-bottom: 15px; padding-bottom: 10px; font-weight: bold; letter-spacing: 2px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+        button { background: transparent; border: 1px solid #1e90ff; color: #1e90ff; padding: 12px 5px; cursor: pointer; text-transform: uppercase; font-size: 9px; transition: 0.1s; }
         button:hover { background: #1e90ff; color: #000; box-shadow: 0 0 10px #1e90ff; }
-        .special { border: 1px solid #ff4d4d; color: #ff4d4d; grid-column: span 2; }
-        .special:hover { background: #ff4d4d; color: #000; box-shadow: 0 0 10px #ff4d4d; }
+        .special { border: 1px solid #ff4d4d; color: #ff4d4d; grid-column: span 3; margin-top: 10px; font-weight: bold; }
+        .special:hover { background: #ff4d4d; color: #000; box-shadow: 0 0 15px #ff4d4d; }
     </style>
 </head>
-<body onclick="document.getElementById('msg').innerText='XENO PROTOCOL ACTIVE'">
+<body onclick="document.getElementById('msg').innerText='PROTOCOL: SOVEREIGN ACTIVE'">
 
     <div class="terminal">
-        <div class="header">FORCE_SAKURA // XENO_EDITION</div>
+        <div class="header">XENO.NOW // SYSTEM_BYPASS</div>
         <div class="grid">
-            <button onclick="play('https://www.myinstants.com/media/sounds/fortnite-death-sound-effect-bit-depth-24-bit.mp3')">FN_DEATH</button>
-            <button onclick="play('https://www.myinstants.com/media/sounds/scp-096-scream.mp3')">SCP_096</button>
             <button onclick="play('https://www.myinstants.com/media/sounds/metal-pipe-clang.mp3')">METAL_PIPE</button>
-            <button onclick="play('https://www.myinstants.com/media/sounds/im-meen-book.mp3')">I_M_MEEN</button>
+            <button onclick="play('https://www.myinstants.com/media/sounds/scp-096-scream.mp3')">SCP_096</button>
+            <button onclick="play('https://www.myinstants.com/media/sounds/vine-boom.mp3')">VINE_BOOM</button>
             
-            <button class="special" onclick="playRandom()">EXECUTE: RANDOM_XENO_SFX</button>
+            <button onclick="play('https://www.myinstants.com/media/sounds/roblox-death-sound_1.mp3')">OLD_OOF</button>
+            <button onclick="play('https://www.myinstants.com/media/sounds/taco-bell-bong.mp3')">TACO_BELL</button>
+            <button onclick="play('https://www.myinstants.com/media/sounds/fart-with-reverb.mp3')">BASS_BOMB</button>
+
+            <button onclick="play('https://www.myinstants.com/media/sounds/windows-xp-error.mp3')">SYS_ERR</button>
+            <button onclick="play('https://www.myinstants.com/media/sounds/discord-notification.mp3')">MSG_PING</button>
+            <button onclick="play('https://www.myinstants.com/media/sounds/mouse-click-sound.mp3')">UI_CLICK</button>
+            
+            <button class="special" onclick="playXeno()">EXECUTE: ALL_XENO_SOUNDS</button>
         </div>
-        <div id="msg" style="margin-top:15px; font-size:9px; color:#444;">CLICK BACKGROUND TO INITIALIZE</div>
+        <div id="msg" style="margin-top:15px; font-size:8px; color:#333;">CLICK TERMINAL TO INITIALIZE OVERRIDE</div>
     </div>
 
     <script>
-        // List of sound URLs that are usually part of executor UIs or unblocked CDNs
-        const xenoSounds = [
-            'https://www.myinstants.com/media/sounds/discord-notification.mp3',
-            'https://www.myinstants.com/media/sounds/windows-xp-error.mp3',
-            'https://www.myinstants.com/media/sounds/error_CD77S63.mp3',
-            'https://www.myinstants.com/media/sounds/mouse-click-sound.mp3'
+        // Full list of sounds found in Xeno and common executors
+        const xenoVault = [
+            'https://www.myinstants.com/media/sounds/button-click-sound-effect.mp3',
+            'https://www.myinstants.com/media/sounds/error-sound.mp3',
+            'https://www.myinstants.com/media/sounds/ping-82701.mp3',
+            'https://www.myinstants.com/media/sounds/success-1-6297.mp3',
+            'https://www.myinstants.com/media/sounds/notification-sound.mp3',
+            'https://www.myinstants.com/media/sounds/pop-94319.mp3',
+            'https://www.myinstants.com/media/sounds/ui-click-43196.mp3'
         ];
 
         function play(url) {
-            new Audio(url).play().catch(e => console.log("Blocked"));
+            new Audio(url).play().catch(e => console.log("Filter Block"));
         }
 
-        function playRandom() {
-            const randomSound = xenoSounds[Math.floor(Math.random() * xenoSounds.length)];
-            play(randomSound);
+        function playXeno() {
+            // This picks a random sound from the full vault every time you click
+            const pick = xenoVault[Math.floor(Math.random() * xenoVault.length)];
+            play(pick);
         }
     </script>
 </body>
