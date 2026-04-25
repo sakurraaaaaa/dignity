@@ -7,7 +7,7 @@
     <style>
         body {
             background-color: #050505;
-            color: #1e90ff; /* Sakura Blue */
+            color: #1e90ff;
             font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
@@ -15,80 +15,101 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            overflow: hidden;
+            cursor: crosshair;
         }
 
         .terminal {
-            border: 1px solid #1e90ff;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.9);
-            box-shadow: 0 0 20px rgba(30, 144, 255, 0.2);
-            width: 400px;
+            border: 1px dashed #1e90ff;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 0 25px rgba(30, 144, 255, 0.1);
+            width: 380px;
+            text-align: center;
         }
 
         .header {
-            color: #ff4d4d; /* Annoyed Red */
+            color: #ff4d4d;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
             border-bottom: 1px solid #ff4d4d;
-            padding-bottom: 5px;
+            padding-bottom: 10px;
         }
 
-        .btn-grid {
+        .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 15px;
         }
 
         button {
-            background: transparent;
+            background: #000;
             border: 1px solid #1e90ff;
             color: #1e90ff;
-            padding: 10px;
+            padding: 15px 5px;
             cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
             font-size: 10px;
+            transition: 0.2s;
+            text-transform: uppercase;
         }
 
         button:hover {
             background: #1e90ff;
             color: #000;
-            box-shadow: 0 0 10px #1e90ff;
+            box-shadow: 0 0 15px #1e90ff;
         }
 
-        .footer {
+        .status {
             margin-top: 20px;
-            font-size: 8px;
-            color: #555;
-            letter-spacing: 2px;
+            font-size: 9px;
+            color: #444;
+            text-transform: uppercase;
         }
     </style>
 </head>
-<body>
+<body onclick="activate()">
 
     <div class="terminal">
-        <div class="header">STATUS: ANNOYED // ROLE: SAKURA</div>
-        <div class="btn-grid">
-            <button onclick="playAudio('13269140651')">Execute: FN_DEATH</button>
-            <button onclick="playAudio('140481768844835')">Execute: SCP_096</button>
-            <button onclick="playAudio('139668725303708')">Execute: METAL_PIPE</button>
-            <button onclick="playAudio('80776947525537')">Execute: I_M_MEEN</button>
+        <div class="header">FORCE SAKURA // OVERRIDE</div>
+        <div class="grid">
+            <button onclick="play('13269140651')">FN_DEATH</button>
+            <button onclick="play('140481768844835')">SCP_096</button>
+            <button onclick="play('139668725303708')">METAL_PIPE</button>
+            <button onclick="play('80776947525537')">I_M_MEEN</button>
         </div>
-        <div class="footer">LOG_ID: BLKBIRD-SOVEREIGN-BYPASS</div>
+        <div id="msg" class="status">Click anywhere to initialize system...</div>
     </div>
 
     <script>
-        function playAudio(assetId) {
-            // Roblox Asset Delivery API Link
-            const url = `https://www.roblox.com/asset-thumbnail/image?assetId=${assetId}&width=0&height=0&format=mp3`;
+        let ready = false;
+
+        function activate() {
+            ready = true;
+            document.getElementById('msg').innerText = "System Ready. Execute commands.";
+            document.getElementById('msg').style.color = "#1e90ff";
+        }
+
+        function play(id) {
+            if (!ready) {
+                alert("Click the background first to bypass browser lock.");
+                return;
+            }
+
+            // Using a different delivery endpoint that sometimes sneaks past filters
+            const url = `https://assetdelivery.roblox.com/v1/asset/?id=${id}`;
             
-            // Note: Modern browsers often block direct Roblox audio links due to CORS.
-            // If it doesn't play, you'll need to host the .mp3 files directly in your GitHub repo.
-            const audio = new Audio(`https://assetdelivery.roblox.com/v1/asset/?id=${assetId}`);
-            audio.play().catch(e => console.log("System block: Audio requires manual trigger or local hosting."));
+            const audio = new Audio(url);
+            audio.type = 'audio/mpeg';
+            
+            audio.play().catch(err => {
+                console.error("Blocked by filter or CORS. Try a proxy.");
+                // If it fails, we try the proxy method automatically
+                const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(url);
+                new Audio(proxyUrl).play().catch(e => {
+                    alert("Linewize is blocking the audio source. You may have to host files on GitHub.");
+                });
+            });
         }
     </script>
-
 </body>
 </html>
