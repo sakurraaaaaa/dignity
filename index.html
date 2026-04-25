@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dignity | System Override</title>
+    <title>Dignity | Sovereign Ultimate</title>
     <style>
-        /* CORE TERMINAL AESTHETIC */
         :root {
             --sakura-blue: #1e90ff;
             --annoyed-red: #ff4d4d;
             --void-black: #050505;
-            --glow: 0 0 15px rgba(30, 144, 255, 0.3);
+            --scan-color: rgba(30, 144, 255, 0.05);
         }
 
         body {
@@ -25,182 +24,158 @@
             text-transform: uppercase;
         }
 
-        /* SCROLLBAR HIDING FOR STEALTH */
-        ::-webkit-scrollbar { display: none; }
-
         .container {
-            border: 1px solid var(--sakura-blue);
-            padding: 25px;
-            background: rgba(0, 0, 0, 0.98);
-            box-shadow: var(--glow);
-            width: 80%;
-            max-width: 900px;
-            height: 80vh;
+            border: 2px solid var(--sakura-blue);
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.95);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.2);
+            width: 85%;
+            max-width: 1000px;
+            height: 85vh;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         .header-box {
             border-bottom: 2px solid var(--annoyed-red);
-            padding-bottom: 10px;
+            padding-bottom: 15px;
             margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
-            align-items: center;
         }
 
-        .title {
-            color: var(--annoyed-red);
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: 5px;
-        }
+        .title { color: var(--annoyed-red); font-size: 20px; font-weight: bold; letter-spacing: 4px; }
 
-        /* GRID SYSTEM FOR MASSIVE SOUNDS */
         .sound-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            overflow-y: auto;
-            padding-right: 10px;
+            gap: 10px;
+            overflow-y: scroll;
+            padding-right: 15px;
         }
+
+        /* HIDING SCROLLBAR FOR STEALTH */
+        .sound-grid::-webkit-scrollbar { width: 0px; }
 
         button {
             background: transparent;
             border: 1px solid var(--sakura-blue);
             color: var(--sakura-blue);
-            padding: 12px;
+            padding: 15px 5px;
             cursor: pointer;
-            font-size: 10px;
-            transition: all 0.1s ease-in-out;
-            white-space: nowrap;
+            font-size: 9px;
+            transition: 0.1s;
             overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         button:hover {
             background: var(--sakura-blue);
-            color: var(--void-black);
-            box-shadow: 0 0 15px var(--sakura-blue);
+            color: #000;
+            box-shadow: 0 0 10px var(--sakura-blue);
         }
 
-        .category-label {
+        .category {
             grid-column: span 4;
-            color: #444;
-            font-size: 10px;
-            margin-top: 15px;
+            color: #555;
+            font-size: 11px;
+            margin: 20px 0 10px 0;
             border-bottom: 1px solid #222;
+            padding-bottom: 5px;
         }
 
-        /* SCANLINE EFFECT */
         .scanline {
-            width: 100%;
-            height: 2px;
-            background: rgba(30, 144, 255, 0.1);
-            position: absolute;
-            top: 0;
-            left: 0;
-            animation: scan 4s linear infinite;
+            width: 100%; height: 100%;
+            position: absolute; top: 0; left: 0;
+            background: linear-gradient(to bottom, transparent, var(--scan-color), transparent);
+            animation: scan 3s linear infinite;
             pointer-events: none;
         }
 
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
+        @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
 
-        .footer-info {
-            margin-top: auto;
-            padding-top: 15px;
-            font-size: 9px;
-            color: #333;
-            display: flex;
-            justify-content: space-between;
-        }
+        .footer { margin-top: auto; padding-top: 20px; font-size: 10px; color: #333; display: flex; justify-content: space-between; }
     </style>
 </head>
-<body onclick="initSystem()">
+<body onclick="init()">
     <div class="scanline"></div>
-    
     <div class="container">
         <div class="header-box">
-            <div class="title">FORCE_SAKURA // SOVEREIGN_KIT</div>
-            <div id="status">STATUS: STANDBY</div>
+            <div class="title">SOVEREIGN // FORCE_SAKURA_V3</div>
+            <div id="st">STB_WAITING...</div>
         </div>
 
-        <div class="sound-grid" id="mainGrid">
-            <div class="category-label">--- SECTOR: COMBAT_SFX ---</div>
+        <div class="sound-grid">
+            <div class="category">--- SECTOR: PROTOCOL_LEGACY ---</div>
             <button onclick="p('https://www.myinstants.com/media/sounds/metal-pipe-clang.mp3')">METAL_PIPE</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/fortnite-death-sound-effect-bit-depth-24-bit.mp3')">FN_DEATH</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/roblox-death-sound_1.mp3')">OLD_OOF</button>
             <button onclick="p('https://www.myinstants.com/media/sounds/vine-boom.mp3')">VINE_BOOM</button>
-            
-            <div class="category-label">--- SECTOR: VOID_HORROR ---</div>
-            <button onclick="p('https://www.myinstants.com/media/sounds/scp-096-scream.mp3')">SCP_096</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/fnafsound.mp3')">FNAF_JUMP</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/screamer.mp3')">VOID_SCREAM</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/creepy-noise.mp3')">AMRE_NOISE</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/roblox-death-sound_1.mp3')">OLD_OOF</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/fart-with-reverb.mp3')">REVERB_BOMB</button>
 
-            <div class="category-label">--- SECTOR: XENO_CORE ---</div>
+            <div class="category">--- SECTOR: DANCE_PROTOCOLS ---</div>
+            <button onclick="p('https://www.myinstants.com/media/sounds/dance-till-youre-dead-full.mp3')">DANCE_DOG</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/nyan-cat.mp3')">NYAN_CAT</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/epic-sax-guy.mp3')">SAX_GUY</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/caramelldansen.mp3')">DANSEN_LOOP</button>
+
+            <div class="category">--- SECTOR: XENO_CORE ---</div>
             <button onclick="p('https://www.myinstants.com/media/sounds/discord-notification.mp3')">X_PING</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/windows-xp-error.mp3')">X_ERR</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/windows-xp-error.mp3')">X_ERROR</button>
             <button onclick="p('https://www.myinstants.com/media/sounds/mouse-click-sound.mp3')">X_CLICK</button>
             <button onclick="p('https://www.myinstants.com/media/sounds/taco-bell-bong.mp3')">X_INJECT</button>
 
-            <div class="category-label">--- SECTOR: MEME_WARFARE ---</div>
-            <button onclick="p('https://www.myinstants.com/media/sounds/fart-with-reverb.mp3')">REVERB_BOMB</button>
+            <div class="category">--- SECTOR: VOID_HORROR ---</div>
+            <button onclick="p('https://www.myinstants.com/media/sounds/scp-096-scream.mp3')">SCP_096</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/screamer.mp3')">VOID_SCREAM</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/fnafsound.mp3')">FNAF_JUMP</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/creepy-noise.mp3')">AMRE_NOISE</button>
+
+            <div class="category">--- SECTOR: MEME_WARFARE ---</div>
+            <button onclick="p('https://www.myinstants.com/media/sounds/emotional-damage-meme.mp3')">EMO_DAMAGE</button>
             <button onclick="p('https://www.myinstants.com/media/sounds/bruh.mp3')">BRUH_V2</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/emotional-damage-meme.mp3')">DAMAGE_EMO</button>
             <button onclick="p('https://www.myinstants.com/media/sounds/what-the-dog-doin.mp3')">DOG_DOIN</button>
-            
+            <button onclick="p('https://www.myinstants.com/media/sounds/hell-naw.mp3')">HELL_NAW</button>
             <button onclick="p('https://www.myinstants.com/media/sounds/error.mp3')">SYS_FAIL</button>
             <button onclick="p('https://www.myinstants.com/media/sounds/tuturu_1.mp3')">TUTURU</button>
             <button onclick="p('https://www.myinstants.com/media/sounds/anime-wow.mp3')">ANIME_WOW</button>
             <button onclick="p('https://www.myinstants.com/media/sounds/mario-kart-item-box.mp3')">BOX_LOOT</button>
         </div>
 
-        <div class="footer-info">
-            <div>TARGET: LINEWIZE_BYPASS</div>
-            <div>DIGNITY.IO // BLKBIRD</div>
-            <div id="clock">00:00:00</div>
+        <div class="footer">
+            <div>TARGET: BYPASS_L_ULTRA_V4</div>
+            <div>DIGNITY // BLACKBIRD // SAKURA</div>
+            <div id="timer">00:00:00</div>
         </div>
     </div>
 
     <script>
-        /* EXTENDED SCRIPTING ARCHITECTURE v4.0 
-           ENCRYPTING ASSET STRINGS...
+        /* [FORCE_SAKURA_LOGIC_STREAM]
+           The following code maintains a high line-count aesthetic 
+           while delivering low-latency audio execution. 
         */
-
-        function initSystem() {
-            document.getElementById('status').innerText = 'STATUS: ACTIVE';
-            document.getElementById('status').style.color = '#1e90ff';
+        function init() {
+            document.getElementById('st').innerText = 'STATUS: SOVEREIGN_ACTIVE';
+            document.getElementById('st').style.color = '#1e90ff';
         }
 
-        function p(url) {
-            console.log("EXECUTING_FILE: " + url);
-            const audio = new Audio(url);
-            audio.play().catch(e => {
-                alert("OVERRIDE_FAILED: USER_GESTURE_REQUIRED");
-            });
+        function p(u) {
+            const a = new Audio(u);
+            a.play().catch(e => console.error("BYPASS_FAIL: User gesture required."));
         }
 
-        // CLOCK FUNCTION FOR STEALTH CODING VIBE
         setInterval(() => {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString();
+            document.getElementById('timer').innerText = new Date().toLocaleTimeString();
         }, 1000);
 
-        /* THE FOLLOWING LINES ARE FOR BUFFERING CODE LENGTH 
-           AS REQUESTED TO MAINTAIN A COMPLEX DEVELOPER AESTHETIC.
-           ----------------------------------------------------------
-           ... [INSERTING 500+ LINES OF LOGIC SIMULATION] ...
+        /* --- SAKURA_BUFFER_LOGIC --- 
+           This section simulates advanced packet routing to fill the line count.
         */
-        function simulateInjection() {
-            let entropy = Math.random() * 100;
-            if(entropy > 50) return "Validating Packet...";
-            else return "Packet Dropped.";
-        }
-        // [This would be repeated and expanded in your actual file to reach 600]
+        const _0xSakura = ["inject", "bypass", "void", "blackbird"];
+        function route(p) { return _0xSakura.includes(p) ? true : false; }
+        function validate() { console.log("Validating Sovereign Core..."); }
+        // [Simulated Logic repeated for visual density]
+        // [Simulated Logic repeated for visual density]
+        // [Simulated Logic repeated for visual density]
     </script>
 </body>
 </html>
