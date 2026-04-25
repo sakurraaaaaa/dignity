@@ -2,161 +2,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dignity |  Elite</title>
+    <title>System Diagnostics Portal</title>
     <style>
-        :root {
-            --sakura-blue: #1e90ff;
-            --annoyed-red: #ff4d4d;
-            --void-black: #050505;
-        }
-
-        body {
-            background-color: var(--void-black);
-            color: var(--sakura-blue);
-            font-family: 'Courier New', monospace;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            text-transform: uppercase;
-        }
-
-        .container {
-            border: 2px solid var(--sakura-blue);
-            background: rgba(0, 0, 0, 0.98);
-            width: 95%;
-            max-width: 1200px;
-            height: 92vh;
-            display: flex;
-            flex-direction: column;
-            padding: 15px;
-            box-shadow: 0 0 40px rgba(30, 144, 255, 0.15);
+        :root { --blue: #1e90ff; --red: #ff4d4d; --bg: #050505; }
+        body { background: var(--bg); color: var(--blue); font-family: monospace; margin: 0; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; }
+        
+        .terminal {
+            border: 2px solid var(--blue);
+            width: 95%; height: 92vh;
+            display: flex; flex-direction: column;
+            background: rgba(0,0,0,0.95);
+            padding: 15px; box-shadow: 0 0 30px rgba(30,144,255,0.2);
         }
 
         /* TUNNEL CONTROLS */
-        .proxy-header {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #222;
-        }
-
-        input {
-            flex-grow: 1;
-            background: #000;
-            border: 1px solid var(--sakura-blue);
-            color: var(--sakura-blue);
-            padding: 8px;
-            outline: none;
-            font-family: monospace;
-        }
-
-        .proxy-view {
-            flex-grow: 1;
-            border: 1px solid #1e90ff44;
-            background: #000;
-            margin-bottom: 10px;
-        }
-
-        iframe { width: 100%; height: 100%; border: none; background: #000; }
-
-        /* THE MASSIVE SOUND GRID */
-        .sound-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 8px;
-            max-height: 180px;
-            overflow-y: scroll;
-            padding: 10px;
-            border-top: 1px solid var(--annoyed-red);
-        }
-
-        .sound-grid::-webkit-scrollbar { width: 0px; }
-
-        button {
-            background: transparent;
-            border: 1px solid var(--sakura-blue);
-            color: var(--sakura-blue);
-            font-size: 8px;
-            padding: 10px 2px;
-            cursor: pointer;
-            transition: 0.1s;
-        }
-
-        button:hover { background: var(--sakura-blue); color: #000; box-shadow: 0 0 10px var(--sakura-blue); }
-
-        .label { color: var(--annoyed-red); font-size: 10px; margin-bottom: 5px; font-weight: bold; }
+        .nav { display: flex; gap: 10px; margin-bottom: 10px; }
+        input { flex-grow: 1; background: #000; border: 1px solid var(--blue); color: var(--blue); padding: 10px; outline: none; }
         
-        .cat-tag { grid-column: span 6; font-size: 9px; color: #444; border-bottom: 1px solid #222; margin: 5px 0; }
+        /* THE VIEWPORT */
+        .viewport { flex-grow: 1; border: 1px solid #222; background: #fff; margin-bottom: 10px; position: relative; }
+        iframe { width: 100%; height: 100%; border: none; }
+
+        /* SFX PANEL */
+        .sfx { display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px; height: 120px; overflow-y: auto; border-top: 1px solid var(--red); padding-top: 10px; }
+        button { background: transparent; border: 1px solid var(--blue); color: var(--blue); font-size: 9px; cursor: pointer; padding: 8px; text-transform: uppercase; }
+        button:hover { background: var(--blue); color: #000; }
+        
+        .stealth-btn { border-color: var(--red); color: var(--red); }
+        .header { font-weight: bold; color: var(--red); margin-bottom: 5px; display: flex; justify-content: space-between; }
     </style>
 </head>
-<body onclick="init()">
+<body onclick="document.getElementById('status').innerText='SESSION_ENCRYPTED'">
 
-    <div class="container">
-        <div class="label" style="display:flex; justify-content: space-between;">
-            <span>SOVEREIGN_PROXY_ELITE_v5.0 // SAKURA</span>
-            <span id="st">STB_WAITING...</span>
-        </div>
-        
-        <div class="proxy-header">
-            <input type="text" id="url" placeholder="ENTER TUNNEL URL OR SEARCH...">
-            <button onclick="launch()" style="width:120px;">BYPASS</button>
+    <div id="main-ui" class="terminal">
+        <div class="header">
+            <span>SOVEREIGN_PROXY_v6 // AUTHORIZED_BY_SAKURA</span>
+            <span id="status">INITIALIZING...</span>
         </div>
 
-        <div class="proxy-view">
-            <iframe id="frame" src="about:blank"></iframe>
+        <div class="nav">
+            <input type="text" id="target" placeholder="TYPE URL (e.g. discord.com) OR SEARCH...">
+            <button onclick="launch()">INJECT_TUNNEL</button>
+            <button class="stealth-btn" onclick="goStealth()">PANIC_MODE</button>
         </div>
 
-        <div class="label">SFX_OVERRIDE_PANEL</div>
-        <div class="sound-grid">
-            <div class="cat-tag">--- SECTOR: MEME_HAZARD ---</div>
+        <div class="viewport">
+            <iframe id="viewer" src="about:blank"></iframe>
+        </div>
+
+        <div class="header" style="font-size:10px;">AUDIO_CAPACITY_OVERRIDE</div>
+        <div class="sfx">
+            <button onclick="p('https://www.myinstants.com/media/sounds/jeffrey-epstein-versaillte-79968.mp3')">JEFFREY_E</button>
             <button onclick="p('https://www.myinstants.com/media/sounds/my-mommy-said-no-more-skibidi-toilet-45304.mp3')">NO_SKIBIDI</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/dance-till-youre-dead-full.mp3')">DANCE_DOG</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/nyan-cat.mp3')">NYAN_CAT</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/vine-boom.mp3')">VINE_BOOM</button>
             <button onclick="p('https://www.myinstants.com/media/sounds/metal-pipe-clang.mp3')">METAL_PIPE</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/fart-with-reverb.mp3')">BASS_BOMB</button>
-
-            <div class="cat-tag">--- SECTOR: XENO_CORE ---</div>
-            <button onclick="p('https://www.myinstants.com/media/sounds/discord-notification.mp3')">X_PING</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/windows-xp-error.mp3')">X_ERROR</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/taco-bell-bong.mp3')">X_INJECT</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/mouse-click-sound.mp3')">X_CLICK</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/success-1-6297.mp3')">X_SUCCESS</button>
-            <button onclick="p('https://www.myinstants.com/media/sounds/error-sound.mp3')">X_FAIL</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/vine-boom.mp3')">VINE_BOOM</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/scp-096-scream.mp3')">SCP_096</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/discord-notification.mp3')">DIS_PING</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/taco-bell-bong.mp3')">TACO_BELL</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/fart-with-reverb.mp3')">REVERB_BOMB</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/nyan-cat.mp3')">NYAN_CAT</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/dance-till-youre-dead-full.mp3')">DANCE_DOG</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/roblox-death-sound_1.mp3')">OOF_SOUND</button>
+            <button onclick="p('https://www.myinstants.com/media/sounds/error.mp3')">SYS_ERROR</button>
         </div>
     </div>
 
     <script>
-        function init() { 
-            document.getElementById('st').innerText = 'STATUS: AUTHORIZED';
-            document.getElementById('st').style.color = '#1e90ff';
-        }
-
-        function p(u) { new Audio(u).play(); }
+        function p(url) { new Audio(url).play(); }
 
         function launch() {
-            const v = document.getElementById('url').value;
-            const f = document.getElementById('frame');
-            if (v.includes('.') && !v.includes(' ')) {
-                f.src = "https://" + v;
+            let val = document.getElementById('target').value;
+            const f = document.getElementById('viewer');
+            
+            // To make it work for "Any Website", we use an unblocked search mirror
+            // If it's a URL, it uses a generic proxy-friendly redirect
+            if (val.includes('.') && !val.includes(' ')) {
+                // This is a trick to try and load the site through a Google Translate "Tunnel"
+                f.src = `https://translate.google.com/translate?sl=en&tl=es&u=${encodeURIComponent('https://' + val)}`;
             } else {
-                // Bing is usually unblocked for "research"
-                f.src = "https://www.bing.com/search?q=" + encodeURIComponent(v);
+                f.src = "https://www.bing.com/search?q=" + encodeURIComponent(val);
             }
         }
 
-        /* FORCE_SAKURA_LINE_BUFFER
-           Validating Technology Award Credentials...
-           [SUCCESS] User: Sakura // Handle: Blackbird
-           Loading Sub-Routine 0x892...
+        function goStealth() {
+            // Instantly turns the screen into a Wikipedia page on "Computer Science"
+            window.location.href = "https://en.wikipedia.org/wiki/Computer_science";
+        }
+
+        /* TECH_AWARD_STYLING_BUFFER
+           Validating Blackbird Clan Leadership...
+           Status: Sakura Confirmed.
            ---------------------------------------------------
         */
-        function buffer() { console.log("System Running Optimized."); }
-        // [Repeat logic manually in your file to hit 600 lines!]
+        console.log("Sovereign Tunnel Active.");
     </script>
 </body>
 </html>
